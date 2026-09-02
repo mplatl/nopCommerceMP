@@ -1,0 +1,137 @@
+@using Nop.Plugin.Misc.BusinessCentral
+@using Nop.Plugin.Misc.BusinessCentral.Models
+@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+    NopHtml.SetActiveMenuItemSystemName(BusinessCentralDefaults.SystemName);
+}
+
+<form asp-controller="BusinessCentralAdmin" asp-action="Configure" method="post" id="configuration-form">
+    <div class="content-header clearfix">
+        <h1 class="float-left">
+            @T("Admin.Plugins.Fields.FriendlyName"): Business Central
+            <small>
+                <i class="fa fa-plug"></i>
+                @T("Admin.Plugins.Fields.Group"): Misc
+            </small>
+        </h1>
+        <div class="float-right">
+            <button type="submit" name="save" class="btn btn-primary">
+                <i class="far fa-save"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+
+    <div class="cards-group">
+        <div class="card card-default no-margin">
+            <div class="card-header">
+                @T("Plugins.Misc.BusinessCentral.InstructionsTitle")
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>@T("Plugins.Misc.BusinessCentral.InstructionsText1")</li>
+                    <li>@T("Plugins.Misc.BusinessCentral.InstructionsText2")</li>
+                    <li>@T("Plugins.Misc.BusinessCentral.InstructionsText3")</li>
+                    <li>@T("Plugins.Misc.BusinessCentral.InstructionsText4")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="cards-group">
+        <div class="card card-default no-margin">
+            <div class="card-header">
+                @T("Admin.Common.Settings")
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="Enabled" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="Enabled" />
+                        <span asp-validation-for="Enabled"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="UseSandbox" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="UseSandbox" />
+                        <span asp-validation-for="UseSandbox"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="TenantId" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="TenantId" />
+                        <span asp-validation-for="TenantId"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="EnvironmentName" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="EnvironmentName" />
+                        <span asp-validation-for="EnvironmentName"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="ClientId" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ClientId" />
+                        <span asp-validation-for="ClientId"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="ClientSecret" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ClientSecret" asp-required="false" />
+                        @if (Model.ClientSecretSet)
+                        {
+                            <span class="text-info">@T("Plugins.Misc.BusinessCentral.ClientSecret.AlreadySet")</span>
+                        }
+                        <span asp-validation-for="ClientSecret"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="CompanyName" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="CompanyName" />
+                        <span asp-validation-for="CompanyName"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="LogSyncMessages" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="LogSyncMessages" />
+                        <span asp-validation-for="LogSyncMessages"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="RequestTimeout" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="RequestTimeout" />
+                        <span asp-validation-for="RequestTimeout"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

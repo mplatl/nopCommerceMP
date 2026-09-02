@@ -2,6 +2,7 @@ services:
     nopcommerce_web:
         build: .
         container_name: nopcommerce
+        restart: unless-stopped
         ports:
             - "80:80"
         depends_on:
@@ -9,10 +10,13 @@ services:
     nopcommerce_database:
         image: "mcr.microsoft.com/mssql/server:2019-latest"
         container_name: nopcommerce_mssql_server
+        restart: unless-stopped
         environment:
             SA_PASSWORD: "nopCommerce_db_password"
             ACCEPT_EULA: "Y"
             MSSQL_PID: "Express"
+        volumes:
+            - nopcommerce_data:/var/opt/mssql
 
 volumes:
   nopcommerce_data:            

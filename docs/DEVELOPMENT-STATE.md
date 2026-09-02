@@ -1,0 +1,73 @@
+# Development State — Business Central Plugin (nopCommerceMP)
+
+> **Letzte Aktualisierung:** 02.09.2025 (Session: P0 + Docker-Verifikation abgeschlossen)
+> Nächster Schritt bei Wiederaufnahme: **P1 — Connection (OAuth2 + Test-Connection)**
+
+---
+
+## 1. Was fertig ist
+
+| Bereich | Stand |
+|---|---|
+| **Konzept** | `docs/business-central-plugin-concept.md` — Plugin-Architektur, BC-API, Roadmap P0–P8 |
+| **Feature-Referenz** | `docs/bc-connector-feature-parity.md` — vollständige Parität mit dem BC-Shopify-Connector (aus BC-Quellcode 28.4.53241.0 abgeleitet), nop-Mapping, Lücken |
+| **P0 Plugin-Skelett** | `src/Plugins/Nop.Plugin.Misc.BusinessCentral/` — plugin.json, csproj, Plugin-Klasse, Settings, Defaults, Controller, Models, Views, Infrastructure (RouteProvider, NopStartup) |
+| **Solution** | Projekt in `src/NopCommerce.sln` (Lösungsordner „Plugins") — kompletter Solution-Build: **0 Fehler** |
+| **Docker-Test** | nopCommerce 4.90.7 lokal im Docker installiert (Demo-Daten) — Plugin installiert + Config-Seite `/Admin/BusinessCentral/Configure` **200 ✓** |
+| **Dev-Skript** | `dev/docker-bootstrap.py` — automatisiert Erstinstallation, Login, Plugin-Install/-Check (idempotent) |
+
+## 2. Umgebung & Zugangsdaten (nur lokale Entwicklung!)
+
+- Shop: http://localhost · Admin: http://localhost/Admin
+- **Admin:** `admin@yourStore.com` / `NopMP!2025#`
+- **SQL Server:** Container `nopcommerce_mssql_server`, `sa` / `nopCommerce_db_password`, DB `nopCommerce` (Demo-Daten)
+- Docker-Volumes: `nopcommercemp_nopcommerce_data` (persistente DB), `restart: unless-stopped` gesetzt
+- .NET SDK 9.0.317 installiert unter `~/.dotnet` (global.json verlangt 9.x; nur SDK 8 war vorinstalliert)
+
+## 3. Wiederaufnahme (nach Reboot / neuer Shell)
+
+```bash
+cd ~/Dokumente/git_private/nopCommerceMP
+docker compose up -d --build          # Web + DB starten (baut nur beim ersten Mal neu)
+# Shop ist bereits installiert → nur Login nötig:
+python3 dev/docker-bootstrap.py       # verifiziert Login + Plugin + Config-Seite
+```
+
+Falls die DB/Installation fehlt (z. B. Volume gelöscht): `python3 dev/docker-bootstrap.py` macht die komplette Erstinstallation automatisch.
+
+**Plugin bauen (nach Code-Änderungen):**
+```bash
+export PATH="$HOME/.dotnet:$PATH"
+dotnet build src/NopCommerce.sln -v minimal          # ganzer Build (empfohlen)
+# oder nur das Plugin (Achtung: -p:SolutionDir nötig):
+dotnet build src/Plugins/Nop.Plugin.Misc.BusinessCentral/Nop.Plugin.Misc.BusinessCentral.csproj -p:SolutionDir="$PWD/src/"
+docker compose up -d --build                          # neue DLL ins Image bringen
+```
+
+## 4. Nächster Schritt: P1 — Connection
+
+**Benötigt vom Kunden/Benutzer:**
+1. BC-Umgebung: Tenant-ID, Environment-Name (Sandbox/Production), Company-Name
+2. Entra-ID-App: Client-ID + Client-Secret (im BC-Tenant registriert, Berechtigung `Dynamics 365 Business Central → API.ReadWrite.All`, Admin-Consent)
+
+**Umsetzung P1 (in `src/Plugins/Nop.Plugin.Misc.BusinessCentral/`):**
+- `Services/BusinessCentralHttpClient.cs` — OAuth2 Client-Credentials (Token-Endpoint `https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token`, Scope `https://api.businesscentral.dynamics.com/.default`), Token-Cache, Basis-URL `https://api.businesscentral.dynamics.com/v2.0/{tenant}/{env}/api/v2.0`
+- `Services/BusinessCentralService.cs` — `TestConnectionAsync()` (Unternehmen-Liste `GET companies`), `IsConfigured()`
+- Config-Seite: „Test Connection"-Button + Statusanzeige, Validierung
+- Registrierung in `Infrastructure/NopStartup.cs` (`AddHttpClient<BusinessCentralHttpClient>().WithProxy()`)
+- Konstanten in `BusinessCentralDefaults.cs` sind vorbereitet (TokenEndpoint, ApiScope, ApiBaseUrl)
+
+## 5. Offene Entscheidungen (aus den Konzept-Dokus)
+
+1. **Orchestrator-Modell:** Option A (nop-Plugin ruft BC-APIs, empfohlen, kein AL) vs. Option B (BC-AL-Extension ruft nop-REST-API) — siehe `docs/bc-connector-feature-parity.md` §2
+2. **Master-Data:** BC = Master (Katalog/Preise/Lager), nop = Auftragsquelle (Paritäts-Default)
+3. **v1-Scope:** P0–P2 (Verbindung + Katalog-Sync) empfohlen; Aufträge/Kunden je nach Priorität
+4. **Auth-Härtung:** Client-Secret vs. Zertifikat
+5. **Multi-Store / Multi-Company** (v1: ein Store)
+6. **Webhooks vs. Polling** (Phase P8)
+7. Platzhalter-Plugin `Nop.Plugin.Misc.Dynamics365` behalten?
+
+## 6. Referenz-Quellen
+
+- BC Shopify Connector Quellcode (Feature-Vorlage): `/home/boss/bcartifacts-source/onprem/28.4.53241.0/at/Applications/Shopify/app/`
+- Plugin-Muster im Repo: `src/Plugins/Nop.Plugin.Misc.Zettle` (API-Client/Sync/Logging), `Nop.Plugin.Misc.Brevo` (Events/Sync-Task), `Nop.Plugin.Misc.Dynamics365` (Stub)

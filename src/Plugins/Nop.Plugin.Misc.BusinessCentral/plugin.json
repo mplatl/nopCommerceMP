@@ -1,0 +1,11 @@
+{
+  "Group": "Misc",
+  "FriendlyName": "Business Central",
+  "SystemName": "Misc.BusinessCentral",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.90" ],
+  "Author": "nopCommerceMP",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Misc.BusinessCentral.dll",
+  "Description": "This plugin connects the nopCommerce store to Microsoft Dynamics 365 Business Central (ERP). It synchronizes the product catalog, prices, inventory, customers and orders. Functional target: feature parity with the official Business Central Shopify connector (nopCommerce = sales channel, Business Central = master/ERP)."
+}
