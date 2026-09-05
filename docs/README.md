@@ -86,6 +86,40 @@ docs/                                 Konzept-, Paritäts- & State-Doku (dieses 
 
 ## 4. Installation — nopCommerce-Plugin
 
+### Plugin-Steckbrief (`Nop.Plugin.Misc.BusinessCentral`)
+
+| Eigenschaft | Wert |
+|---|---|
+| Plugin-Name (Admin) | „Business Central“ |
+| SystemName | `Misc.BusinessCentral` |
+| Gruppe / DisplayOrder | `Misc` / 1 |
+| Version | 1.00 (unterstützt nopCommerce 4.90) |
+| Author | nopCommerceMP |
+| Konfigurationsseite | `/Admin/BusinessCentral/Configure` (Menü: Configuration → Local plugins) |
+
+Das Plugin verbindet den Shop mit Business Central in **zwei Richtungen**:
+
+- **Inbound (für die BC-App):** REST-Endpoints `/api/bc/health|products|orders|customers` mit Auth per `X-Api-Key`-Header — das ist die API, die die Business-Central-AL-App „nopCommerce Connector“ aufruft.
+- **Outbound (P1):** eigener Zugriff auf die BC-API v2.0 per OAuth 2.0 client-credentials (Entra-ID) — z. B. für „Test Connection“/Unternehmensliste.
+
+API-Key und Client-Secret werden **verschlüsselt** in der DB gespeichert; ein leeres Feld behält den vorhandenen Wert.
+
+### Einstellungen (Config-Seite)
+
+| Feld | Bedeutung |
+|---|---|
+| Enabled | Verbindung aktiv (Default nach Installation: **aus** — erst nach erfolgreicher Konfiguration aktivieren) |
+| UseSandbox | Sandbox- statt Produktions-Umgebung (Default: **an**) |
+| TenantId | Microsoft-Entra-ID-Tenant (GUID) der BC-Umgebung |
+| EnvironmentName | Name der BC-Umgebung (z. B. `sandbox`, `sandbox29`) |
+| ClientId | Anwendungs-ID (client ID) der Entra-ID-App |
+| ClientSecret | Client-Secret der App (OAuth client-credentials) |
+| ApiKey | **API-Key für die BC-App** (Header `X-Api-Key`) — gleichen Key in der BC-Shop-Karte eintragen |
+| CompanyName | BC-Company, mit der synchronisiert wird |
+| LogSyncMessages | Sync-/Fehler-Logging (Default: **an**) |
+| RequestTimeout | Request-Timeout in Sekunden (Default: 30) |
+| Test Connection | prüft OAuth-Verbindung und listet die verfügbaren BC-Company-Namen |
+
 ```bash
 cd ~/Dokumente/git_private/nopCommerceMP
 docker compose up -d --build                # Shop + DB starten
