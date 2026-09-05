@@ -49,12 +49,14 @@ report 62150 "Add Store Products"
                     field(ShopCode; ShopCode)
                     {
                         Caption = 'Shop Code';
+                        ApplicationArea = All;
                         TableRelation = "Nop Commerce Shop".Code;
                         ToolTip = 'The shop (store) the found items are added to.';
                     }
                     field(DefaultStatus; DefaultStatus)
                     {
                         Caption = 'Status';
+                        ApplicationArea = All;
                         ToolTip = 'The status that is set on the added store products. Set to Active to transfer them to nopCommerce.';
                     }
                 }
@@ -65,11 +67,13 @@ report 62150 "Add Store Products"
                     field(AttributeName; AttributeName)
                     {
                         Caption = 'Attribute';
+                        ApplicationArea = All;
                         ToolTip = 'The name of the item attribute, e.g. "Color".';
                     }
                     field(AttributeValue; AttributeValue)
                     {
                         Caption = 'Attribute Value';
+                        ApplicationArea = All;
                         ToolTip = 'Only items having this attribute value are added. Leave empty to add all items of the attribute.';
                     }
                 }
