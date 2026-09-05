@@ -2,7 +2,7 @@
   "Group": "Misc",
   "FriendlyName": "Business Central",
   "SystemName": "Misc.BusinessCentral",
-  "Version": "1.00",
+  "Version": "1.01",
   "SupportedVersions": [ "4.90" ],
   "Author": "nopCommerceMP",
   "DisplayOrder": 1,

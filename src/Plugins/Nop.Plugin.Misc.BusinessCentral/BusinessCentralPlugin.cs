@@ -1,7 +1,9 @@
+using Nop.Core.Domain.ScheduleTasks;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
+using Nop.Services.ScheduleTasks;
 using Nop.Web.Framework.Mvc.Routing;
 
 namespace Nop.Plugin.Misc.BusinessCentral;
@@ -15,6 +17,7 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
 
     protected readonly ILocalizationService _localizationService;
     protected readonly INopUrlHelper _nopUrlHelper;
+    protected readonly IScheduleTaskService _scheduleTaskService;
     protected readonly ISettingService _settingService;
 
     #endregion
@@ -23,10 +26,12 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
 
     public BusinessCentralPlugin(ILocalizationService localizationService,
         INopUrlHelper nopUrlHelper,
+        IScheduleTaskService scheduleTaskService,
         ISettingService settingService)
     {
         _localizationService = localizationService;
         _nopUrlHelper = nopUrlHelper;
+        _scheduleTaskService = scheduleTaskService;
         _settingService = settingService;
     }
 
@@ -56,6 +61,19 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
             LogSyncMessages = true,
             RequestTimeout = BusinessCentralDefaults.RequestTimeout
         });
+
+        //register the synchronization task (regular catalog transfer from Business Central)
+        if (await _scheduleTaskService.GetTaskByTypeAsync(BusinessCentralDefaults.SynchronizationTask) == null)
+        {
+            await _scheduleTaskService.InsertTaskAsync(new ScheduleTask
+            {
+                Name = BusinessCentralDefaults.SynchronizationTaskName,
+                Type = BusinessCentralDefaults.SynchronizationTask,
+                Seconds = BusinessCentralDefaults.DefaultSynchronizationPeriodSeconds,
+                Enabled = true,
+                LastEnabledUtc = DateTime.UtcNow
+            });
+        }
 
         //locales
         await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
@@ -99,6 +117,11 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
     /// <returns>A task that represents the asynchronous operation</returns>
     public override async Task UninstallAsync()
     {
+        //delete the synchronization task
+        var syncTask = await _scheduleTaskService.GetTaskByTypeAsync(BusinessCentralDefaults.SynchronizationTask);
+        if (syncTask != null)
+            await _scheduleTaskService.DeleteTaskAsync(syncTask);
+
         //delete settings
         await _settingService.DeleteSettingAsync<BusinessCentralSettings>();
 

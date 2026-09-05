@@ -19,9 +19,11 @@ public class NopStartup : INopStartup
     /// <param name="configuration">Configuration of the application</param>
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        //register the HTTP client (with the system proxy support) and the service used to connect to Business Central
+        //register the HTTP client (with the system proxy support), the Business Central service
+        //and the schedule task that transfers the catalog from Business Central
         services.AddHttpClient<BusinessCentralHttpClient>().WithProxy();
         services.AddScoped<BusinessCentralService>();
+        services.AddScoped<BusinessCentralSyncTask>();
     }
 
     /// <summary>

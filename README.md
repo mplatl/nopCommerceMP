@@ -98,7 +98,7 @@ docs/                                 Konzept-, Paritäts- & State-Doku (dieses 
 | Plugin-Name (Admin) | „Business Central“ |
 | SystemName | `Misc.BusinessCentral` |
 | Gruppe / DisplayOrder | `Misc` / 1 |
-| Version | 1.00 (unterstützt nopCommerce 4.90) |
+| Version | 1.01 (unterstützt nopCommerce 4.90) |
 | Author | nopCommerceMP |
 | Konfigurationsseite | `/Admin/BusinessCentral/Configure` (Menü: Configuration → Local plugins) |
 
@@ -227,7 +227,8 @@ Anschließend App unter „Extension Management" prüfen.
 |---|---|
 | ✅ Iteration A | AL-App-Grundgerüst: Shop-Tabelle, Produkt-Auswahl/-Status, Setup-/Produkt-Seiten, Übersetzungen; kompiliert gegen Platform 28.0; läuft im lokalen Container; in Cloud-Sandbox installiert |
 | ✅ nop-Plugin | P1-Verbindung BC-API (OAuth) live verifiziert; Inbound-REST-Endpoints health/products/orders/customers implementiert |
-| 🔜 Iteration B | AL-seitig: echte HTTP-Aufrufe — `TestConnection` gegen `/api/bc/health`, Produkt-Push (`POST products`, Status-Flow), dann Order-/Customer-Import mit Mapping; danach Job Queue, Sync-Log, Versions-Bumps |
+| ✅ Sync-Engine (Katalog) | `BusinessCentralService.GetItemsAsync`/`SyncCatalogAsync` + `BusinessCentralSyncTask` implementiert: zieht Items der konfigurierten BC-Company (paged) und legt/aktualisiert nop-Produkte per SKU (idempotent); Task alle 15 Min registriert bei Plugin-Install, „Run now“ möglich |
+| 🔜 Als Nächstes | Preise/Lager-Felder gegen echtes `$metadata` verifizieren; Kunden-/Auftrags-Export nop → BC (BC-API); „Jetzt synchronisieren“-Button auf der Config-Seite; inkrementeller `lastModifiedDateTime`-Marker; BC-App-Iteration B bleibt optional |
 
 **AL-Regeln (Lessons — nie wieder verletzen!):**
 1. Neue GUID je App in `app.json` — nie kopieren.
@@ -319,15 +320,22 @@ Die exakten Feld-/Entity-Namen der Zielversion liefert `…/api/v2.0/$metadata`.
 
 ### 10.4 Sync-Engine in nopCommerce (Umsetzungsplan)
 
-1. **`BusinessCentralService` erweitern** (OAuth/Token-Handling existiert schon):
-   `GetItemsAsync(since)` (BC → nop), später `GetCustomersAsync`, `CreateSalesOrderAsync` (nop → BC).
-2. **BC Item → nop Product:** `number` → `Sku` (idempotentes Anlegen/Update per SKU), Name → `Name`,
-   Preise/Lager je nach verfügbaren Feldern der API (`$metadata` prüfen). Mapping-Details: `docs/bc-connector-feature-parity.md` §3–§4.
-3. **Sync-Task:** `Services/BusinessCentralSyncTask` (Name/Type/Period stehen bereits in
-   `BusinessCentralDefaults.SynchronizationTask`, 900 s) — bei Plugin-Install über `IScheduleTaskService`
-   registrieren, zusätzlich „Jetzt synchronisieren“-Button auf der Config-Seite.
-4. **Inkrementell:** Merker auf `lastModifiedDateTime` des letzten Laufs; Fehler über `LogSyncMessages` loggen.
-5. **Reihenfolge:** zuerst Katalog BC → nop (P2), dann Bestand/Preise (P3), dann Kunden/Aufträge nop → BC (P4/P5).
+**Stand: Katalog-Sync (P2, Teil 1) ist implementiert** — OAuth/Token-Handling existierte schon.
+
+1. ✅ **`BusinessCentralService` erweitert:** `GetItemsAsync` (paged Vollabzug der Company-Items) und
+   `SyncCatalogAsync` (legt/aktualisiert nop-Produkte).
+2. ✅ **BC Item → nop Product:** `number` → `Sku` (idempotentes Anlegen/Update per SKU), Name → `Name`,
+   `blocked` → `Published`, optional `gtin`/`unitPrice`/`inventory` nur wenn die API sie liefert
+   (Feldumfang je Umgebung über `$metadata` prüfen). Mapping-Details: `docs/bc-connector-feature-parity.md` §3–§4.
+3. ✅ **Sync-Task:** `Services/BusinessCentralSyncTask` registriert bei Plugin-Install
+   (`IScheduleTaskService`, Name/Type in `BusinessCentralDefaults`, Intervall 900 s — änderbar in
+   **System → Schedule tasks**, dort auch „Run now“). Manuell: `curl -X POST "http://localhost/scheduletask/runtask?taskType=Nop.Plugin.Misc.BusinessCentral.Services.BusinessCentralSyncTask"`
+4. ⚠️ **Bereits installierte Umgebungen:** Die Task-Zeile wird erst beim (Re-)Install des Plugins angelegt
+   (Uninstall löscht auch die Einstellungen → Creds/API-Key danach neu eintragen). Alternativ Zeile manuell
+   in der DB `ScheduleTask` anlegen (Name, 900, Type s. o., Enabled=1).
+5. 🔜 **Inkrementell:** Merker auf `lastModifiedDateTime` statt Vollabzug (bei großen Katalogen);
+   Fehlerlauf-Logging via `LogSyncMessages`.
+6. **Reihenfolge weiter:** Bestand/Preise gegen echtes `$metadata` verifizieren (P3), dann Kunden/Aufträge nop → BC (P4/P5).
 
 ### 10.5 Erste Ende-zu-Ende-Verifikation
 
