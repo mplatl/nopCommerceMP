@@ -4,9 +4,9 @@ using Microsoft.Inventory.Item;
 using Microsoft.Inventory.Item.Attribute;
 
 /// <summary>
-/// Item search page that shows the items matching a saved filter (or the current manual filters)
-/// and adds them as store products of a shop. Open it from a shop ("Search &amp; Add Items") or
-/// from a saved filter ("Search Items") - the target shop and the default status are then preset.
+/// Item search page: shows the items that match a saved filter (item fields + attribute filter)
+/// or the current manual filters, and adds them as store products of a shop.
+/// The attribute filter uses the standard item attribute search (page "Filter Items by Attribute").
 /// </summary>
 page 62107 "Nop Item Search"
 {
@@ -54,6 +54,16 @@ page 62107 "Nop Item Search"
     {
         area(Processing)
         {
+            action(AttributeSearch)
+            {
+                ApplicationArea = All;
+                Caption = 'Filter by Attributes';
+                ToolTip = 'Search the items with the standard item attribute search.';
+                trigger OnAction()
+                begin
+                    SearchByAttributes();
+                end;
+            }
             action(AddToStoreProducts)
             {
                 ApplicationArea = All;
@@ -96,107 +106,94 @@ page 62107 "Nop Item Search"
     end;
 
     local procedure ApplySavedFilter(Filter: Record "Nop Product Filter")
+    var
+        NopStoreProducts: Codeunit "Nop Store Products";
+        AttributeNumbers: Text;
     begin
         Rec.FilterGroup(0);
 
-        if Filter."Item No. Filter" <> '' then
-            Rec.SetFilter("No.", Filter."Item No. Filter");
+        //attribute filter: only the items matching the standard attribute logic are shown
+        AttributeNumbers := NopStoreProducts.GetAttributeItemNumbers(Filter."Attribute Filter");
+        if AttributeNumbers <> '' then
+            Rec.SetFilter("No.", AttributeNumbers)
+        else begin
+            if Filter."Item No. Filter" <> '' then
+                Rec.SetFilter("No.", Filter."Item No. Filter");
+        end;
+
         if Filter."Description Filter" <> '' then
             Rec.SetFilter(Description, Filter."Description Filter");
         if Filter."Item Category Filter" <> '' then
             Rec.SetFilter("Item Category Code", Filter."Item Category Filter");
-
-        //optional attribute filter - replaces the item number filter with the matching item numbers
-        if Filter."Attribute Name" <> '' then begin
-            AttributeNumbers := BuildAttributeItemNumbers(Filter."Attribute Name", Filter."Attribute Value");
-            if AttributeNumbers <> '' then
-                Rec.SetFilter("No.", AttributeNumbers);
-        end;
     end;
 
-    local procedure BuildAttributeItemNumbers(AttributeName: Text; AttributeValue: Text): Text
+    local procedure SearchByAttributes()
     var
-        ItemAttribute: Record "Item Attribute";
-        ItemAttributeValue: Record "Item Attribute Value";
-        ItemAttributeValueMapping: Record "Item Attribute Value Mapping";
-        ItemNumbers: Text;
-    begin
-        if AttributeName = '' then
-            exit('');
-
-        ItemAttribute.SetRange(Name, AttributeName);
-        if not ItemAttribute.FindFirst() then
-            exit('');
-
-        ItemAttributeValueMapping.SetRange("Table ID", DATABASE::Item);
-        ItemAttributeValueMapping.SetRange("Item Attribute ID", ItemAttribute.ID);
-
-        if AttributeValue <> '' then begin
-            ItemAttributeValue.SetRange("Attribute ID", ItemAttribute.ID);
-            ItemAttributeValue.SetFilter(Value, '%1', AttributeValue);
-            if not ItemAttributeValue.FindFirst() then
-                exit('');
-            ItemAttributeValueMapping.SetRange("Item Attribute Value ID", ItemAttributeValue.ID);
-        end;
-
-        if ItemAttributeValueMapping.FindSet() then
-            repeat
-                if ItemAttributeValueMapping."No." <> '' then begin
-                    if StrLen(ItemNumbers) + StrLen(ItemAttributeValueMapping."No.") + 1 > 2000 then
-                        exit(ItemNumbers);
-                    if ItemNumbers = '' then
-                        ItemNumbers := ItemAttributeValueMapping."No."
-                    else
-                        ItemNumbers := ItemNumbers + '|' + ItemAttributeValueMapping."No.";
-                end;
-            until ItemAttributeValueMapping.Next() = 0;
-
-        exit(ItemNumbers);
-    end;
-
-    local procedure AddFilteredItemsToStoreProducts()
-    var
-        NopShop: Record "Nop Commerce Shop";
-        NopProduct: Record "Nop Product";
-        Added: Integer;
-        AlreadyExists: Integer;
+        NopStoreProducts: Codeunit "Nop Store Products";
+        TempFilter: Record "Filter Item Attributes Buffer" temporary;
+        CriteriaText: Text[250];
+        AttributeNumbers: Text;
+        NopFilteredItems: Page "Nop Filtered Items";
     begin
         if ShopCode = '' then
             Error(ShopNotSetErr);
 
-        if not NopShop.Get(ShopCode) then
+        //run the standard attribute search dialog
+        if not NopStoreProducts.RunAttributeSearchDialog(TempFilter) then
+            exit;
+
+        CriteriaText := NopStoreProducts.GetCriteriaText(TempFilter);
+        AttributeNumbers := NopStoreProducts.GetAttributeItemNumbers(CriteriaText);
+        if AttributeNumbers = '' then begin
+            Message(NoItemsFoundMsg);
+            exit;
+        end;
+
+        //show the matching items in the result page and add them there
+        NopFilteredItems.SetItemNumbers(AttributeNumbers);
+        NopFilteredItems.SetShopCode(ShopCode);
+        NopFilteredItems.SetDefaultStatus(DefaultStatus);
+        NopFilteredItems.Run();
+    end;
+
+    local procedure AddFilteredItemsToStoreProducts()
+    var
+        NopStoreProducts: Codeunit "Nop Store Products";
+        Added: Boolean;
+        AlreadyExists: Boolean;
+        AddedCount: Integer;
+        ExistingCount: Integer;
+    begin
+        if ShopCode = '' then
+            Error(ShopNotSetErr);
+
+        if not NopStoreProducts.ShopExists(ShopCode) then
             Error(ShopNotFoundErr, ShopCode);
 
-        Added := 0;
-        AlreadyExists := 0;
+        AddedCount := 0;
+        ExistingCount := 0;
 
         if Rec.FindSet() then
             repeat
                 if Rec."No." <> '' then begin
-                    NopProduct.SetRange("Shop Code", ShopCode);
-                    if NopProduct.Get(ShopCode, Rec."No.") then
-                        AlreadyExists += 1
-                    else begin
-                        NopProduct."Shop Code" := ShopCode;
-                        NopProduct."Item No." := Rec."No.";
-                        NopProduct.Description := Rec.Description;
-                        NopProduct.Status := DefaultStatus;
-                        NopProduct.Insert();
-                        Added += 1;
-                    end;
+                    NopStoreProducts.AddItem(ShopCode, Rec."No.", Rec.Description, DefaultStatus, Added, AlreadyExists);
+                    if Added then
+                        AddedCount += 1;
+                    if AlreadyExists then
+                        ExistingCount += 1;
                 end;
             until Rec.Next() = 0;
 
-        Message(SummaryMsg, ShopCode, Added, AlreadyExists);
+        Message(SummaryMsg, ShopCode, AddedCount, ExistingCount);
     end;
 
     var
         ShopCode: Code[10];
         FilterCode: Code[10];
         DefaultStatus: enum "Nop Product Status";
-        AttributeNumbers: Text;
         Filter: Record "Nop Product Filter";
         ShopNotSetErr: Label 'Open this item search from a shop ("Search & Add Items") or from a saved filter first, so that the target shop is known.';
         ShopNotFoundErr: Label 'Shop "%1" does not exist.';
+        NoItemsFoundMsg: Label 'No items match the selected attributes.';
         SummaryMsg: Label 'Items added to shop %1: %2 added, %3 already existing.';
 }

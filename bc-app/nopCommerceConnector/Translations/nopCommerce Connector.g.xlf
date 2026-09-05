@@ -128,25 +128,15 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 1986787142 - Field 2006108605 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Optional: only items that have this item attribute are added.</source>
+        <trans-unit id="Table 1986787142 - Field 287107392 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item attribute search criteria in the format Attribute=Value, entries separated by "|". Set by the standard attribute search.</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Name - Property ToolTip</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Filter - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Table 1986787142 - Field 2006108605 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Attribute</source>
+        <trans-unit id="Table 1986787142 - Field 287107392 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Attribute Filter</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Name - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1986787142 - Field 2887840001 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Optional: only items that have this attribute value are added.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Value - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Table 1986787142 - Field 2887840001 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Attribute Value</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Value - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Attribute Filter - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 1986787142 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Code</source>
@@ -513,10 +503,70 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops Part - Control Sync Products - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 2814878554 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filtered Items (Attributes)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - NamedType 1100090462" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop "%1" does not exist.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - NamedType ShopNotFoundErr</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - NamedType 3486016826" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Open this attribute search from a shop ("Search &amp; Add Items") or from a saved filter first, so that the target shop is known.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - NamedType ShopNotSetErr</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - NamedType 1453957919" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Items added to shop %1: %2 added, %3 already existing.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - NamedType SummaryMsg</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Control Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Control 2105307182 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Inventory</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Control Inventory - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Control 1037119892 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item Category Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Control Item Category Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Control 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Control No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Control 2937233469 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unit Price</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Control Unit Price - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Action 2262743967 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Add all listed items to the store products of the target shop.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Action AddToStoreProducts - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2814878554 - Action 2262743967 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Add to Store Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Filtered Items - Action AddToStoreProducts - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 1504386286 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Item Search</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Item Search - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1504386286 - NamedType 994701412" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No items match the selected attributes.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Item Search - NamedType NoItemsFoundMsg</note>
         </trans-unit>
         <trans-unit id="Page 1504386286 - NamedType 1100090462" size-unit="char" translate="yes" xml:space="preserve">
           <source>Shop "%1" does not exist.</source>
@@ -573,6 +623,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Item Search - Action AddToStoreProducts - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 1504386286 - Action 3808277670 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Search the items with the standard item attribute search.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Item Search - Action AttributeSearch - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1504386286 - Action 3808277670 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filter by Attributes</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Item Search - Action AttributeSearch - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 1986787142 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Product Filter</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -583,15 +643,10 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Control AttributeFilter - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 1986787142 - Control 2006108605 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Attribute</source>
+        <trans-unit id="Page 1986787142 - Control 287107392 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Attribute Filter</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Control Attribute Name - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 1986787142 - Control 2887840001 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Attribute Value</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Control Attribute Value - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Control Attribute Filter - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1986787142 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>General</source>
@@ -642,6 +697,16 @@
           <source>Shop Code</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Control Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1986787142 - Action 3808277670 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Search the items by attributes with the standard attribute search. The criteria are stored in this filter.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Action AttributeSearch - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1986787142 - Action 3808277670 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Attribute Search</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Product Filter - Action AttributeSearch - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1986787142 - Action 1813573108 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Search the items matching this filter and add them to the store products.</source>

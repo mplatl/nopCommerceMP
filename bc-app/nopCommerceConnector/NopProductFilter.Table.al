@@ -39,17 +39,11 @@ table 62104 "Nop Product Filter"
             DataClassification = CustomerContent;
             //the status that is set when the found items are added to the store products
         }
-        field(5; "Attribute Name"; Text[250])
+        field(5; "Attribute Filter"; Text[250])
         {
-            Caption = 'Attribute';
+            Caption = 'Attribute Filter';
             DataClassification = CustomerContent;
-            ToolTip = 'Optional: only items that have this item attribute are added.';
-        }
-        field(6; "Attribute Value"; Text[250])
-        {
-            Caption = 'Attribute Value';
-            DataClassification = CustomerContent;
-            ToolTip = 'Optional: only items that have this attribute value are added.';
+            ToolTip = 'Item attribute search criteria in the format Attribute=Value, entries separated by "|". Set by the standard attribute search.';
         }
         field(7; "Item No. Filter"; Text[250])
         {
