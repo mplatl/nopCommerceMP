@@ -235,6 +235,7 @@ Anschließend App unter „Extension Management" prüfen.
 2. Objekt-ID-Range **62100–62300** (nicht 50000er — Kollision mit GLAccount Workflow 50100–50109).
 3. `ApplicationArea = All;` auf Seitenebene; Cops (CodeCop/PerTenantExtensionCop/UICop) aktiviert.
 4. Erst lokal publizieren/validieren (Container), dann Cloud; Automation-Upload nicht mit Wiederholungen verkleben.
+5. **PTE0004 (Cloud-Validierung):** Jede Tabelle der App braucht ein passendes **Permission Set** im App-Code (`NopCommerceConnector.PermissionSet.al`, „Nop Commerce Access“) — sonst schlägt das Deployment in der Sandbox mit „Table … is missing a matching permission set“ fehl (lokal im Container nicht sichtbar!).
 
 Ausführlicher Stand: `docs/DEVELOPMENT-STATE.md` · Roadmap/Parität: `docs/bc-connector-feature-parity.md` · Konzept: `docs/business-central-plugin-concept.md`
 
