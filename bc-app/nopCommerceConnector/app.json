@@ -2,7 +2,7 @@
   "id": "c4f5b3a2-19b7-4a6e-8f2d-4d9a1c7e6b50",
   "name": "nopCommerce Connector",
   "publisher": "nopCommerceMP",
-  "version": "1.0.6.0",
+  "version": "1.0.7.0",
   "brief": "Bidirectional integration between nopCommerce and Dynamics 365 Business Central (catalog selection & export, order and customer import).",
   "description": "Connects nopCommerce store(s) to Business Central, modeled after the Microsoft Shopify Connector. Business Central acts as the master/orchestrator: only explicitly selected items (per shop, via filters or individually) are pushed to nopCommerce. Orders and customers are imported from nopCommerce into Business Central and mapped.",
   "privacyStatement": "",

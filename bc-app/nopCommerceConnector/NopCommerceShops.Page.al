@@ -64,6 +64,20 @@ page 62102 "Nop Commerce Shops"
                     NopCommerceProducts.Run();
                 end;
             }
+            action(AddStoreProducts)
+            {
+                ApplicationArea = All;
+                Caption = 'Add Store Products';
+                ToolTip = 'Add items to the selected shop via item and attribute filters.';
+                Visible = Rec.Code <> '';
+                trigger OnAction()
+                var
+                    AddStoreProductsReport: Report "Add Store Products";
+                begin
+                    AddStoreProductsReport.SetShopCode(Rec.Code);
+                    AddStoreProductsReport.Run();
+                end;
+            }
             action(OpenCard)
             {
                 ApplicationArea = All;

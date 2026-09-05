@@ -18,7 +18,6 @@ page 62140 "nopCommerce Admin"
             {
                 ApplicationArea = All;
                 Caption = 'nopCommerce Shops';
-                ToolTip = 'View and manage the nopCommerce shops (stores) that are connected to Business Central.';
             }
         }
     }

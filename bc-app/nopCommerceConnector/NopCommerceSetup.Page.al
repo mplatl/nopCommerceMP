@@ -112,6 +112,19 @@ page 62100 "Nop Commerce Setup"
                     NopCommerceProducts.Run();
                 end;
             }
+            action(AddItems)
+            {
+                Caption = 'Add Store Products';
+                ToolTip = 'Add items to this shop via item and attribute filters.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    AddStoreProducts: Report "Add Store Products";
+                begin
+                    AddStoreProducts.SetShopCode(Rec.Code);
+                    AddStoreProducts.Run();
+                end;
+            }
             action(TestConnection)
             {
                 Caption = 'Test Connection';
