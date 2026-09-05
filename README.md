@@ -41,6 +41,11 @@ Der Connector ist am offiziellen **Microsoft Shopify Connector** modelliert
 - **Auth:** Plugin-Endpoints prüfen den Header `X-Api-Key` gegen den konfigurierten
   (verschlüsselten) API-Key. Richtung nop → BC läuft über OAuth-Client-Credentials.
 
+> **⚠️ Betriebsentscheidung (lokal):** nopCommerce läuft nur im lokalen Docker-Container und ist für
+> Business Central (Cloud) **nicht erreichbar**. Deshalb ist **nopCommerce der aktive Part** und holt/pusht
+> die Daten direkt über die BC-API v2.0 (OAuth client-credentials, P1 verifiziert). Die AL-App-Richtung
+> (BC ruft nop-Endpoints) ist vorerst zurückgestellt. Schritt-für-Schritt: **§10**.
+
 > Detaillierte Konzepte: `docs/business-central-plugin-concept.md`,
 > Feature-Parität & Mapping: `docs/bc-connector-feature-parity.md`.
 
@@ -251,3 +256,82 @@ python3 dev/docker-bootstrap.py       # Login + Plugin + Config-Seite verifizier
 # BC-Container (falls benötigt):
 cd ~/Dokumente/MsDyn365Bc.On.Linux && BC_VERSION=28.1 docker compose up -d --wait
 ```
+
+---
+
+## 10. Anleitung: Daten über nopCommerce mit Business Central austauschen
+
+> Warum diese Richtung? Der Shop (nopCommerce) läuft lokal im Docker-Container
+> (`http://localhost`) — Business Central (Cloud-Sandbox) kann dort **nicht** hineingreifen.
+> Umgekehrt hat nopCommerce Internetzugang und kann die **öffentlich erreichbare BC-API v2.0**
+> aufrufen (OAuth 2.0 client-credentials). **nopCommerce zieht also die Daten** aus BC bzw.
+> schreibt nop-Daten (Aufträge/Kunden) aktiv nach BC. Die BC-AL-App bleibt nur dann relevant,
+> wenn der Shop später öffentlich erreichbar ist (Option B).
+
+### Datenrichtung & Master
+
+| Daten | Woher (Master) | Weg | Umsetzung |
+|---|---|---|---|
+| Katalog/Preise/Lager | **BC** | nop **zieht** → legt/aktualisiert nop-Produkte | §10.5 (P2) |
+| Aufträge | **nop** | nop **schreibt** → erzeugt BC-Sales Orders | später (P5) |
+| Kunden | **nop** | nop **schreibt** → erzeugt/aktualisiert BC-Kunden | später (P4) |
+| Bestand/Status | BC | nop **zieht** → aktualisiert nop-Stock | später (P3) |
+
+### 10.1 Einmalig: BC-Daten-API freischalten
+
+1. Im Entra-ID-Tenant eine **App-Registrierung** mit Client-Secret anlegen (bzw. die bestehende P1-App nutzen).
+2. **API-Berechtigung:** Dynamics 365 Business Central → **Anwendungsberechtigung `API.ReadWrite.All`** → „Admin-Zustimmung erteilen“.
+   ⚠️ Die App von `dev/upload-bc-app.sh` hat nur `Automation.ReadWrite.All` (App-Deployment) — **reicht für die Daten-API nicht**.
+3. Notieren: **Tenant-ID**, **Environment-Name** (z. B. `sandbox29`), **Client-ID**, **Client-Secret**, **Company-Name**
+   (z. B. „CRONUS International Ltd.“ — exakter Name aus der Companies-Liste, Schritt 10.3).
+
+### 10.2 nop-Plugin konfigurieren & „Test Connection“
+
+Im Admin (`/Admin/BusinessCentral/Configure`) eintragen: `UseSandbox = an`, `TenantId`, `EnvironmentName`,
+`ClientId`, `ClientSecret`, `CompanyName`, dann **Test Connection** → zeigt die verfügbaren Companies.
+Automatisiert (End-to-End-Test aus dem Container):
+
+```bash
+BC_TEST_TENANT_ID=… BC_TEST_ENV=sandbox29 BC_TEST_CLIENT_ID=… BC_TEST_CLIENT_SECRET=… \
+BC_TEST_COMPANY=… python3 dev/test-bc-connection.py
+```
+
+### 10.3 Zugriff aus nop/Container verifizieren (curl)
+
+```bash
+# OAuth-Token holen
+TOKEN=$(curl -s -X POST "https://login.microsoftonline.com/$BC_TENANT_ID/oauth2/v2.0/token" \
+  -d "client_id=$BC_CLIENT_ID" -d "client_secret=$BC_CLIENT_SECRET" \
+  -d "scope=https://api.businesscentral.dynamics.com/.default" -d "grant_type=client_credentials" \
+  | python3 -c "import sys,json;print(json.load(sys.stdin)['access_token'])")
+
+# 1) Unternehmen (Company-ID für Schritt 2 merken)
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://api.businesscentral.dynamics.com/v2.0/$BC_TENANT_ID/$BC_ENV/api/v2.0/companies" | python3 -m json.tool
+
+# 2) Erste Artikel (Katalog aus BC — Mapping-Schlüssel: number → SKU)
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://api.businesscentral.dynamics.com/v2.0/$BC_TENANT_ID/$BC_ENV/api/v2.0/companies($COMPANY_ID)/items?\$top=5" | python3 -m json.tool
+```
+
+Läuft das aus dem Container: `docker exec nopcommerce curl …` (Internet ist vorhanden).
+Die exakten Feld-/Entity-Namen der Zielversion liefert `…/api/v2.0/$metadata`.
+
+### 10.4 Sync-Engine in nopCommerce (Umsetzungsplan)
+
+1. **`BusinessCentralService` erweitern** (OAuth/Token-Handling existiert schon):
+   `GetItemsAsync(since)` (BC → nop), später `GetCustomersAsync`, `CreateSalesOrderAsync` (nop → BC).
+2. **BC Item → nop Product:** `number` → `Sku` (idempotentes Anlegen/Update per SKU), Name → `Name`,
+   Preise/Lager je nach verfügbaren Feldern der API (`$metadata` prüfen). Mapping-Details: `docs/bc-connector-feature-parity.md` §3–§4.
+3. **Sync-Task:** `Services/BusinessCentralSyncTask` (Name/Type/Period stehen bereits in
+   `BusinessCentralDefaults.SynchronizationTask`, 900 s) — bei Plugin-Install über `IScheduleTaskService`
+   registrieren, zusätzlich „Jetzt synchronisieren“-Button auf der Config-Seite.
+4. **Inkrementell:** Merker auf `lastModifiedDateTime` des letzten Laufs; Fehler über `LogSyncMessages` loggen.
+5. **Reihenfolge:** zuerst Katalog BC → nop (P2), dann Bestand/Preise (P3), dann Kunden/Aufträge nop → BC (P4/P5).
+
+### 10.5 Erste Ende-zu-Ende-Verifikation
+
+1. BC-Sandbox hat Demo-Artikel (CRONUS).
+2. Sync ausführen → Produkte erscheinen im nop-Admin (Katalog → Produkte), SKU = BC-Artikelnummer.
+3. Zweiter Lauf → **Updates statt Duplikate** (SKU-Mapping).
+4. Fehlerfälle im nop-Log bzw. Plugin-Log prüfen (`LogSyncMessages`).
