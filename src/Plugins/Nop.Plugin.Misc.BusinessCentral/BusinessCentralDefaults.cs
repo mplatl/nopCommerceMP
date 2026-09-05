@@ -68,6 +68,11 @@ public class BusinessCentralDefaults
     public static string CompaniesItemsPath => "companies({0})/items";
 
     /// <summary>
+    /// Gets the relative path template of the pictures of an item (usage: string.Format(…, companyId, itemId))
+    /// </summary>
+    public static string CompaniesItemsPicturePath => "companies({0})/items({1})/picture";
+
+    /// <summary>
     /// Gets the number of records requested per page from the Business Central API
     /// </summary>
     public static int ApiPageSize => 100;

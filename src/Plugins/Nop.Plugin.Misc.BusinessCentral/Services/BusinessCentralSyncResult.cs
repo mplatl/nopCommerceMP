@@ -16,9 +16,14 @@ public class BusinessCentralSyncResult
     public int Updated { get; set; }
 
     /// <summary>
-    /// Gets or sets the number of items that were already up to date (or skipped)
+    /// Gets or sets the number of products that were skipped (already up to date)
     /// </summary>
     public int Skipped { get; set; }
+
+    /// <summary>
+    /// Gets or sets the number of product pictures downloaded from Business Central and attached
+    /// </summary>
+    public int PicturesAdded { get; set; }
 
     /// <summary>
     /// Gets the errors that occurred while processing single items (key: SKU)

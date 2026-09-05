@@ -161,5 +161,32 @@ public class BusinessCentralHttpClient
         return JsonConvert.DeserializeObject<TResponse>(responseBody);
     }
 
+    /// <summary>
+    /// Downloads the content of a media read link (e.g. an item picture) as binary data
+    /// </summary>
+    /// <param name="settings">Plugin settings (tenant, environment, timeout)</param>
+    /// <param name="accessToken">Valid access token</param>
+    /// <param name="mediaReadLink">Absolute URL of the media content</param>
+    /// <returns>The downloaded bytes and the content type returned by the server</returns>
+    public async Task<(byte[] Bytes, string ContentType)> GetBytesAsync(BusinessCentralSettings settings, string accessToken, string mediaReadLink)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, mediaReadLink);
+        request.Headers.Add(HeaderNames.Authorization, $"Bearer {accessToken}");
+
+        var response = await SendRequestAsync(request, settings);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync();
+            throw new NopException(
+                $"Downloading Business Central media content failed (HTTP {(int)response.StatusCode} {response.ReasonPhrase}): {GetApiErrorMessage(errorBody)}");
+        }
+
+        var bytes = await response.Content.ReadAsByteArrayAsync();
+        var contentType = response.Content.Headers.ContentType?.MediaType;
+
+        return (bytes, contentType ?? MimeTypes.ImageJpeg);
+    }
+
     #endregion
 }

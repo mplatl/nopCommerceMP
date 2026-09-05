@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Logging;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Media;
 using Nop.Plugin.Misc.BusinessCentral.Domain.Api;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
-using Nop.Services.Configuration;
+using Nop.Services.Media;
 using Nop.Services.Security;
 
 namespace Nop.Plugin.Misc.BusinessCentral.Services;
@@ -19,6 +20,7 @@ public class BusinessCentralService
     protected readonly IEncryptionService _encryptionService;
     protected readonly BusinessCentralHttpClient _httpClient;
     protected readonly ILogger<BusinessCentralService> _logger;
+    protected readonly IPictureService _pictureService;
     protected readonly IProductService _productService;
     protected readonly IProductTemplateService _productTemplateService;
 
@@ -29,12 +31,14 @@ public class BusinessCentralService
     public BusinessCentralService(BusinessCentralHttpClient httpClient,
         IEncryptionService encryptionService,
         ILogger<BusinessCentralService> logger,
+        IPictureService pictureService,
         IProductService productService,
         IProductTemplateService productTemplateService)
     {
         _httpClient = httpClient;
         _encryptionService = encryptionService;
         _logger = logger;
+        _pictureService = pictureService;
         _productService = productService;
         _productTemplateService = productTemplateService;
     }
@@ -151,13 +155,21 @@ public class BusinessCentralService
         var accessToken = await GetAccessTokenAsync(settings);
         var company = await ResolveCompanyAsync(settings, accessToken);
 
+        return await GetItemsAsync(settings, accessToken, company.Id);
+    }
+
+    /// <summary>
+    /// Loads all items of the given company from Business Central (paged; full pull per run)
+    /// </summary>
+    protected virtual async Task<IList<Item>> GetItemsAsync(BusinessCentralSettings settings, string accessToken, string companyId)
+    {
         var items = new List<Item>();
         var pageSize = BusinessCentralDefaults.ApiPageSize;
         var skip = 0;
 
         while (true)
         {
-            var path = $"{string.Format(BusinessCentralDefaults.CompaniesItemsPath, company.Id)}?$top={pageSize}&$skip={skip}";
+            var path = $"{string.Format(BusinessCentralDefaults.CompaniesItemsPath, companyId)}?$top={pageSize}&$skip={skip}";
             var page = await _httpClient.GetAsync<ApiCollectionResponse<Item>>(settings, accessToken, path);
 
             if (page?.Value == null || page.Value.Count == 0)
@@ -175,6 +187,54 @@ public class BusinessCentralService
     }
 
     /// <summary>
+    /// Downloads the first picture of the given item (if any) and attaches it to the nopCommerce product
+    /// (the picture is only downloaded when the product does not have a picture yet)
+    /// </summary>
+    protected virtual async Task AttachItemPictureIfMissingAsync(BusinessCentralSettings settings, string accessToken,
+        Company company, Item item, Product product, BusinessCentralSyncResult result)
+    {
+        if (item == null || product == null || string.IsNullOrEmpty(item.Id) || string.IsNullOrEmpty(product.Sku))
+            return;
+
+        //product already has at least one picture → nothing to do
+        var existingPictures = await _productService.GetProductPicturesByProductIdAsync(product.Id);
+        if (existingPictures.Count > 0)
+            return;
+
+        //read the pictures of the item (standard API: companies({id})/items({id})/picture)
+        var path = string.Format(BusinessCentralDefaults.CompaniesItemsPicturePath, company.Id, item.Id);
+        var pictures = await _httpClient.GetAsync<ApiCollectionResponse<Domain.Api.Picture>>(settings, accessToken, path);
+        var picture = pictures?.Value?.FirstOrDefault();
+        var mediaReadLink = picture?.GetMediaReadLink();
+
+        if (string.IsNullOrEmpty(mediaReadLink))
+            return;
+
+        var (bytes, contentType) = await _httpClient.GetBytesAsync(settings, accessToken, mediaReadLink);
+
+        if (bytes == null || bytes.Length == 0)
+            return;
+
+        if (bytes.Length > 8 * 1024 * 1024)
+        {
+            result.Errors.Add($"{product.Sku}: picture exceeds the 8 MB limit ({bytes.Length} bytes) and was skipped.");
+            return;
+        }
+
+        var savedPicture = await _pictureService.InsertPictureAsync(bytes, contentType ?? MimeTypes.ImageJpeg, null,
+            null, null, true, false);
+        await _productService.InsertProductPictureAsync(new ProductPicture
+        {
+            ProductId = product.Id,
+            PictureId = savedPicture.Id,
+            DisplayOrder = 1
+        });
+
+        result.PicturesAdded++;
+        _logger.LogInformation("Business Central picture attached to product \"{Sku}\".", product.Sku);
+    }
+
+    /// <summary>
     /// Synchronizes the Business Central catalog to nopCommerce:
     /// each item is created/updated as a product (mapping key: item number ↔ SKU, idempotent)
     /// </summary>
@@ -185,7 +245,9 @@ public class BusinessCentralService
         if (!IsConfigured(settings))
             throw new NopException("The Business Central connection is not configured. Please complete the plugin configuration first.");
 
-        var items = await GetItemsAsync(settings);
+        var accessToken = await GetAccessTokenAsync(settings);
+        var company = await ResolveCompanyAsync(settings, accessToken);
+        var items = await GetItemsAsync(settings, accessToken, company.Id);
 
         if (items.Count == 0)
         {
@@ -280,6 +342,9 @@ public class BusinessCentralService
                     else
                         result.Skipped++;
                 }
+
+                //attach the item picture (only when the product has none yet)
+                await AttachItemPictureIfMissingAsync(settings, accessToken, company, item, product, result);
             }
             catch (Exception ex)
             {
@@ -288,8 +353,8 @@ public class BusinessCentralService
             }
         }
 
-        _logger.LogInformation("Business Central catalog synchronization finished for company \"{Company}\": {Created} created, {Updated} updated, {Skipped} unchanged, {Errors} errors.",
-            settings.CompanyName, result.Created, result.Updated, result.Skipped, result.Errors.Count);
+        _logger.LogInformation("Business Central catalog synchronization finished for company \"{Company}\": {Created} created, {Updated} updated, {Skipped} unchanged, {Pictures} pictures added, {Errors} errors.",
+            settings.CompanyName, result.Created, result.Updated, result.Skipped, result.PicturesAdded, result.Errors.Count);
 
         return result;
     }
