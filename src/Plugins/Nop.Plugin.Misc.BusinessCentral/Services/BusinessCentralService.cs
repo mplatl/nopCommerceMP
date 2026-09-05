@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Media;
@@ -201,16 +202,29 @@ public class BusinessCentralService
         if (existingPictures.Count > 0)
             return;
 
-        //read the pictures of the item (standard API: companies({id})/items({id})/picture)
+        //read the pictures of the item (standard API: companies({id})/items({id})/picture).
+        //the response is either a single entity (picture exists) or an empty collection {"value":[]}
         var path = string.Format(BusinessCentralDefaults.CompaniesItemsPicturePath, company.Id, item.Id);
-        var pictures = await _httpClient.GetAsync<ApiCollectionResponse<Domain.Api.Picture>>(settings, accessToken, path);
-        var picture = pictures?.Value?.FirstOrDefault();
+        var response = await _httpClient.GetAsync<JObject>(settings, accessToken, path);
+
+        Domain.Api.Picture picture = null;
+        if (response != null)
+        {
+            if (response["value"] is JArray valueArray)
+            {
+                if (valueArray.Count > 0)
+                    picture = valueArray[0].ToObject<Domain.Api.Picture>();
+            }
+            else
+                picture = response.ToObject<Domain.Api.Picture>();
+        }
+
         var mediaReadLink = picture?.GetMediaReadLink();
 
         if (string.IsNullOrEmpty(mediaReadLink))
             return;
 
-        var (bytes, contentType) = await _httpClient.GetBytesAsync(settings, accessToken, mediaReadLink);
+        var (bytes, responseContentType) = await _httpClient.GetBytesAsync(settings, accessToken, mediaReadLink);
 
         if (bytes == null || bytes.Length == 0)
             return;
@@ -221,7 +235,9 @@ public class BusinessCentralService
             return;
         }
 
-        var savedPicture = await _pictureService.InsertPictureAsync(bytes, contentType ?? MimeTypes.ImageJpeg, null,
+        //prefer the content type reported by the picture entity (the download header is usually just application/octet-stream)
+        var mimeType = picture.GetContentType() ?? responseContentType;
+        var savedPicture = await _pictureService.InsertPictureAsync(bytes, mimeType ?? MimeTypes.ImageJpeg, null,
             null, null, true, false);
         await _productService.InsertProductPictureAsync(new ProductPicture
         {
