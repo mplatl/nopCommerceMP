@@ -114,16 +114,23 @@ page 62100 "Nop Commerce Setup"
             }
             action(AddItems)
             {
-                Caption = 'Add Store Products';
-                ToolTip = 'Add items to this shop via item and attribute filters.';
+                Caption = 'Search & Add Items';
+                ToolTip = 'Search items (also by saved filters) and add them to the store products of this shop.';
                 ApplicationArea = All;
                 trigger OnAction()
                 var
-                    AddStoreProducts: Report "Add Store Products";
+                    NopItemSearch: Page "Nop Item Search";
                 begin
-                    AddStoreProducts.SetShopCode(Rec.Code);
-                    AddStoreProducts.Run();
+                    NopItemSearch.SetShopCode(Rec.Code);
+                    NopItemSearch.Run();
                 end;
+            }
+            action(ProductFilters)
+            {
+                Caption = 'Saved Filters';
+                ToolTip = 'Manage the saved search filters (item + attribute filters) that add items to store products.';
+                ApplicationArea = All;
+                RunObject = Page "Nop Product Filters";
             }
             action(TestConnection)
             {
