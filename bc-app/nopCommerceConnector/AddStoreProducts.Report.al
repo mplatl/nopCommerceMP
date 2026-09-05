@@ -69,12 +69,58 @@ report 62150 "Add Store Products"
                         Caption = 'Attribute';
                         ApplicationArea = All;
                         ToolTip = 'The name of the item attribute, e.g. "Color".';
+
+                        trigger OnLookup(var Text: Text): Boolean
+                        var
+                            ItemAttribute: Record "Item Attribute";
+                            ItemAttributes: Page "Item Attributes";
+                        begin
+                            ItemAttributes.LookupMode := true;
+                            ItemAttributes.SetTableView(ItemAttribute);
+                            if ItemAttributes.RunModal() = Action::LookupOK then begin
+                                ItemAttributes.GetRecord(ItemAttribute);
+                                AttributeName := ItemAttribute.Name;
+                                //a different attribute invalidates a previously selected value
+                                AttributeValue := '';
+                            end;
+                            exit(true);
+                        end;
                     }
                     field(AttributeValue; AttributeValue)
                     {
                         Caption = 'Attribute Value';
                         ApplicationArea = All;
                         ToolTip = 'Only items having this attribute value are added. Leave empty to add all items of the attribute.';
+
+                        trigger OnLookup(var Text: Text): Boolean
+                        var
+                            ItemAttribute: Record "Item Attribute";
+                            ItemAttributeValue: Record "Item Attribute Value";
+                            ItemAttributeValues: Page "Item Attribute Values";
+                            AttributeID: Integer;
+                        begin
+                            //resolve the selected attribute first
+                            if AttributeName = '' then begin
+                                Message(SelectAttributeFirstInfo);
+                                exit(true);
+                            end;
+                            ItemAttribute.SetRange(Name, AttributeName);
+                            if not ItemAttribute.FindFirst() then begin
+                                Error(AttributeNotFoundErr, AttributeName);
+                                exit(true);
+                            end;
+                            AttributeID := ItemAttribute.ID;
+
+                            //show only the values of the selected attribute
+                            ItemAttributeValue.SetRange("Attribute ID", AttributeID);
+                            ItemAttributeValues.LookupMode := true;
+                            ItemAttributeValues.SetTableView(ItemAttributeValue);
+                            if ItemAttributeValues.RunModal() = Action::LookupOK then begin
+                                ItemAttributeValues.GetRecord(ItemAttributeValue);
+                                AttributeValue := ItemAttributeValue.Value;
+                            end;
+                            exit(true);
+                        end;
                     }
                 }
             }
@@ -192,6 +238,7 @@ report 62150 "Add Store Products"
         NopProduct: Record "Nop Product";
         ShopNotFoundErr: Label 'Shop "%1" does not exist.', Comment = 'Shown when the shop on the request page does not exist.';
         AttributeNotFoundErr: Label 'Item attribute "%1" was not found.', Comment = 'Shown when the attribute filter does not match any attribute.';
+        SelectAttributeFirstInfo: Label 'Select an attribute first before choosing an attribute value.';
         AttributeValueNotFoundErr: Label 'Attribute value "%1" was not found for attribute "%2".', Comment = 'Shown when the attribute value filter does not match.';
         SummaryMsg: Label 'Store products added to shop %2: %1 added, %3 already existing, %4 items skipped (attribute filter).', Comment = 'Summary shown after the report run.';
 }

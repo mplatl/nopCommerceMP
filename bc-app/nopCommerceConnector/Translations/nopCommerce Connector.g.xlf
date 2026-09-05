@@ -488,6 +488,11 @@
           <note from="Developer" annotates="general" priority="2">Shown when the attribute value filter does not match.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Add Store Products - NamedType AttributeValueNotFoundErr</note>
         </trans-unit>
+        <trans-unit id="Report 653790530 - NamedType 153546668" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Select an attribute first before choosing an attribute value.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Add Store Products - NamedType SelectAttributeFirstInfo</note>
+        </trans-unit>
         <trans-unit id="Report 653790530 - NamedType 1100090462" size-unit="char" translate="yes" xml:space="preserve">
           <source>Shop "%1" does not exist.</source>
           <note from="Developer" annotates="general" priority="2">Shown when the shop on the request page does not exist.</note>
