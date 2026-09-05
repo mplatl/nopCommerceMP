@@ -14,7 +14,7 @@ page 62140 "nopCommerce Admin"
     {
         area(RoleCenter)
         {
-            part(ShopList; "Nop Commerce Shops")
+            part(ShopList; "Nop Commerce Shops Part")
             {
                 ApplicationArea = All;
                 Caption = 'nopCommerce Shops';

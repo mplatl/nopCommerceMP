@@ -45,4 +45,34 @@ page 62102 "Nop Commerce Shops"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(StoreProducts)
+            {
+                ApplicationArea = All;
+                Caption = 'Store Products';
+                ToolTip = 'Open the products of the selected shop (filtered by shop).';
+                Visible = Rec.Code <> '';
+                trigger OnAction()
+                var
+                    NopCommerceProducts: Page "Nop Commerce Products";
+                begin
+                    NopCommerceProducts.SetShopCode(Rec.Code);
+                    NopCommerceProducts.Run();
+                end;
+            }
+            action(OpenCard)
+            {
+                ApplicationArea = All;
+                Caption = 'Card';
+                ToolTip = 'Open the shop card of the selected shop.';
+                Visible = Rec.Code <> '';
+                RunObject = Page "Nop Commerce Setup";
+                RunPageMode = Edit;
+            }
+        }
+    }
 }

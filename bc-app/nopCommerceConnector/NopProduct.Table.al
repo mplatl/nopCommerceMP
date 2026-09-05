@@ -1,5 +1,6 @@
 namespace NopCommerceConnector;
 
+using Microsoft.Inventory.Item;
 
 /// <summary>
 /// Represents an item of a shop that is (candidate to be) exported to nopCommerce.
@@ -25,6 +26,7 @@ table 62101 "Nop Product"
         {
             Caption = 'Item No.';
             DataClassification = CustomerContent;
+            TableRelation = Item."No.";
             NotBlank = true;
         }
         field(3; Description; Text[100])
@@ -64,4 +66,14 @@ table 62101 "Nop Product"
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    var
+        Item: Record Item;
+    begin
+        //copy the item description to the selection row when it was not entered manually
+        if Description = '' then
+            if Item.Get(Item."No.", "Item No.") then
+                Description := Item.Description;
+    end;
 }
