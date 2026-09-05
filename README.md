@@ -1,80 +1,253 @@
-﻿﻿nopCommerce: free and open-source eCommerce solution
-===========
+# nopCommerceMP — nopCommerce ⇄ Business Central Connector
 
-[nopCommerce](https://www.nopcommerce.com/?utm_source=github&utm_medium=content&utm_campaign=homepage) is the best open-source eCommerce platform. nopCommerce is free, and it is the most popular ASP.NET Core shopping cart.
+> Dieses Repo basiert auf **nopCommerce 4.90.7** (net9.0) und enthält den kompletten
+> **Business-Central-Connector** aus zwei Komponenten:
+> 1. **nopCommerce-Plugin** `Nop.Plugin.Misc.BusinessCentral` (läuft im Shop)
+> 2. **Business-Central-AL-App** „nopCommerce Connector" (läuft in BC, Container + Cloud-Sandbox)
 
-![nopCommerce demo](https://www.nopcommerce.com/images/github/responsive_devices_codeplex.png#v1)
+Der Connector ist am offiziellen **Microsoft Shopify Connector** modelliert
+(BC-Quellcode 28.4.53241.0 analysiert, siehe `docs/bc-connector-feature-parity.md`):
+**Business Central = Master/ERP** (Katalog, Preise, Lager), **nopCommerce = Sales-Channel/Auftragsquelle**.
 
-### Key features ###
+---
 
-* The product is being developed and supported by the professional team since 2008.
-* nopCommerce has been downloaded more than 3,000,000 times.
-* The active developer community has more than 250,000 members.
-* nopCommerce runs on .NET 9 with an MS SQL 2012 (or higher) backend database.
-* nopCommerce is cross-platform, and you can run it on Windows, Linux, or Mac.
-* nopCommerce supports Docker out of the box, so you can easily run nopCommerce on a Linux machine.
-* nopCommerce supports PostgreSQL and MySQL databases.
-* nopCommerce fully supports web farms. You can read more about it [here](https://docs.nopcommerce.com/en/developer/tutorials/web-farms.html?utm_source=github&utm_medium=referral&utm_campaign=documentation&utm_content=text).  
-* All methods in nopCommerce are async.
-* nopCommerce supports multi-factor authentication out of the box.
-* Start our [online course for developers](https://nopcommerce.com/training?utm_source=github&utm_medium=referral&utm_campaign=course&utm_content=text) and get the practical and technical skills you need to run and customize nopCommerce websites.
+## 1. Architektur & Datenfluss
 
-![Logo](https://www.nopcommerce.com/images/github/logos.png#v2)
+```
+┌──────────────────────────────┐        ┌─────────────────────────────────────┐
+│  Business Central (AL-App)   │        │  nopCommerce (Plugin)               │
+│  „nopCommerce Connector"     │        │  Nop.Plugin.Misc.BusinessCentral    │
+│                              │        │                                     │
+│  • Shop-Karte (Pro Shop)     │  HTTPS │  • REST-Endpoints (X-Api-Key):      │
+│  • Produkt-Auswahl/-Status   │───────▶│    GET  /api/bc/health              │
+│  • Sync-Engine (ab Iter. B)  │        │    POST /api/bc/products            │
+│                              │        │    GET  /api/bc/orders?since=&max=  │
+│  BC = Orchestrator/Master    │        │    GET  /api/bc/customers?since=    │
+└──────────────────────────────┘        └───────────────┬─────────────────────┘
+                                                        │ (optional, P1 outbound)
+                                                        ▼
+                                   ┌──────────────────────────────────────┐
+                                   │ Business Central API v2.0 (Cloud)    │
+                                   │ OAuth 2.0 client-credentials (Entra) │
+                                   │ z. B. GET /companies (TestConnection)│
+                                   └──────────────────────────────────────┘
+```
 
-nopCommerce architecture follows well-known software patterns and the best security practices. The source code is fully customizable. Pluggable and clear architecture makes it easy to develop custom functionality and follow any business requirements.
+- **BC → nop (Katalog-Export):** Nur explizit ausgewählte Artikel („Nop Product"-Einträge
+  je Shop) werden per `POST /api/bc/products` angelegt/aktualisiert. Der nopCommerce-`Sku`
+  ist der Mapping-Schlüssel zum BC-Artikelnr. `remove=true` archivert (unpublisht) das Produkt.
+- **nop → BC (Aufträge/Kunden-Import):** BC pollt `GET /api/bc/orders|customers?since=…`
+  (ISO-8601-Marker) und legt Sales Orders/Kunden an (Iteration B+).
+- **Auth:** Plugin-Endpoints prüfen den Header `X-Api-Key` gegen den konfigurierten
+  (verschlüsselten) API-Key. Richtung nop → BC läuft über OAuth-Client-Credentials.
 
-Using the latest Microsoft technologies, nopCommerce provides high performance, stability, and security. nopCommerce is also fully compatible with Azure and web farms.
+> Detaillierte Konzepte: `docs/business-central-plugin-concept.md`,
+> Feature-Parität & Mapping: `docs/bc-connector-feature-parity.md`.
 
-Our clear and detailed [documentation](https://docs.nopcommerce.com/developer/index.html?utm_source=github&utm_medium=referral&utm_campaign=documentation&utm_content=text) and [online course](https://nopcommerce.com/training?utm_source=github&utm_medium=referral&utm_campaign=course&utm_content=text) for developers will help you start with nopCommerce easily.
+---
 
+## 2. Repo-Struktur (relevant)
 
-### The advantages of working with nopCommerce ###
+```
+bc-app/nopCommerceConnector/          Business-Central-AL-App „nopCommerce Connector"
+  app.json                            App-ID/-Version, ID-Range 62100–62300, Target Cloud
+  *.al                               Tabellen, Enum, Seiten, Codeunit (Namespace NopCommerceConnector)
+  Translations/*.g.xlf                Übersetzungsdatei (XLIFF)
+  .vscode/settings.json               Code-Analyse: CodeCop/PerTenantExtensionCop/UICop
+  .alpackages/                        Symbol-Pakete (Platform 28.0 / App 28.4 — NICHT committen, .gitignore)
+  nopCommerceConnector.app            Kompilierte App (Build-Artefakt — NICHT committen, .gitignore)
+src/Plugins/Nop.Plugin.Misc.BusinessCentral/   nopCommerce-Plugin (nop-Seite)
+  BusinessCentralApiController.cs     Inbound-REST-API für die BC-App (X-Api-Key)
+  Services/                           BusinessCentralHttpClient/-Service (P1, OAuth → BC-API)
+  Domain/Api, Models/Api              DTOs
+  Controllers/, Infrastructure/, Views/, Models/   Admin-Config + Routen
+dev/                                  Dev-/Build-Skripte
+  build-bc-app.sh                     AL-App kompilieren (altool)
+  upload-bc-app.sh                    AL-App in Cloud-Sandbox deployen (Automation-API)
+  docker-bootstrap.py                 nopCommerce-Erstinstallation/-Verifikation (idempotent)
+  test-bc-connection.py               P1 „Test Connection" nop-Plugin → BC-API (End-to-End)
+docs/                                 Konzept-, Paritäts- & State-Doku (dieses Readme, …)
+```
 
-nopCommerce offers powerful [out-of-the-box features](https://www.nopcommerce.com/features?utm_source=github&utm_medium=referral&utm_campaign=features&utm_content=text) for creating an online store of any size and type.
+---
 
-nopCommerce is integrated with all the popular third-party services. You can find thousands of integrations on nopCommerce [Marketplace](https://www.nopcommerce.com/marketplace?utm_source=github&utm_medium=referral&utm_campaign=marketplace&utm_content=text).
+## 3. Voraussetzungen (lokal)
 
-The [Web API plugin](https://www.nopcommerce.com/web-api?utm_source=github&utm_medium=referral&utm_campaign=WebAPI&utm_content=text) by the nopCommerce team lets you build integrations with third-party services or mobile applications using REST. The Web API plugin is available with source code and covers all methods of nopCommerce: backend and frontend. You can read more about it [here](https://www.nopcommerce.com/web-api?utm_source=github&utm_medium=referral&utm_campaign=WebAPI&utm_content=text).
+| Komponente | Hinweis |
+|---|---|
+| Docker + docker compose | nopCommerce-Stack (Web + SQL Server) |
+| .NET SDK 9.0.317 | `export PATH="$HOME/.dotnet:$PATH"` (global.json verlangt 9.x) |
+| BC-Linux-Container | `MsDyn365Bc.On.Linux`, BC 28.x — siehe `docs/`-Verweis u. Skill bc-linux-container |
+| AL-Tool `altool` | VS-Code-AL-Extension `…/ms-dynamics-smb.al-*/bin/linux/altool` (Execute-Bit setzen) |
+| Symbol-Pakete | liegen in `bc-app/nopCommerceConnector/.alpackages/` (Platform 28.0.53152.0 / Application 28.4.53241.0) |
+| Cloud-Sandbox | Entra-ID-App-Registrierung mit `Automation.ReadWrite.All` (Client-ID/Secret), Environment-Name, Tenant-ID |
 
-Friendly members of the [nopCommerce community](https://www.nopcommerce.com/boards?utm_source=github&utm_medium=referral&utm_campaign=forum&utm_content=text) will always help with advice and share their experiences. nopCommerce core development team provides [professional support](https://www.nopcommerce.com/nopcommerce-premium-support-services?utm_source=github&utm_medium=referral&utm_campaign=premium_support&utm_content=text) within 24 hours.
+---
 
+## 4. Installation — nopCommerce-Plugin
 
-## Store demo ##
+### Plugin-Steckbrief (`Nop.Plugin.Misc.BusinessCentral`)
 
-Evaluate the functionality and convenience of nopCommerce as a customer and store owner.
+| Eigenschaft | Wert |
+|---|---|
+| Plugin-Name (Admin) | „Business Central“ |
+| SystemName | `Misc.BusinessCentral` |
+| Gruppe / DisplayOrder | `Misc` / 1 |
+| Version | 1.00 (unterstützt nopCommerce 4.90) |
+| Author | nopCommerceMP |
+| Konfigurationsseite | `/Admin/BusinessCentral/Configure` (Menü: Configuration → Local plugins) |
 
-Front End | Admin area
-----|------
-[![ScreenShot](https://www.nopcommerce.com/images/github/public-demo.png#v1)](https://demo.nopcommerce.com?utm_source=github&utm_medium=referral&utm_campaign=demo_store&utm_content=button) | [![ScreenShot](https://www.nopcommerce.com/images/github/admin-demo.png#v1)](https://admin-demo.nopcommerce.com/admin?utm_source=github&utm_medium=referral&utm_campaign=demo_store&utm_content=button)
+Das Plugin verbindet den Shop mit Business Central in **zwei Richtungen**:
 
+- **Inbound (für die BC-App):** REST-Endpoints `/api/bc/health|products|orders|customers` mit Auth per `X-Api-Key`-Header — das ist die API, die die Business-Central-AL-App „nopCommerce Connector“ aufruft.
+- **Outbound (P1):** eigener Zugriff auf die BC-API v2.0 per OAuth 2.0 client-credentials (Entra-ID) — z. B. für „Test Connection“/Unternehmensliste.
 
-### nopCommerce resources ###
+API-Key und Client-Secret werden **verschlüsselt** in der DB gespeichert; ein leeres Feld behält den vorhandenen Wert.
 
-nopCommerce official site: [https://www.nopcommerce.com](https://www.nopcommerce.com/?utm_source=github&utm_medium=referral&utm_campaign=homepage&utm_content=links)
+### Einstellungen (Config-Seite)
 
-* [Demo store](https://www.nopcommerce.com/demo?utm_source=github&utm_medium=referral&utm_campaign=demo_store&utm_content=links)
-* [Download nopCommerce](https://www.nopcommerce.com/download-nopcommerce?utm_source=github&utm_medium=referral&utm_campaign=download_nop&utm_content=links)
-* [Online course for developers](https://nopcommerce.com/training?utm_source=github&utm_medium=referral&utm_campaign=course&utm_content=links)
-* [Feature list](https://www.nopcommerce.com/features?utm_source=github&utm_medium=referral&utm_campaign=features&utm_content=links)
-* [Web API plugin](https://www.nopcommerce.com/web-api?utm_source=github&utm_medium=referral&utm_campaign=WebAPI&utm_content=links)
-* [nopCommerce documentation](https://docs.nopcommerce.com?utm_source=github&utm_medium=referral&utm_campaign=documentation&utm_content=links)
-* [Community forums](https://www.nopcommerce.com/boards?utm_source=github&utm_medium=referral&utm_campaign=forum&utm_content=links)
-* [Premium support services](https://www.nopcommerce.com/nopcommerce-premium-support-services?utm_source=github&utm_medium=referral&utm_campaign=premium_support&utm_content=links)
-* [Certified developer program](https://www.nopcommerce.com/certified-developer-program?utm_source=github&utm_medium=referral&utm_campaign=certified_developer&utm_content=links)
-* [nopCommerce partners](https://www.nopcommerce.com/partners?utm_source=github&utm_medium=referral&utm_campaign=solution_partners&utm_content=links)
+| Feld | Bedeutung |
+|---|---|
+| Enabled | Verbindung aktiv (Default nach Installation: **aus** — erst nach erfolgreicher Konfiguration aktivieren) |
+| UseSandbox | Sandbox- statt Produktions-Umgebung (Default: **an**) |
+| TenantId | Microsoft-Entra-ID-Tenant (GUID) der BC-Umgebung |
+| EnvironmentName | Name der BC-Umgebung (z. B. `sandbox`, `sandbox29`) |
+| ClientId | Anwendungs-ID (client ID) der Entra-ID-App |
+| ClientSecret | Client-Secret der App (OAuth client-credentials) |
+| ApiKey | **API-Key für die BC-App** (Header `X-Api-Key`) — gleichen Key in der BC-Shop-Karte eintragen |
+| CompanyName | BC-Company, mit der synchronisiert wird |
+| LogSyncMessages | Sync-/Fehler-Logging (Default: **an**) |
+| RequestTimeout | Request-Timeout in Sekunden (Default: 30) |
+| Test Connection | prüft OAuth-Verbindung und listet die verfügbaren BC-Company-Namen |
 
-nopCommerce YouTube: [The Architecture behind the nopCommerce eCommerce Platform](https://www.youtube.com/watch?v=6gLbizzSA9o&list=PLnL_aDfmRHwtJmzeA7SxrpH3-XDY2ue0a)
+```bash
+cd ~/Dokumente/git_private/nopCommerceMP
+docker compose up -d --build                # Shop + DB starten
+python3 dev/docker-bootstrap.py             # Erstinstallation automatisch (Login, Plugin, Config-Seite)
+```
 
+**Plugin bauen (nach Code-Änderungen):**
+```bash
+export PATH="$HOME/.dotnet:$PATH"
+dotnet build src/NopCommerce.sln -v minimal
+docker compose up -d --build                # neue DLL ins Image (Container neu bauen)
+```
 
-### Earn with nopCommerce ###
+**Konfiguration im Admin** (`http://localhost/Admin` → „Business Central" / `/Admin/BusinessCentral/Configure`):
+1. **API-Key** erzeugen und speichern — er autorisiert Aufrufe der BC-App
+   (Header `X-Api-Key`), wird verschlüsselt abgelegt.
+2. Optional **P1-Verbindung BC-API** (nop → BC): Tenant-ID, Environment-Name,
+   Company-Name, Client-ID/-Secret (Entra-ID-App mit API-Zugriff) eintragen →
+   „Test Connection" zeigt die verfügbaren Unternehmen.
+   Automatisiert: `BC_TEST_*`-Env-Variablen + `python3 dev/test-bc-connection.py`.
 
-60,000 stores worldwide are powered by nopCommerce, and 10,000 new stores open every year. nopCommerce [solution partners’ directory](https://www.nopcommerce.com/partners?utm_source=github&utm_medium=referral&utm_campaign=solution_partners&utm_content=text_become_partner) gets 80,000+ page views per year from store owners who are looking for a partner to build a store from scratch, migrate from another platform, or improve and customize an existing store.
+**Inbound-REST-Endpoints der BC-App (Public API):**
 
-Become a solution partner of nopCommerce and get new clients – [learn more](https://www.nopcommerce.com/become-partner?utm_source=github&utm_medium=referral&utm_campaign=become-partner&utm_content=learn_more).
+| Endpoint | Methode | Zweck |
+|---|---|---|
+| `/api/bc/health` | GET | Health-Check → „Test Connection" in BC |
+| `/api/bc/products` | POST | Artikel anlegen/aktualisieren (JSON, `sku` = Mapping-Schlüssel; `remove:true` archivert) |
+| `/api/bc/orders` | GET | Neue/geänderte Bestellungen seit `since` (ISO-8601), Paginierung `max` (Default 100, max 500) |
+| `/api/bc/customers` | GET | Neue/geänderte Kunden seit `since` |
 
-Create a new graphical theme or develop a new plugin or integration and sell it on the nopCommerce [Marketplace](https://www.nopcommerce.com/marketplace?utm_source=github&utm_medium=referral&utm_campaign=marketplace&utm_content=text_sell_on_marketplace).
+Alle Endpoints: Auth per `X-Api-Key`-Header, Antworten camelCase-JSON.
+Öffentlich erreichbar machen (z. B. Tunnel/Port-Forward) ist nur nötig, wenn die
+**Cloud-Sandbox** direkt zugreifen soll — lokal reicht `http://localhost`.
 
+---
 
-### Contribute ###
+## 5. Installation — BC-App „nopCommerce Connector"
 
-As a free and open-source project, we are very grateful to everyone who helps us to develop nopCommerce. Please find more details about the options and bonuses for contributors at [contribute page](https://www.nopcommerce.com/contribute?utm_source=github&utm_medium=referral&utm_campaign=contribute&utm_content=text).
+### 5.1 Build
+
+```bash
+./dev/build-bc-app.sh          # nutzt altool compile gegen .alpackages → bc-app/nopCommerceConnector/nopCommerceConnector.app
+```
+
+### 5.2 Lokal (BC-Linux-Container, Empfehlung: immer zuerst hier testen)
+
+Container läuft (Projekt `MsDyn365Bc.On.Linux`, BC 28.x, Dev-Endpoint `http://localhost:7049/BC/dev`,
+Auth `BCRUNNER` / `Admin123!`). Publish z. B. per Dev-Endpoint:
+
+```bash
+cd bc-app/nopCommerceConnector
+curl -sf -u 'BCRUNNER:Admin123!' -X PUT 'http://localhost:7049/BC/dev/apps?SchemaUpdateMode=ForceSync' \
+  -H 'Content-Type: application/octet-stream' --data-binary @nopCommerceConnector.app -w 'HTTP %{http_code}\n'
+# Verifikation: installierte Apps auflisten
+curl -sf -u 'BCRUNNER:Admin123!' 'http://localhost:7049/BC/dev/apps' | python3 -m json.tool | head
+```
+
+Alternativ in VS Code über die AL-Erweiterung („Publish" auf den Dev-Endpoint).
+
+### 5.3 Cloud-Sandbox (per Automation-API)
+
+Voraussetzung: Entra-ID-App mit `Automation.ReadWrite.All` + **einmalige Freigabe**
+(Admin-Consent/App-Installation in der Ziel-Umgebung — nach Fehlschlag nicht blind
+wiederholen, lokale Validierung bevorzugen).
+
+```bash
+BC_TENANT_ID=… BC_ENV=sandbox29 \
+BC_CLIENT_ID=… BC_CLIENT_SECRET=… \
+./dev/upload-bc-app.sh bc-app/nopCommerceConnector/nopCommerceConnector.app "CRONUS AT"
+```
+
+Das Skript: Token holen → `extensionUpload` anlegen → `.app`-Stream hochladen →
+`Microsoft.NAV.upload` auslösen → Deployment-Status pollen.
+Anschließend App unter „Extension Management" prüfen.
+
+> Hinweis: Aus der Cloud-Sandbox ist `http://localhost` des Shops **nicht** erreichbar —
+> echte End-to-End-Tests brauchen eine öffentlich erreichbare nopCommerce-URL
+> (Tunnel/Port-Forward/Server-Deployment).
+
+---
+
+## 6. Bedienung in Business Central
+
+1. Suche nach **„nopCommerce Connection"** (Seite `Nop Commerce Setup`, Karte).
+2. **Shop anlegen:** Code, Beschreibung, `Enabled`, nopCommerce-URL (öffentlich erreichbar
+   für Cloud) und API-Key des nop-Plugins.
+3. **„Test Connection"** prüft Erreichbarkeit + API-Key gegen `/api/bc/health`
+   (aktuell Placeholder — echte Implementierung = Iteration B).
+4. **„Products"** öffnet die Produktliste des Shops (Seite `Nop Commerce Products`):
+   Nur Artikel, die hier als Eintrag existieren, werden nach nopCommerce exportiert —
+   nie der komplette Katalog.
+5. **Status:** `Draft` (noch nicht exportiert) → `Active` (exportiert & synchron) →
+   `Archived` (aus nopCommerce entfernt).
+
+---
+
+## 7. Entwicklungsstand & nächste Schritte
+
+| Stand | Inhalt |
+|---|---|
+| ✅ Iteration A | AL-App-Grundgerüst: Shop-Tabelle, Produkt-Auswahl/-Status, Setup-/Produkt-Seiten, Übersetzungen; kompiliert gegen Platform 28.0; läuft im lokalen Container; in Cloud-Sandbox installiert |
+| ✅ nop-Plugin | P1-Verbindung BC-API (OAuth) live verifiziert; Inbound-REST-Endpoints health/products/orders/customers implementiert |
+| 🔜 Iteration B | AL-seitig: echte HTTP-Aufrufe — `TestConnection` gegen `/api/bc/health`, Produkt-Push (`POST products`, Status-Flow), dann Order-/Customer-Import mit Mapping; danach Job Queue, Sync-Log, Versions-Bumps |
+
+**AL-Regeln (Lessons — nie wieder verletzen!):**
+1. Neue GUID je App in `app.json` — nie kopieren.
+2. Objekt-ID-Range **62100–62300** (nicht 50000er — Kollision mit GLAccount Workflow 50100–50109).
+3. `ApplicationArea = All;` auf Seitenebene; Cops (CodeCop/PerTenantExtensionCop/UICop) aktiviert.
+4. Erst lokal publizieren/validieren (Container), dann Cloud; Automation-Upload nicht mit Wiederholungen verkleben.
+
+Ausführlicher Stand: `docs/DEVELOPMENT-STATE.md` · Roadmap/Parität: `docs/bc-connector-feature-parity.md` · Konzept: `docs/business-central-plugin-concept.md`
+
+---
+
+## 8. Umgebung & Zugangsdaten (nur lokale Entwicklung!)
+
+- Shop: http://localhost · Admin: http://localhost/Admin
+- **Admin:** `admin@yourStore.com` / `NopMP!2025#`
+- **SQL Server:** Container `nopcommerce_mssql_server`, `sa` / `nopCommerce_db_password`, DB `nopCommerce`
+- **BC-Container:** Dev `http://localhost:7049/BC/dev` · OData `http://localhost:7048/BC/ODataV4` · API `http://localhost:7052/BC/api/v2.0` — Auth `BCRUNNER` / `Admin123!`
+- Cloud-Zugangsdaten (Sandbox/Entra-ID) **nur über Umgebungsvariablen** — nie ins Repo!
+
+## 9. Wiederaufnahme (nach Reboot / neuer Shell)
+
+```bash
+cd ~/Dokumente/git_private/nopCommerceMP
+docker compose up -d --build          # Shop (nopCommerce) starten
+python3 dev/docker-bootstrap.py       # Login + Plugin + Config-Seite verifizieren
+# BC-Container (falls benötigt):
+cd ~/Dokumente/MsDyn365Bc.On.Linux && BC_VERSION=28.1 docker compose up -d --wait
+```
