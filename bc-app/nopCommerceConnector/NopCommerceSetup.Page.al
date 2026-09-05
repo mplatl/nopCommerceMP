@@ -26,6 +26,11 @@ page 62100 "Nop Commerce Setup"
                 {
                     Caption = 'Description';
                 }
+                field("Nop Store Name"; Rec."Nop Store Name")
+                {
+                    Caption = 'nopCommerce Store Name';
+                    ToolTip = 'The name of the matching store inside nopCommerce (multistore). Leave empty to fall back to the shop description.';
+                }
                 field("Enabled"; Rec.Enabled)
                 {
                     Caption = 'Enabled';
@@ -55,6 +60,36 @@ page 62100 "Nop Commerce Setup"
                 {
                     Caption = 'Sync Products';
                     ToolTip = 'Enable to export the selected products of this shop to nopCommerce.';
+                }
+                field("Sync Prices"; Rec."Sync Prices")
+                {
+                    Caption = 'Sync Prices';
+                    ToolTip = 'Enable to transfer the unit price of the selected products to nopCommerce.';
+                }
+                field("Sync Inventory"; Rec."Sync Inventory")
+                {
+                    Caption = 'Sync Inventory';
+                    ToolTip = 'Enable to transfer the available stock of the selected products to nopCommerce.';
+                }
+                field("Sync Images"; Rec."Sync Images")
+                {
+                    Caption = 'Sync Images';
+                    ToolTip = 'Enable to transfer the item picture of the selected products to nopCommerce.';
+                }
+            }
+            group("Import Options")
+            {
+                Caption = 'Import Options';
+
+                field("Import Customers"; Rec."Import Customers")
+                {
+                    Caption = 'Import Customers';
+                    ToolTip = 'Enable to import the customers of this nopCommerce store into Business Central.';
+                }
+                field("Import Orders"; Rec."Import Orders")
+                {
+                    Caption = 'Import Orders';
+                    ToolTip = 'Enable to import the orders of this nopCommerce store into Business Central.';
                 }
             }
         }

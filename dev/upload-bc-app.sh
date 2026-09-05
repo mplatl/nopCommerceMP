@@ -26,7 +26,7 @@ TOKEN=$(curl -s -m 30 -X POST "$AUTH" -d "client_id=$BC_CLIENT_ID" -d "client_se
 echo "== 1) extensionUpload anlegen =="
 curl -s -m 60 -X POST "$B/extensionUpload?$CQ" -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" -H "Accept: application/json" \
-  -d '{"schedule":"Current version","schemaSyncMode":"Add"}' -o /tmp/bcupload.json -w "HTTP %{http_code}\n"
+  -d "{\"schedule\":\"Current version\",\"schemaSyncMode\":\"${SCHEMA_SYNC_MODE:-Add}\"}" -o /tmp/bcupload.json -w "HTTP %{http_code}\n"
 ID=$(python3 -c "import json;print(json.load(open('/tmp/bcupload.json'))['systemId'])")
 echo "systemId=$ID"
 

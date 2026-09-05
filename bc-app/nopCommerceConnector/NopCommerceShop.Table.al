@@ -8,6 +8,7 @@ table 62100 "Nop Commerce Shop"
 {
     Caption = 'NopCommerce Shop';
     DataClassification = CustomerContent;
+    DrillDownPageId = "Nop Commerce Setup";
 
     fields
     {
@@ -52,6 +53,42 @@ table 62100 "Nop Commerce Shop"
             DataClassification = CustomerContent;
             //when enabled, selected items are exported to nopCommerce
         }
+        field(8; "Sync Prices"; Boolean)
+        {
+            Caption = 'Sync Prices';
+            DataClassification = CustomerContent;
+            //when enabled, the unit price of the selected items is transferred to nopCommerce
+        }
+        field(9; "Sync Inventory"; Boolean)
+        {
+            Caption = 'Sync Inventory';
+            DataClassification = CustomerContent;
+            //when enabled, the available stock of the selected items is transferred to nopCommerce
+        }
+        field(10; "Sync Images"; Boolean)
+        {
+            Caption = 'Sync Images';
+            DataClassification = CustomerContent;
+            //when enabled, the item picture is transferred to nopCommerce
+        }
+        field(11; "Import Customers"; Boolean)
+        {
+            Caption = 'Import Customers';
+            DataClassification = CustomerContent;
+            //future: import the customers of this nopCommerce store into Business Central
+        }
+        field(12; "Import Orders"; Boolean)
+        {
+            Caption = 'Import Orders';
+            DataClassification = CustomerContent;
+            //future: import the orders of this nopCommerce store into Business Central
+        }
+        field(13; "Nop Store Name"; Text[100])
+        {
+            Caption = 'nopCommerce Store Name';
+            DataClassification = CustomerContent;
+            ToolTip = 'The name of the matching store inside nopCommerce (multistore). Leave empty to fall back to the shop description.';
+        }
     }
 
     keys
@@ -78,6 +115,8 @@ table 62100 "Nop Commerce Shop"
     trigger OnInsert()
     begin
         "API Key Set" := "API Key" <> '';
+        if "Nop Store Name" = '' then
+            "Nop Store Name" := Description;
     end;
 
     trigger OnModify()
