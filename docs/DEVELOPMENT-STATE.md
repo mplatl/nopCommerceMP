@@ -1,7 +1,13 @@
 # Development State — Business Central Plugin (nopCommerceMP)
 
-> **Letzte Aktualisierung:** 02.09.2025 (Session: P0 + Docker-Verifikation abgeschlossen)
-> Nächster Schritt bei Wiederaufnahme: **P1 — Connection (OAuth2 + Test-Connection)**
+> **Letzte Aktualisierung:** 04.09.2026 (P1 live verifiziert; BC-App „nopCommerce Connector“ Iteration A+B Teil 1)
+> Nächster Schritt: BC-App auf Sandbox `sandbox29` publizieren (braucht einmalige Freigabe, siehe §4) + Iteration B fortsetzen
+
+## AL-Regeln für die BC-App (Lessons — nie wieder verletzen!)
+1. **Neue GUID je App** (`app.json` id) — nie kopieren.
+2. **ID-Bereich nicht bei 50000/50100 starten**; Projekt nutzt **62100–62300** (Konflikt mit GLAccount Workflow 50100–50109 vermeiden).
+3. **`ApplicationArea = All;` auf Objektebene** (Seiten), sonst PTE0008 bei Cloud-Validierung; Cops (CodeCop/PerTenantExtensionCop/UICop) via `.vscode/settings.json` aktiviert.
+4. Erst lokal publizieren/validieren (MsDyn365Bc.On.Linux), dann SaaS; Automation-Upload-Queue nicht mit Wiederholungen verkleben.
 
 ---
 

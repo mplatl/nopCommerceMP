@@ -21,6 +21,10 @@
                 <i class="far fa-save"></i>
                 @T("Admin.Common.Save")
             </button>
+            <button type="submit" asp-action="TestConnection" class="btn bg-olive ml-1">
+                <i class="fa fa-plug"></i>
+                @T("Plugins.Misc.BusinessCentral.TestConnection")
+            </button>
         </div>
     </div>
 
@@ -102,6 +106,19 @@
                             <span class="text-info">@T("Plugins.Misc.BusinessCentral.ClientSecret.AlreadySet")</span>
                         }
                         <span asp-validation-for="ClientSecret"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="ApiKey" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ApiKey" asp-required="false" />
+                        @if (Model.ApiKeySet)
+                        {
+                            <span class="text-info">@T("Plugins.Misc.BusinessCentral.ApiKey.AlreadySet")</span>
+                        }
+                        <span asp-validation-for="ApiKey"></span>
                     </div>
                 </div>
                 <div class="form-group row">

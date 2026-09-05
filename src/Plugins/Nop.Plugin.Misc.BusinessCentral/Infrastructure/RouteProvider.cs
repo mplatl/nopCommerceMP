@@ -17,8 +17,25 @@ public class RouteProvider : IRouteProvider
     public void RegisterRoutes(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ConfigurationRouteName,
-            pattern: "Admin/BusinessCentral/Configure",
-            defaults: new { controller = "BusinessCentralAdmin", action = "Configure", area = AreaNames.ADMIN });
+            pattern: "Admin/BusinessCentral/{action=Configure}/{id?}",
+            defaults: new { controller = "BusinessCentralAdmin", area = AreaNames.ADMIN });
+
+        //public API endpoints called by the Business Central extension (no admin area, API key auth)
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiHealthRouteName,
+            pattern: BusinessCentralDefaults.ApiHealthRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "Health" });
+
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiProductsRouteName,
+            pattern: BusinessCentralDefaults.ApiProductsRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "Products" });
+
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiOrdersRouteName,
+            pattern: BusinessCentralDefaults.ApiOrdersRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "Orders" });
+
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiCustomersRouteName,
+            pattern: BusinessCentralDefaults.ApiCustomersRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "Customers" });
     }
 
     /// <summary>

@@ -22,6 +22,13 @@ public record ConfigurationModel
     /// </summary>
     public bool ClientSecretSet { get; set; }
 
+    public string ApiKey { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether an API key is already stored
+    /// </summary>
+    public bool ApiKeySet { get; set; }
+
     public string CompanyName { get; set; }
 
     public bool LogSyncMessages { get; set; }

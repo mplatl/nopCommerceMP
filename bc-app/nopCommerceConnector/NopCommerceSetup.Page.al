@@ -1,0 +1,100 @@
+namespace NopCommerceConnector;
+
+/// <summary>
+/// Setup card for the nopCommerce connection (mirrors the Shopify shop card).
+/// </summary>
+page 62100 "Nop Commerce Setup"
+{
+    ApplicationArea = All;
+    PageType = Card;
+    SourceTable = "Nop Commerce Shop";
+    Caption = 'nopCommerce Connection';
+
+    layout
+    {
+        area(Content)
+        {
+            group(General)
+            {
+                Caption = 'General';
+
+                field("Code"; Rec.Code)
+                {
+                    Caption = 'Code';
+                }
+                field("Description"; Rec.Description)
+                {
+                    Caption = 'Description';
+                }
+                field("Enabled"; Rec.Enabled)
+                {
+                    Caption = 'Enabled';
+                }
+            }
+            group(Connection)
+            {
+                Caption = 'Connection';
+
+                field("Nop Commerce URL"; Rec."Nop Commerce URL")
+                {
+                    Caption = 'nopCommerce URL';
+                    ToolTip = 'The public URL of the nopCommerce store (used by the Business Central service to call the plugin API endpoints).';
+                }
+                field("API Key"; Rec."API Key")
+                {
+                    Caption = 'API Key';
+                    ShowCaption = false;
+                    ToolTip = 'The API key issued by the nopCommerce plugin. Requests from Business Central are authenticated with this key.';
+                }
+            }
+            group("Sync Options")
+            {
+                Caption = 'Sync Options';
+
+                field("Sync Products"; Rec."Sync Products")
+                {
+                    Caption = 'Sync Products';
+                    ToolTip = 'Enable to export the selected products of this shop to nopCommerce.';
+                }
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(Products)
+            {
+                Caption = 'Products';
+                ToolTip = 'Manage the products of this shop that are exported to nopCommerce. Only products listed here are synchronized.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopCommerceProducts: Page "Nop Commerce Products";
+                begin
+                    NopCommerceProducts.SetShopCode(Rec.Code);
+                    NopCommerceProducts.Run();
+                end;
+            }
+            action(TestConnection)
+            {
+                Caption = 'Test Connection';
+                ToolTip = 'Verifies that Business Central can reach the nopCommerce plugin API of this shop.';
+                ApplicationArea = All;
+                Visible = Rec.Enabled;
+                trigger OnAction()
+                var
+                    NopConnectorMgt: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopConnectorMgt.TestConnection(Rec);
+                end;
+            }
+        }
+    }
+
+    trigger OnAfterGetRecord()
+    begin
+        Rec."API Key Set" := Rec."API Key" <> '';
+    end;
+}

@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="en-US" original="nopCommerce Connector">
+    <body>
+      <group id="body">
+        <trans-unit id="Table 2438157764 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>NopCommerce Shop</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Method 2570329715 - NamedType 746566160" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The shop "%1" is missing connection data. Enter the nopCommerce URL and the API key.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Method ValidateSetup - NamedType NopShopSetupValidationErr</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 4253087169 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>API Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field API Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 357668407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>API Key Set</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field API Key Set - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 2891538263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enabled</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Enabled - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 764272665 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>NopCommerce URL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Nop Commerce URL - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 746147881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sync Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Sync Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Product</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 568743302 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Item No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Sync Error</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Last Sync Error - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 4127628433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Product ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Nop Product Id - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 513339096 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3259063814 - Field 1679533494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Synchronized Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product - Field Synchronized Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 4263468516 - NamedType 873290991" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The shop "%1" (%2) is ready. nopCommerce endpoint checks will run once the plugin API is published.</source>
+          <note from="Developer" annotates="general" priority="2">Placeholder until the nopCommerce REST endpoints are implemented (Iteration B).</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method TestConnection - NamedType NopSetupTestOkMsg</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 568743302 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Item No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Sync Error</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Last Sync Error - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 4127628433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Product ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Nop Product Id - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 513339096 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3890820952 - Control 1679533494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Synchronized Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Synchronized Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Connection</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 1735060826 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Connection</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Connection - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 4253087169 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The API key issued by the nopCommerce plugin. Requests from Business Central are authenticated with this key.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control API Key - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 4253087169 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>API Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control API Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 764272665 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The public URL of the nopCommerce store (used by the Business Central service to call the plugin API endpoints).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Nop Commerce URL - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 764272665 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce URL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Nop Commerce URL - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 2891538263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enabled</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Enabled - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 329682425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sync Options</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Sync Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 746147881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enable to export the selected products of this shop to nopCommerce.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Sync Products - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Control 746147881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sync Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Control Sync Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 2362238540 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manage the products of this shop that are exported to nopCommerce. Only products listed here are synchronized.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Products - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 2362238540 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 4263468516 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Verifies that Business Central can reach the nopCommerce plugin API of this shop.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action TestConnection - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 4263468516 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Test Connection</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action TestConnection - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3177061298 - EnumValue 1090351696 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Active</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Nop Product Status - EnumValue Active - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3177061298 - EnumValue 57370450 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Archived</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Nop Product Status - EnumValue Archived - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3177061298 - EnumValue 253238575 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Draft</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Nop Product Status - EnumValue Draft - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

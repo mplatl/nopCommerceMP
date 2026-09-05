@@ -5,6 +5,8 @@ services:
         restart: unless-stopped
         ports:
             - "80:80"
+        volumes:
+            - nopcommerce_appdata:/app/App_Data
         depends_on:
             - nopcommerce_database
     nopcommerce_database:
@@ -19,4 +21,5 @@ services:
             - nopcommerce_data:/var/opt/mssql
 
 volumes:
-  nopcommerce_data:            
+  nopcommerce_data:
+  nopcommerce_appdata:            

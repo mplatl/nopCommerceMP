@@ -38,6 +38,12 @@ public class BusinessCentralSettings : ISettings
     public string ClientSecret { get; set; }
 
     /// <summary>
+    /// Gets or sets the encrypted API key that authorizes requests from Business Central
+    /// to the nopCommerce plugin endpoints (configured on the Business Central side)
+    /// </summary>
+    public string ApiKey { get; set; }
+
+    /// <summary>
     /// Gets or sets the name of the Business Central company used for synchronization
     /// </summary>
     public string CompanyName { get; set; }

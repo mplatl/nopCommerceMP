@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core.Infrastructure;
+using Nop.Plugin.Misc.BusinessCentral.Services;
+using Nop.Web.Framework.Infrastructure.Extensions;
 
 namespace Nop.Plugin.Misc.BusinessCentral.Infrastructure;
 
@@ -17,8 +19,9 @@ public class NopStartup : INopStartup
     /// <param name="configuration">Configuration of the application</param>
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        //the HTTP client and services are registered here as soon as the sync engine is implemented (phase P1/P2)
-        //services.AddHttpClient<BusinessCentralHttpClient>().WithProxy();
+        //register the HTTP client (with the system proxy support) and the service used to connect to Business Central
+        services.AddHttpClient<BusinessCentralHttpClient>().WithProxy();
+        services.AddScoped<BusinessCentralService>();
     }
 
     /// <summary>

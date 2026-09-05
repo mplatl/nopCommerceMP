@@ -48,4 +48,54 @@ public class BusinessCentralDefaults
     /// Gets the Business Central API v2.0 base URL
     /// </summary>
     public static string ApiBaseUrl => "https://api.businesscentral.dynamics.com/v2.0/{0}/{1}/api/v2.0";
+
+    /// <summary>
+    /// Gets the relative path of the companies endpoint
+    /// </summary>
+    public static string CompaniesPath => "companies";
+
+    /// <summary>
+    /// Gets the name of the HTTP header that carries the API key of incoming requests from Business Central
+    /// </summary>
+    public static string ApiKeyHeaderName => "X-Api-Key";
+
+    /// <summary>
+    /// Gets the route pattern of the health endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiHealthRoute => "api/bc/health";
+
+    /// <summary>
+    /// Gets the route pattern of the product push endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiProductsRoute => "api/bc/products";
+
+    /// <summary>
+    /// Gets the route pattern of the order export endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiOrdersRoute => "api/bc/orders";
+
+    /// <summary>
+    /// Gets the route pattern of the customer export endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiCustomersRoute => "api/bc/customers";
+
+    /// <summary>
+    /// Gets the API route name used to register the health endpoint
+    /// </summary>
+    public static string ApiHealthRouteName => "Plugin.Misc.BusinessCentral.ApiHealth";
+
+    /// <summary>
+    /// Gets the API route name used to register the product push endpoint
+    /// </summary>
+    public static string ApiProductsRouteName => "Plugin.Misc.BusinessCentral.ApiProducts";
+
+    /// <summary>
+    /// Gets the API route name used to register the order export endpoint
+    /// </summary>
+    public static string ApiOrdersRouteName => "Plugin.Misc.BusinessCentral.ApiOrders";
+
+    /// <summary>
+    /// Gets the API route name used to register the customer export endpoint
+    /// </summary>
+    public static string ApiCustomersRouteName => "Plugin.Misc.BusinessCentral.ApiCustomers";
 }

@@ -1,0 +1,10 @@
+{
+  "name": "nopCommerce Connector ruleset",
+  "rules": [
+    {
+      "id": "AS0015",
+      "action": "None",
+      "justification": "kein AppSource-Paket, PTE-only"
+    }
+  ]
+}

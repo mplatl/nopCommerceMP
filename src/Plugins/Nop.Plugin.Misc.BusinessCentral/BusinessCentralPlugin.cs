@@ -73,6 +73,9 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
             ["Plugins.Misc.BusinessCentral.ClientSecret"] = "Client secret",
             ["Plugins.Misc.BusinessCentral.ClientSecret.Hint"] = "The client secret of the registered app. It is stored encrypted. Leave empty to keep the current secret.",
             ["Plugins.Misc.BusinessCentral.ClientSecret.AlreadySet"] = "A client secret is already set. Enter a new value only to replace it.",
+            ["Plugins.Misc.BusinessCentral.ApiKey"] = "API key (for Business Central)",
+            ["Plugins.Misc.BusinessCentral.ApiKey.Hint"] = "The API key that authorizes requests from Business Central to this store's plugin endpoints (products, orders, customers). Enter the same key in the nopCommerce shop card of the Business Central extension. It is stored encrypted. Leave empty to keep the current key.",
+            ["Plugins.Misc.BusinessCentral.ApiKey.AlreadySet"] = "An API key is already set. Enter a new value only to replace it.",
             ["Plugins.Misc.BusinessCentral.CompanyName"] = "Company name",
             ["Plugins.Misc.BusinessCentral.CompanyName.Hint"] = "The Business Central company that is synchronized with this store.",
             ["Plugins.Misc.BusinessCentral.LogSyncMessages"] = "Log sync messages",
@@ -83,7 +86,8 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
             ["Plugins.Misc.BusinessCentral.InstructionsText1"] = "1. Make sure you have a Business Central environment (sandbox or production) with API access enabled.",
             ["Plugins.Misc.BusinessCentral.InstructionsText2"] = "2. Register an app in Microsoft Entra ID (Azure portal) in the same tenant as Business Central and grant it the Dynamics 365 Business Central application permission (API.ReadWrite.All) with admin consent.",
             ["Plugins.Misc.BusinessCentral.InstructionsText3"] = "3. Enter the tenant ID, environment name, client ID and client secret below and save.",
-            ["Plugins.Misc.BusinessCentral.InstructionsText4"] = "4. The connection can be tested from this page (available in the next version step)."
+            ["Plugins.Misc.BusinessCentral.InstructionsText4"] = "4. Click \"Test connection\" to verify that the connection works. On success, the companies available in your environment are listed — use one of these names as the company name.",
+            ["Plugins.Misc.BusinessCentral.TestConnection"] = "Test connection"
         });
 
         await base.InstallAsync();
