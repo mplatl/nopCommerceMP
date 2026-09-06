@@ -480,14 +480,26 @@ public class BusinessCentralApiController : Controller
                 return JsonResult(StatusCodes.Status400BadRequest, new { error = string.Join("; ", result.Errors) });
             }
 
-            //display name of the account (used as "full name" of the customer)
-            if (!string.IsNullOrWhiteSpace(request.Name))
-                await _genericAttributeService.SaveAttributeAsync(customer, "FirstName", request.Name.Trim());
+            //visible customer name in nopCommerce: Business Central customer information.
+            //nopCommerce stores the name in the Customer entity columns (FirstName/LastName).
+            //FirstName = name from the login row (fallback: the BC customer number) and
+            //LastName = BC customer number (when a name is set) so that the account can be
+            //identified in the nopCommerce customer list/details ("Full name").
+            var customerName = request.Name?.Trim() ?? string.Empty;
+            var customerNo = request.CustomerNo?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(customerName))
+                customer.FirstName = customerNo;
+            else
+            {
+                customer.FirstName = customerName;
+                customer.LastName = customerNo;
+            }
+            await _customerService.UpdateCustomerAsync(customer);
 
             //mapping to the Business Central customer (Debitor): every login of the same
             //customer carries the same bcCustomerNo -> orders are assigned to the same Bill-to customer
-            if (!string.IsNullOrWhiteSpace(request.CustomerNo))
-                await _genericAttributeService.SaveAttributeAsync(customer, "bcCustomerNo", request.CustomerNo);
+            if (!string.IsNullOrWhiteSpace(customerNo))
+                await _genericAttributeService.SaveAttributeAsync(customer, "bcCustomerNo", customerNo);
 
             return JsonResult(StatusCodes.Status200OK, new { email = customer.Email, customerId = customer.Id, created = true });
         }

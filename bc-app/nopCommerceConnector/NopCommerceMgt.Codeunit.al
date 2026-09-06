@@ -299,10 +299,15 @@ codeunit 62100 "Nop Commerce Mgt."
         JResponse: JsonToken;
         JToken: JsonToken;
         Payload: Text;
+        LoginName: Text;
         CustomerId: Integer;
         Created: Boolean;
     begin
-        Payload := '{"email":"' + EscapeJson(NopCustomerLogin."E-mail") + '","password":"' + EscapeJson(NopCustomerLogin."Initial Password") + '","name":"' + EscapeJson(NopCustomerLogin.Name) + '","customerNo":"' + EscapeJson(NopCustomerLogin."Customer No.") + '"}';
+        if NopCustomerLogin.Name <> '' then
+            LoginName := NopCustomerLogin.Name
+        else
+            LoginName := NopCustomerLogin."Customer No.";
+        Payload := '{"email":"' + EscapeJson(NopCustomerLogin."E-mail") + '","password":"' + EscapeJson(NopCustomerLogin."Initial Password") + '","name":"' + EscapeJson(LoginName) + '","customerNo":"' + EscapeJson(NopCustomerLogin."Customer No.") + '"}';
 
         if not NopHttp.Post(Shop, 'api/bc/customers/register', Payload, ResponseText) then begin
             NopCustomerLogin."Last Sync Error" := CopyStr(ResponseText, 1, 250);
