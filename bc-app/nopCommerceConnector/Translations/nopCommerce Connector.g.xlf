@@ -3,6 +3,61 @@
   <file datatype="xml" source-language="en-US" target-language="en-US" original="nopCommerce Connector">
     <body>
       <group id="body">
+        <trans-unit id="Table 14593563 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Category</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Key of the category within the shop.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description text of the category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 2961552353 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name of the category as it is shown in the shop.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 723233035 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent category of this category (same shop). Categories can be nested like in nopCommerce; an empty value means a top-level category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Parent Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 723233035 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent Category</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Parent Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 1669136979 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop in nopCommerce to which this category belongs.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Shop Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 14593563 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Category - Field Shop Code - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 1168423545 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Cue</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -703,6 +758,41 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method TestConnection - NamedType NopTestFailMsg</note>
         </trans-unit>
+        <trans-unit id="Page 2404752334 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Categories</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 723233035 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent category of this category (same shop). Categories can be nested like in nopCommerce; an empty value means a top-level category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control Parent Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 723233035 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent Category</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control Parent Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2404752334 - Control 3534480189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Categories - Control ParentName - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 805109205 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Customers</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1028,6 +1118,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action AddItems - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 113145658 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manage the categories of this shop. Categories are defined per shop (not matched 1:1 with Business Central) and can have parent categories like in nopCommerce.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Categories - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 113145658 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Categories</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Categories - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3318282709 - Action 3606140129 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the customer logins (Debitor) of this shop. Several logins per customer are possible; each row = one login in the nopCommerce store.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1182,6 +1282,16 @@
           <source>Sync Products</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Control Sync Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 113145658 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manage the categories of the selected shop. Categories are defined per shop (not matched 1:1 with Business Central) and can have parent categories like in nopCommerce.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Categories - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 113145658 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Categories</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Categories - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 24306597 - Action 3606140129 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the customer logins (Debitor) of this shop. Several logins per customer are possible; each row = one login in the nopCommerce store.</source>

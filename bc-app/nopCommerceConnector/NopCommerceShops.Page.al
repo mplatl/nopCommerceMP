@@ -132,6 +132,19 @@ page 62102 "Nop Commerce Shops"
                     NopCommerceCustomers.Run();
                 end;
             }
+            action(Categories)
+            {
+                Caption = 'Categories';
+                ToolTip = 'Manage the categories of the selected shop. Categories are defined per shop (not matched 1:1 with Business Central) and can have parent categories like in nopCommerce.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopCommerceCategories: Page "Nop Commerce Categories";
+                begin
+                    NopCommerceCategories.SetShopCode(Rec.Code);
+                    NopCommerceCategories.Run();
+                end;
+            }
             action(ProductFilters)
             {
                 ApplicationArea = All;
