@@ -4,14 +4,12 @@ namespace NopCommerceConnector;
 /// Represents a customer login (Debitor) that is used by a shop (linked to the shop).
 /// Several logins per customer (Debitor) are possible: each row = one login in the
 /// nopCommerce store, assigned to a shop like the store products ("Nop Product").
-/// The login is identified by the customer's e-mail; the initial password is transferred
-/// to nopCommerce when the row is pushed (like the product export).
+/// The login is identified by the customer's e-mail (unique per shop); the initial
+/// password is transferred to nopCommerce when the row is pushed (like the product export).
 /// Only logins with a record here are created/kept in the shop ("whitelist").
 /// </summary>
-table 62114 "Nop Customer"
+table 62116 "Nop Customer Login"
 {
-    ObsoleteState = Pending;
-    ObsoleteReason = 'Superseded by "Nop Customer Login" (62116) which supports several logins per customer (Debitor).';
     Caption = 'nopCommerce Customer Login';
     DataClassification = CustomerContent;
 
@@ -76,7 +74,9 @@ table 62114 "Nop Customer"
 
     keys
     {
-        key(PK; "Shop Code", "Customer No.")
+        //several logins per customer (Debitor) are possible: one row per login/e-mail.
+        //The e-mail is the login in the nopCommerce store and stays unique per shop.
+        key(PK; "Shop Code", "Customer No.", "E-mail")
         {
             Clustered = true;
         }

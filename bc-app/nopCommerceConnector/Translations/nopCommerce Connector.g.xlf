@@ -183,6 +183,86 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer - Field Synchronized Date - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3209749842 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Customer Login</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 4190130733 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Debitor (customer) in Business Central to whom this shop login belongs.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Customer No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 4190130733 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Customer No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Customer No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 985328067 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Login (user name) of the customer in the nopCommerce store - the e-mail address of the account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field E-mail - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 985328067 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>E-mail</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 4241830435 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial password that is set for the login in the nopCommerce store (transferred when the row is pushed).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Initial Password - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 4241830435 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial Password</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Initial Password - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 2687252343 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Contains the error message of the last failed transfer, if any.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Last Sync Error - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Sync Error</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Last Sync Error - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 234986132 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Identifier of the customer in the nopCommerce store (set by the transfer).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Nop Customer Id - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 234986132 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Customer Id</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Nop Customer Id - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 513339096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Draft = login not created yet, Active = login created/kept in sync in the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Status - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 513339096 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 1679533494 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date and time of the last successful transfer of this customer login.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Synchronized Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 1679533494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Synchronized Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Synchronized Date - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 4024829517 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Language</source>
           <note from="Developer" annotates="general" priority="2"></note>

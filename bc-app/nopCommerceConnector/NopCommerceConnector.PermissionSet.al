@@ -21,5 +21,6 @@ permissionset 62110 "Nop Commerce Access"
         tabledata "Nop Product Filter" = rimd,
         tabledata "Nop Language" = rimd,
         tabledata "Nop Commerce Cue" = rimd,
-        tabledata "Nop Customer" = rimd;
+        tabledata "Nop Customer" = rimd,
+        tabledata "Nop Customer Login" = rimd;
 }

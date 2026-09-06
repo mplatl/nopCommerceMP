@@ -1,7 +1,7 @@
 namespace NopCommerceConnector;
 
 /// <summary>
-/// List of the customer logins (Debitoren-Logins) per shop ("Nop Customer").
+/// List of the customer logins (Debitoren-Logins) per shop ("Nop Customer Login").
 /// Opened via the "Customers" action of the shop (Setup/card and Shops list) —
 /// the page is filtered to the shop and new records get the shop code automatically.
 /// Several logins per customer (Debitor) are possible (one row per login/e-mail).
@@ -11,7 +11,7 @@ page 62122 "Nop Commerce Customers"
     ApplicationArea = All;
     Caption = 'nopCommerce Customers';
     PageType = List;
-    SourceTable = "Nop Customer";
+    SourceTable = "Nop Customer Login";
     UsageCategory = Administration;
 
     layout
