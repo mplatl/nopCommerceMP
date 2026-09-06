@@ -44,7 +44,10 @@ public class BusinessCentralPlugin : BasePlugin, IMiscPlugin
     /// </summary>
     public override string GetConfigurationPageUrl()
     {
-        return _nopUrlHelper.RouteUrl(BusinessCentralDefaults.ConfigurationRouteName);
+        // pass the action explicitly: RouteUrl without values picks up the ambient
+        // "action" from the current request (e.g. ListSelect on the plugin list)
+        // and would generate Admin/BusinessCentral/ListSelect instead
+        return _nopUrlHelper.RouteUrl(BusinessCentralDefaults.ConfigurationRouteName, new { action = "Configure" });
     }
 
     /// <summary>
