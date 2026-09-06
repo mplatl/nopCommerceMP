@@ -77,15 +77,4 @@ table 62101 "Nop Product"
                 Description := Item.Description;
     end;
 
-    trigger OnDelete()
-    var
-        NopCommerceMgt: Codeunit "Nop Commerce Mgt.";
-    begin
-        //Deleting an active store product also removes (unpublishes) the product in the
-        //nopCommerce store, otherwise it would remain visible although it is no longer
-        //managed here. If the nopCommerce call fails, the deletion is aborted and the
-        //row stays (see "Last Sync Error" flow / status Archived for the manual variant).
-        if Status = "Nop Product Status"::Active then
-            NopCommerceMgt.RemoveProductInNop(Rec);
-    end;
 }

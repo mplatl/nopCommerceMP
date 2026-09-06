@@ -209,31 +209,6 @@ codeunit 62100 "Nop Commerce Mgt."
     end;
 
     /// <summary>
-    /// Removes (unpublishes) an active product of a shop in the nopCommerce store
-    /// (POST /api/bc/products with remove=true, mirrored by the plugin as published=false).
-    /// Called when an active "Nop Product" row is deleted; errors abort the deletion.
-    /// </summary>
-    /// <param name="NopProduct">The store product row that is about to be deleted.</param>
-    internal procedure RemoveProductInNop(NopProduct: Record "Nop Product")
-    var
-        Shop: Record "Nop Commerce Shop";
-        NopHttp: Codeunit "Nop Commerce Http";
-        ResponseText: Text;
-        Payload: Text;
-        RemoveFailMsg: Label 'The product "%1" of the shop "%2" could not be removed in nopCommerce. %3';
-    begin
-        //only products that were exported (active) have to be removed in the store
-        if NopProduct.Status <> "Nop Product Status"::Active then
-            exit;
-        if not Shop.Get(NopProduct."Shop Code") then
-            exit;
-
-        Payload := '{"sku":"' + EscapeJson(NopProduct."Item No.") + '","remove":true}';
-        if not NopHttp.Post(Shop, 'api/bc/products', Payload, ResponseText) then
-            Error(RemoveFailMsg, NopProduct."Item No.", Shop.Code, CopyStr(ResponseText, 1, 200));
-    end;
-
-    /// <summary>
     /// Escapes a text value for embedding into a JSON string payload.
     /// </summary>
     local procedure EscapeJson(Value: Text): Text
