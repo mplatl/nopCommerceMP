@@ -113,6 +113,18 @@ page 62102 "Nop Commerce Shops"
                     NopCommerceLanguages.Run();
                 end;
             }
+            action(PushProducts)
+            {
+                Caption = 'Push Products';
+                ToolTip = 'Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopProductSync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopProductSync.PushProducts(Rec);
+                end;
+            }
             action(OpenCard)
             {
                 ApplicationArea = All;

@@ -3,8 +3,9 @@ namespace NopCommerceConnector;
 /// <summary>
 /// Thin HTTP transport for the nopCommerce plugin API of a shop.
 /// Business Central is the orchestrator: it calls the plugin endpoints (X-Api-Key header);
-/// nopCommerce never initiates requests. GET is used for pulls (health, languages export);
-/// POST (products push) follows together with the product sync iteration.
+/// nopCommerce never initiates requests.
+/// GET  = pulls (health, languages export, later orders/customers)
+/// POST = pushes (product catalog export)
 /// </summary>
 codeunit 62120 "Nop Commerce Http"
 {
@@ -17,18 +18,33 @@ codeunit 62120 "Nop Commerce Http"
     /// <returns>True if the request was sent and answered with an HTTP success code.</returns>
     internal procedure Get(Shop: Record "Nop Commerce Shop"; UrlPath: Text; var ResponseText: Text): Boolean
     begin
-        exit(Send(Shop, 'GET', UrlPath, ResponseText));
+        exit(Send(Shop, 'GET', UrlPath, '', ResponseText));
     end;
 
     /// <summary>
-    /// Sends a request to the plugin API of the shop (method GET/POST, X-Api-Key header).
+    /// Executes a POST request with a JSON body against the plugin API of the shop.
     /// </summary>
-    internal procedure Send(Shop: Record "Nop Commerce Shop"; Method: Text; UrlPath: Text; var ResponseText: Text) Success: Boolean
+    /// <param name="Shop">The shop whose connection is used.</param>
+    /// <param name="UrlPath">API path relative to the shop URL, e.g. api/bc/products.</param>
+    /// <param name="JsonBody">JSON payload of the request.</param>
+    /// <param name="ResponseText">Response body (also filled on HTTP errors).</param>
+    /// <returns>True if the request was sent and answered with an HTTP success code.</returns>
+    internal procedure Post(Shop: Record "Nop Commerce Shop"; UrlPath: Text; JsonBody: Text; var ResponseText: Text): Boolean
+    begin
+        exit(Send(Shop, 'POST', UrlPath, JsonBody, ResponseText));
+    end;
+
+    /// <summary>
+    /// Sends a request to the plugin API of the shop (X-Api-Key header, optional JSON body).
+    /// </summary>
+    internal procedure Send(Shop: Record "Nop Commerce Shop"; Method: Text; UrlPath: Text; JsonBody: Text; var ResponseText: Text) Success: Boolean
     var
         HttpClient: HttpClient;
         Request: HttpRequestMessage;
         Response: HttpResponseMessage;
         Headers: HttpHeaders;
+        Content: HttpContent;
+        ContentHeaders: HttpHeaders;
     begin
         Shop.ValidateSetup();
 
@@ -36,6 +52,15 @@ codeunit 62120 "Nop Commerce Http"
         Request.Method := Method;
         Request.GetHeaders(Headers);
         Headers.Add('X-Api-Key', Shop."API Key");
+
+        if Method in ['POST', 'PUT'] then begin
+            Content.WriteFrom(JsonBody);
+            Content.GetHeaders(ContentHeaders);
+            if ContentHeaders.Contains('Content-Type') then
+                ContentHeaders.Remove('Content-Type');
+            ContentHeaders.Add('Content-Type', 'application/json');
+            Request.Content(Content);
+        end;
 
         if HttpClient.Send(Request, Response) then begin
             Success := Response.IsSuccessStatusCode();

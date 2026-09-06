@@ -160,6 +160,18 @@ page 62100 "Nop Commerce Setup"
                     NopCommerceLanguages.Run();
                 end;
             }
+            action(PushProducts)
+            {
+                Caption = 'Push Products';
+                ToolTip = 'Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopProductSync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopProductSync.PushProducts(Rec);
+                end;
+            }
             action(TestConnection)
             {
                 Caption = 'Test Connection';

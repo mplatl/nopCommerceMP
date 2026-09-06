@@ -4,8 +4,11 @@ namespace NopCommerceConnector;
 /// Central management codeunit for the nopCommerce integration (mirrors the Microsoft Shopify "Mgt." codeunits).
 /// Business Central is the orchestrator/master: it calls the plugin API of the shops (pull and push);
 /// nopCommerce only answers REST calls (X-Api-Key) and never initiates requests.
-/// Implemented: connection test (health) and the language pull per shop ("Nop Language").
-/// Open: product push (POST /api/bc/products) and order/customer import (GET /api/bc/orders|customers).
+/// Implemented: connection test (health), language pull per shop ("Nop Language")
+/// and the product push per shop (POST /api/bc/products; catalog export of the selected
+/// "Nop Product" rows incl. the remove/archive flow).
+/// Open: order/customer import (GET /api/bc/orders|customers) and the numeric fields of the
+/// product push (price/stock - requires culture-safe decimal serialization).
 /// </summary>
 codeunit 62100 "Nop Commerce Mgt."
 {
@@ -127,6 +130,90 @@ codeunit 62100 "Nop Commerce Mgt."
         end;
 
         Message(SyncedMsg, Shop.Code, Added, Updated);
+    end;
+
+    /// <summary>
+    /// Pushes the selected products of a shop to nopCommerce (POST /api/bc/products).
+    /// Rows with status Draft/Active are created/updated (published); rows with status
+    /// Archived are removed (remove=true). Successful rows become Active and store the
+    /// nopCommerce product id; failed rows keep their status and get a sync error.
+    /// </summary>
+    /// <param name="Shop">The shop whose store products are exported.</param>
+    internal procedure PushProducts(Shop: Record "Nop Commerce Shop")
+    var
+        NopProduct: Record "Nop Product";
+        Pushed: Integer;
+        Failed: Integer;
+        PushMsg: Label 'Products of the shop "%1" pushed: %2 successful, %3 failed.';
+    begin
+        Shop.ValidateSetup();
+        Pushed := 0;
+        Failed := 0;
+
+        NopProduct.SetRange("Shop Code", Shop.Code);
+        if NopProduct.FindSet() then
+            repeat
+                if not PushProduct(NopProduct, Shop, Pushed, Failed) then begin
+                    NopProduct."Last Sync Error" := 'Push skipped (product has no item number).';
+                    NopProduct.Modify();
+                    Failed := Failed + 1;
+                end;
+            until NopProduct.Next() = 0;
+
+        Message(PushMsg, Shop.Code, Pushed, Failed);
+    end;
+
+    /// <summary>
+    /// Pushes a single selected product row to nopCommerce and updates the row.
+    /// </summary>
+    /// <returns>False if the row could not be processed (no item number).</returns>
+    local procedure PushProduct(NopProduct: Record "Nop Product"; Shop: Record "Nop Commerce Shop"; var Pushed: Integer; var Failed: Integer): Boolean
+    var
+        NopHttp: Codeunit "Nop Commerce Http";
+        ResponseText: Text;
+        JResponse: JsonToken;
+        JToken: JsonToken;
+        Payload: Text;
+        ProductId: Integer;
+    begin
+        if NopProduct."Item No." = '' then
+            exit(false);
+
+        if NopProduct.Status = "Nop Product Status"::Archived then
+            Payload := '{"sku":"' + EscapeJson(NopProduct."Item No.") + '","remove":true}'
+        else
+            Payload := '{"sku":"' + EscapeJson(NopProduct."Item No.") + '","name":"' + EscapeJson(NopProduct.Description) + '","published":true}';
+
+        if not NopHttp.Post(Shop, 'api/bc/products', Payload, ResponseText) then begin
+            NopProduct."Last Sync Error" := CopyStr(ResponseText, 1, 250);
+            NopProduct.Modify();
+            Failed := Failed + 1;
+            exit(true);
+        end;
+
+        ProductId := 0;
+        if JResponse.ReadFrom(ResponseText) then
+            if JResponse.SelectToken('$.productId', JToken) and JToken.IsValue and not JToken.AsValue().IsNull then
+                ProductId := JToken.AsValue().AsInteger();
+
+        NopProduct."Last Sync Error" := '';
+        if ProductId <> 0 then
+            NopProduct."Nop Product Id" := ProductId;
+        NopProduct."Synchronized Date" := CurrentDateTime();
+        if NopProduct.Status <> "Nop Product Status"::Archived then
+            NopProduct.Status := "Nop Product Status"::Active;
+        NopProduct.Modify();
+
+        Pushed := Pushed + 1;
+        exit(true);
+    end;
+
+    /// <summary>
+    /// Escapes a text value for embedding into a JSON string payload.
+    /// </summary>
+    local procedure EscapeJson(Value: Text): Text
+    begin
+        exit(Value.Replace('\', '\\').Replace('"', '\"'));
     end;
 
     [TryFunction]
