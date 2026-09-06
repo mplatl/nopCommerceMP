@@ -44,6 +44,10 @@ public class RouteProvider : IRouteProvider
         endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiCustomersRegisterRouteName,
             pattern: BusinessCentralDefaults.ApiCustomersRegisterRoute,
             defaults: new { controller = "BusinessCentralApi", action = "RegisterCustomer" });
+
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiCategoriesRegisterRouteName,
+            pattern: BusinessCentralDefaults.ApiCategoriesRegisterRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "RegisterCategory" });
     }
 
     /// <summary>

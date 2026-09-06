@@ -30,6 +30,7 @@ public class BusinessCentralApiController : Controller
     protected readonly ILogger<BusinessCentralApiController> _logger;
     protected readonly IAddressService _addressService;
     protected readonly ICountryService _countryService;
+    protected readonly ICategoryService _categoryService;
     protected readonly ICustomerService _customerService;
     protected readonly ICustomerRegistrationService _customerRegistrationService;
     protected readonly IGenericAttributeService _genericAttributeService;
@@ -48,6 +49,7 @@ public class BusinessCentralApiController : Controller
     public BusinessCentralApiController(ILogger<BusinessCentralApiController> logger,
         IAddressService addressService,
         ICountryService countryService,
+        ICategoryService categoryService,
         ICustomerService customerService,
         ICustomerRegistrationService customerRegistrationService,
         IGenericAttributeService genericAttributeService,
@@ -62,6 +64,7 @@ public class BusinessCentralApiController : Controller
         _logger = logger;
         _addressService = addressService;
         _countryService = countryService;
+        _categoryService = categoryService;
         _customerService = customerService;
         _customerRegistrationService = customerRegistrationService;
         _genericAttributeService = genericAttributeService;
@@ -508,6 +511,65 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central customer registration failed");
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Customer registration failed" });
+        }
+    }
+
+    /// <summary>
+    /// Registers a category in nopCommerce (Business Central pushes the per-shop categories;
+    /// parent categories are created first and Business Central sends the nopCommerce parent id).
+    /// A category that already exists (same name under the same parent) is not created twice -
+    /// the existing category id is returned instead (created = false).
+    /// </summary>
+    public virtual async Task<IActionResult> RegisterCategory()
+    {
+        if (!await IsApiKeyValidAsync())
+            return JsonResult(StatusCodes.Status401Unauthorized, new { error = "Invalid API key" });
+
+        try
+        {
+            using var reader = new StreamReader(Request.Body);
+            var body = await reader.ReadToEndAsync();
+            var request = JsonConvert.DeserializeObject<CategoryRegisterRequest>(body);
+            if (request is null || string.IsNullOrWhiteSpace(request.Name))
+                return JsonResult(StatusCodes.Status400BadRequest, new { error = "Category name is required" });
+
+            var name = request.Name.Trim();
+
+            if (request.ParentId > 0)
+            {
+                var parent = await _categoryService.GetCategoryByIdAsync(request.ParentId);
+                if (parent is null)
+                    return JsonResult(StatusCodes.Status400BadRequest, new { error = $"Parent category (id {request.ParentId}) does not exist" });
+            }
+
+            var existing = (await _categoryService.GetAllCategoriesAsync())
+                .FirstOrDefault(c => c.ParentCategoryId == request.ParentId && string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase));
+            if (existing != null)
+                return JsonResult(StatusCodes.Status200OK, new { categoryId = existing.Id, created = false });
+
+            var category = new Category
+            {
+                Name = name,
+                Description = request.Description?.Trim() ?? string.Empty,
+                ParentCategoryId = request.ParentId,
+                Published = true,
+                ShowOnHomepage = false,
+                AllowCustomersToSelectPageSize = false,
+                PageSize = 6
+            };
+            await _categoryService.InsertCategoryAsync(category);
+
+            //mapping to the Business Central category code of this shop (traceability)
+            if (!string.IsNullOrWhiteSpace(request.BcCategoryCode))
+                await _genericAttributeService.SaveAttributeAsync(category, "bcCategoryCode", request.BcCategoryCode.Trim());
+
+            return JsonResult(StatusCodes.Status200OK, new { categoryId = category.Id, created = true });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Business Central category registration failed");
+
+            return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Category registration failed" });
         }
     }
 

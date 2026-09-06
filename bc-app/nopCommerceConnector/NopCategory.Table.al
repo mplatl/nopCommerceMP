@@ -51,6 +51,29 @@ table 62130 "Nop Category"
             DataClassification = CustomerContent;
             ToolTip = 'Description text of the category.';
         }
+        field(6; Status; enum "Nop Category Status")
+        {
+            Caption = 'Status';
+            DataClassification = CustomerContent;
+        }
+        field(7; "Nop Category Id"; BigInteger)
+        {
+            Caption = 'nopCommerce Category ID';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(8; "Synchronized Date"; DateTime)
+        {
+            Caption = 'Synchronized Date';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(9; "Last Sync Error"; Text[250])
+        {
+            Caption = 'Last Sync Error';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 
     keys

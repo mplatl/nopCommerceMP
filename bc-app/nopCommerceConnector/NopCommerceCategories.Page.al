@@ -38,10 +38,39 @@ page 62132 "Nop Commerce Categories"
                     Caption = 'Parent Name';
                     Editable = false;
                 }
+                field(Status; Rec.Status)
+                {
+                    Caption = 'Status';
+                    Editable = false;
+                }
+                field("Nop Category Id"; Rec."Nop Category Id")
+                {
+                    Caption = 'nopCommerce Category ID';
+                    Editable = false;
+                }
                 field(Description; Rec.Description)
                 {
                     Caption = 'Description';
                 }
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(PushCategory)
+            {
+                Caption = 'Push Category';
+                ToolTip = 'Transfers this single category to the shop (creates it in nopCommerce). The parent category, if any, must already be created in the shop.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopCategorySync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopCategorySync.PushCategoryRow(Rec);
+                end;
             }
         }
     }
@@ -75,6 +104,7 @@ page 62132 "Nop Commerce Categories"
     begin
         if NopShopCode <> '' then
             Rec."Shop Code" := NopShopCode;
+        Rec.Status := "Nop Category Status"::Draft;
     end;
 
     procedure SetShopCode(ShopCode: Code[10])

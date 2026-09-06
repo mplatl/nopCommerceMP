@@ -138,6 +138,16 @@ public class BusinessCentralDefaults
     public static string ApiCustomersRegisterRouteName => "Plugin.Misc.BusinessCentral.ApiCustomersRegister";
 
     /// <summary>
+    /// Gets the route pattern of the category registration endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiCategoriesRegisterRoute => "api/bc/categories/register";
+
+    /// <summary>
+    /// Gets the route name of the category registration endpoint
+    /// </summary>
+    public static string ApiCategoriesRegisterRouteName => "Plugin.Misc.BusinessCentral.ApiCategoriesRegister";
+
+    /// <summary>
     /// Gets the route name of the language export endpoint
     /// </summary>
     public static string ApiLanguagesRouteName => "Plugin.Misc.BusinessCentral.ApiLanguages";

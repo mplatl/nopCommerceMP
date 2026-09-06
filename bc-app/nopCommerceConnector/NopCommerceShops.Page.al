@@ -104,6 +104,18 @@ page 62102 "Nop Commerce Shops"
                     NopProductSync.PushProducts(Rec);
                 end;
             }
+            action(PushCategories)
+            {
+                ApplicationArea = All;
+                Caption = 'Push Categories';
+                ToolTip = 'Creates the categories (Draft) of the selected shop in nopCommerce - parent categories are always created before their subcategories.';
+                trigger OnAction()
+                var
+                    NopCategorySync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopCategorySync.PushCategories(Rec);
+                end;
+            }
         }
 
         area(Navigation)

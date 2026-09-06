@@ -289,6 +289,169 @@ codeunit 62100 "Nop Commerce Mgt."
     end;
 
     /// <summary>
+    /// Creates the categories of a shop in nopCommerce (POST /api/bc/categories/register).
+    /// Only categories with Status = Draft are pushed. Parent categories are always created
+    /// before their subcategories: the rows are processed in passes until no more Draft row
+    /// can be pushed (rows whose parent category failed keep their status and error).
+    /// </summary>
+    internal procedure PushCategories(Shop: Record "Nop Commerce Shop")
+    var
+        NopCategory: Record "Nop Category";
+        Pushed: Integer;
+        Failed: Integer;
+        Progress: Integer;
+        PushMsg: Label 'Categories of the shop "%1" pushed: %2 successful, %3 failed.';
+    begin
+        Shop.ValidateSetup();
+        Pushed := 0;
+        Failed := 0;
+
+        repeat
+            Progress := 0;
+            NopCategory.SetRange("Shop Code", Shop.Code);
+            NopCategory.SetRange(Status, "Nop Category Status"::Draft);
+            if NopCategory.FindSet() then
+                repeat
+                    if IsCategoryParentReady(NopCategory) then begin
+                        if PushCategory(NopCategory, Shop) then
+                            Pushed := Pushed + 1
+                        else
+                            Failed := Failed + 1;
+                        Progress := Progress + 1;
+                    end;
+                until NopCategory.Next() = 0;
+        until Progress = 0;
+
+        Message(PushMsg, Shop.Code, Pushed, Failed);
+    end;
+
+    /// <summary>
+    /// True if the category has no parent or its parent category is already created
+    /// (Active) in the shop - a parent category must exist before its subcategory is pushed.
+    /// </summary>
+    local procedure IsCategoryParentReady(NopCategory: Record "Nop Category"): Boolean
+    var
+        Parent: Record "Nop Category";
+    begin
+        if NopCategory."Parent Code" = '' then
+            exit(true);
+
+        Parent.SetRange("Shop Code", NopCategory."Shop Code");
+        Parent.SetRange(Code, NopCategory."Parent Code");
+        if not Parent.FindFirst() then
+            exit(true); //invalid parent reference is reported when the row itself is pushed
+
+        exit(Parent.Status = "Nop Category Status"::Active);
+    end;
+
+    /// <summary>
+    /// Transfers one single category row to nopCommerce (per-row action "Push Category" of
+    /// the Categories page). The parent category must already be created in the shop.
+    /// </summary>
+    internal procedure PushCategoryRow(NopCategory: Record "Nop Category")
+    var
+        Shop: Record "Nop Commerce Shop";
+        Parent: Record "Nop Category";
+        PushedOkMsg: Label 'Category "%1" transferred (nopCommerce category id %2).';
+        PushedFailMsg: Label 'Category "%1" could not be transferred: %2';
+    begin
+        if NopCategory.Name = '' then
+            Error('The category has no name.');
+        if not Shop.Get(NopCategory."Shop Code") then
+            Error('The shop "%1" does not exist.', NopCategory."Shop Code");
+        Shop.ValidateSetup();
+
+        if NopCategory."Parent Code" <> '' then begin
+            Parent.SetRange("Shop Code", NopCategory."Shop Code");
+            Parent.SetRange(Code, NopCategory."Parent Code");
+            if not Parent.FindFirst() then
+                Error('The parent category "%1" does not exist.', NopCategory."Parent Code");
+            if Parent.Status <> "Nop Category Status"::Active then
+                Error('Push the parent category "%1" first.', NopCategory."Parent Code");
+        end;
+
+        if PushCategory(NopCategory, Shop) then
+            Message(PushedOkMsg, NopCategory.Code, NopCategory."Nop Category Id")
+        else
+            Message(PushedFailMsg, NopCategory.Code, NopCategory."Last Sync Error");
+    end;
+
+    /// <summary>
+    /// Creates the category in nopCommerce (POST /api/bc/categories/register) and updates
+    /// the row: Status Active + nopCommerce category id + synchronized date on success,
+    /// otherwise the row keeps its status and the last sync error is stored.
+    /// </summary>
+    local procedure PushCategory(NopCategory: Record "Nop Category"; Shop: Record "Nop Commerce Shop"): Boolean
+    var
+        NopHttp: Codeunit "Nop Commerce Http";
+        ResponseText: Text;
+        JResponse: JsonToken;
+        JToken: JsonToken;
+        Payload: Text;
+        ParentId: Integer;
+        CategoryId: Integer;
+    begin
+        ParentId := 0;
+        if NopCategory."Parent Code" <> '' then
+            if not GetCategoryParentId(NopCategory, ParentId) then
+                exit(false);
+
+        Payload := '{"name":"' + EscapeJson(NopCategory.Name) + '","description":"' + EscapeJson(NopCategory.Description) + '","parentId":' + Format(ParentId) + ',"bcCategoryCode":"' + EscapeJson(NopCategory.Code) + '"}';
+        if not NopHttp.Post(Shop, 'api/bc/categories/register', Payload, ResponseText) then begin
+            NopCategory."Last Sync Error" := CopyStr(ResponseText, 1, 250);
+            NopCategory.Modify(true);
+            exit(false);
+        end;
+
+        if not JResponse.ReadFrom(ResponseText) then begin
+            NopCategory."Last Sync Error" := 'Invalid response from the shop: ' + CopyStr(ResponseText, 1, 200);
+            NopCategory.Modify(true);
+            exit(false);
+        end;
+
+        CategoryId := 0;
+        if JResponse.SelectToken('categoryId', JToken) then
+            if JToken.IsValue then
+                CategoryId := JToken.AsValue().AsInteger();
+
+        if CategoryId <> 0 then begin
+            NopCategory."Nop Category Id" := CategoryId;
+            NopCategory.Status := "Nop Category Status"::Active;
+            NopCategory."Synchronized Date" := CurrentDateTime();
+            NopCategory."Last Sync Error" := '';
+            NopCategory.Modify(true);
+            exit(true);
+        end;
+
+        NopCategory."Last Sync Error" := 'The shop did not return a category id.';
+        NopCategory.Modify(true);
+        exit(false);
+    end;
+
+    /// <summary>
+    /// Returns the nopCommerce category id of the parent category of the given row.
+    /// </summary>
+    local procedure GetCategoryParentId(NopCategory: Record "Nop Category"; var ParentNopId: Integer): Boolean
+    var
+        Parent: Record "Nop Category";
+    begin
+        Parent.SetRange("Shop Code", NopCategory."Shop Code");
+        Parent.SetRange(Code, NopCategory."Parent Code");
+        if not Parent.FindFirst() then begin
+            NopCategory."Last Sync Error" := 'The parent category "' + NopCategory."Parent Code" + '" does not exist.';
+            NopCategory.Modify(true);
+            exit(false);
+        end;
+        if Parent."Nop Category Id" = 0 then begin
+            NopCategory."Last Sync Error" := 'The parent category "' + NopCategory."Parent Code" + '" has not been created in the shop yet.';
+            NopCategory.Modify(true);
+            exit(false);
+        end;
+        ParentNopId := Parent."Nop Category Id";
+        exit(true);
+    end;
+
+    /// <summary>
     /// Registers one customer login (row) in nopCommerce and updates the row.
     /// </summary>
     /// <returns>True if the row was processed successfully.</returns>
