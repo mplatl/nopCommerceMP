@@ -9,6 +9,9 @@ Der Connector ist am offiziellen **Microsoft Shopify Connector** modelliert
 (BC-Quellcode 28.4.53241.0 analysiert, siehe `docs/bc-connector-feature-parity.md`):
 **Business Central = Master/ERP** (Katalog, Preise, Lager), **nopCommerce = Sales-Channel/Auftragsquelle**.
 
+> **Betrieb live (Hetzner `/nop1`):** Fixes für Subdirectory-Hosting (PathBase, Icons/Fonts/WebOptimizer,
+> Plugin-Konfig-URL) & Wiederherstellung nach Reinstall → [`docs/hetzner-subdirectory-deployment.md`](docs/hetzner-subdirectory-deployment.md)
+
 ---
 
 ## 1. Architektur & Datenfluss

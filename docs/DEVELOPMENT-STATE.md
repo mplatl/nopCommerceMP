@@ -3,6 +3,18 @@
 > **Letzte Aktualisierung:** 04.09.2026 (P1 live verifiziert; BC-App „nopCommerce Connector“ Iteration A+B Teil 1)
 > Nächster Schritt: BC-App auf Sandbox `sandbox29` publizieren (braucht einmalige Freigabe, siehe §4) + Iteration B fortsetzen
 
+## Hosting/Fixes (Hetzner /nop1) — Lessons, nie wieder vergessen!
+0. **Reverse Proxy ist Caddy, nicht nginx**; nopCommerce läuft unter `https://project-discovery.ddns.net/nop1`.
+1. **WebOptimizer MUSS komplett aus sein** (`EnableCssBundling: false` **und** `EnableJavaScriptBundling: false`):
+   er schreibt `url()`/`@font-face`-Pfade wurzel-relativ um → unter Path-Base laden Fonts nicht → **alle Icons = Platzhalter**.
+2. **`RouteUrl(name)` ohne explizite Values = Fallstrick**: Ambient-Werte (z. B. `action=ListSelect` auf der Plugin-List-Seite)
+   gewinnen über Route-Defaults → immer Ziel-Action mitgeben (`new { action = "Configure" }`, Commit `0557e83`).
+3. **Installer schreibt `App_Data/appsettings.json` mit Code-Defaults** → nach Reinstall Fixes erneut anwenden
+   (`/opt/nop1/fix-config.sh`: HostingConfig-Proxy + WebOptimizer off + Bundles leeren).
+   Details & Warum: [`docs/hetzner-subdirectory-deployment.md`](hetzner-subdirectory-deployment.md) (Commit `b88eab7` = X-Forwarded-Prefix).
+
+---
+
 ## AL-Regeln für die BC-App (Lessons — nie wieder verletzen!)
 1. **Neue GUID je App** (`app.json` id) — nie kopieren.
 2. **ID-Bereich nicht bei 50000/50100 starten**; Projekt nutzt **62100–62300** (Konflikt mit GLAccount Workflow 50100–50109 vermeiden).
