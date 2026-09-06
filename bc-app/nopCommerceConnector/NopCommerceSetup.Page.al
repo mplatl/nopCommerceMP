@@ -97,7 +97,53 @@ page 62100 "Nop Commerce Setup"
 
     actions
     {
+
+
         area(Processing)
+        {
+            action(GetLanguages)
+            {
+                Caption = 'Get Languages';
+                ToolTip = 'Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopLanguageSync: Codeunit "Nop Commerce Mgt.";
+                    NopCommerceLanguages: Page "Nop Commerce Languages";
+                begin
+                    NopLanguageSync.SyncLanguages(Rec);
+                    NopCommerceLanguages.SetShopCode(Rec.Code);
+                    NopCommerceLanguages.Run();
+                end;
+            }
+            action(PushProducts)
+            {
+                Caption = 'Push Products';
+                ToolTip = 'Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopProductSync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopProductSync.PushProducts(Rec);
+                end;
+            }
+            action(TestConnection)
+            {
+                Caption = 'Test Connection';
+                ToolTip = 'Verifies that Business Central can reach the nopCommerce plugin API of this shop.';
+                ApplicationArea = All;
+                Visible = Rec.Enabled;
+                trigger OnAction()
+                var
+                    NopConnectorMgt: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopConnectorMgt.TestConnection(Rec);
+                end;
+            }
+        }
+
+        area(Navigation)
         {
             action(Products)
             {
@@ -145,51 +191,7 @@ page 62100 "Nop Commerce Setup"
                     NopCommerceLanguages.Run();
                 end;
             }
-            action(GetLanguages)
-            {
-                Caption = 'Get Languages';
-                ToolTip = 'Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.';
-                ApplicationArea = All;
-                trigger OnAction()
-                var
-                    NopLanguageSync: Codeunit "Nop Commerce Mgt.";
-                    NopCommerceLanguages: Page "Nop Commerce Languages";
-                begin
-                    NopLanguageSync.SyncLanguages(Rec);
-                    NopCommerceLanguages.SetShopCode(Rec.Code);
-                    NopCommerceLanguages.Run();
-                end;
-            }
-            action(PushProducts)
-            {
-                Caption = 'Push Products';
-                ToolTip = 'Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).';
-                ApplicationArea = All;
-                trigger OnAction()
-                var
-                    NopProductSync: Codeunit "Nop Commerce Mgt.";
-                begin
-                    NopProductSync.PushProducts(Rec);
-                end;
-            }
-            action(TestConnection)
-            {
-                Caption = 'Test Connection';
-                ToolTip = 'Verifies that Business Central can reach the nopCommerce plugin API of this shop.';
-                ApplicationArea = All;
-                Visible = Rec.Enabled;
-                trigger OnAction()
-                var
-                    NopConnectorMgt: Codeunit "Nop Commerce Mgt.";
-                begin
-                    NopConnectorMgt.TestConnection(Rec);
-                end;
-            }
         }
+    
     }
-
-    trigger OnAfterGetRecord()
-    begin
-        Rec."API Key Set" := Rec."API Key" <> '';
-    end;
 }

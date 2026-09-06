@@ -49,28 +49,10 @@ page 62102 "Nop Commerce Shops"
 
     actions
     {
+
+
         area(Processing)
         {
-            action(ProductFilters)
-            {
-                ApplicationArea = All;
-                Caption = 'Saved Filters';
-                ToolTip = 'Manage the saved search filters that add items to store products.';
-                RunObject = Page "Nop Product Filters";
-            }
-            action(Languages)
-            {
-                ApplicationArea = All;
-                Caption = 'Languages';
-                ToolTip = 'Manage the nopCommerce languages of the selected shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.';
-                trigger OnAction()
-                var
-                    NopCommerceLanguages: Page "Nop Commerce Languages";
-                begin
-                    NopCommerceLanguages.SetShopCode(Rec.Code);
-                    NopCommerceLanguages.Run();
-                end;
-            }
             action(GetLanguages)
             {
                 ApplicationArea = All;
@@ -99,5 +81,30 @@ page 62102 "Nop Commerce Shops"
                 end;
             }
         }
+
+        area(Navigation)
+        {
+            action(ProductFilters)
+            {
+                ApplicationArea = All;
+                Caption = 'Saved Filters';
+                ToolTip = 'Manage the saved search filters that add items to store products.';
+                RunObject = Page "Nop Product Filters";
+            }
+            action(Languages)
+            {
+                ApplicationArea = All;
+                Caption = 'Languages';
+                ToolTip = 'Manage the nopCommerce languages of the selected shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.';
+                trigger OnAction()
+                var
+                    NopCommerceLanguages: Page "Nop Commerce Languages";
+                begin
+                    NopCommerceLanguages.SetShopCode(Rec.Code);
+                    NopCommerceLanguages.Run();
+                end;
+            }
+        }
+    
     }
 }

@@ -563,16 +563,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action AddItems - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Get Languages</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 3318282709 - Action 1750020835 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the nopCommerce languages that are used by this shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -602,6 +592,16 @@
           <source>Products</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3318282709 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
@@ -678,16 +678,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Control Sync Products - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 24306597 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Pulls the nopCommerce languages of the selected shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 24306597 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Get Languages</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 24306597 - Action 1750020835 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the nopCommerce languages of the selected shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -707,6 +697,16 @@
           <source>Saved Filters</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action ProductFilters - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pulls the nopCommerce languages of the selected shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 24306597 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
