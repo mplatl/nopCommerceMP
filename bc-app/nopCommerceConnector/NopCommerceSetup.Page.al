@@ -132,6 +132,19 @@ page 62100 "Nop Commerce Setup"
                 ApplicationArea = All;
                 RunObject = Page "Nop Product Filters";
             }
+            action(Languages)
+            {
+                Caption = 'Languages';
+                ToolTip = 'Manage the nopCommerce languages that are used by this shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopCommerceLanguages: Page "Nop Commerce Languages";
+                begin
+                    NopCommerceLanguages.SetShopCode(Rec.Code);
+                    NopCommerceLanguages.Run();
+                end;
+            }
             action(TestConnection)
             {
                 Caption = 'Test Connection';

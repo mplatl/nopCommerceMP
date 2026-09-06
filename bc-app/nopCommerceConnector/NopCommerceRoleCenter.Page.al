@@ -65,6 +65,13 @@ page 62140 "nopCommerce Admin"
                 RunObject = Page "Nop Commerce Products";
                 ToolTip = 'Open the list of products that are selected per shop.';
             }
+            action(Languages)
+            {
+                ApplicationArea = All;
+                Caption = 'Languages';
+                RunObject = Page "Nop Commerce Languages";
+                ToolTip = 'Open the list of nopCommerce languages that are maintained per shop.';
+            }
         }
     }
 }

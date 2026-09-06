@@ -32,6 +32,7 @@
 | **P0 Plugin-Skelett** | `src/Plugins/Nop.Plugin.Misc.BusinessCentral/` — plugin.json, csproj, Plugin-Klasse, Settings, Defaults, Controller, Models, Views, Infrastructure (RouteProvider, NopStartup) |
 | **Solution** | Projekt in `src/NopCommerce.sln` (Lösungsordner „Plugins") — kompletter Solution-Build: **0 Fehler** |
 | **Docker-Test** | nopCommerce 4.90.7 lokal im Docker installiert (Demo-Daten) — Plugin installiert + Config-Seite `/Admin/BusinessCentral/Configure` **200 ✓** |
+| **P1c Nop-Languages je Shop** | BC-App 1.0.12.0: Tabelle `Nop Language` (je Shop, nop Language ID), Seite `Nop Commerce Languages`, Aktionen „Languages“ (Shop-Card, Shops-Liste, RoleCenter), Default-Sprache je Shop — Basis für sprachspezifische Produkttext-Syncs (Pull via Plugin-API + HTTP-Infra folgt) |
 | **Dev-Skript** | `dev/docker-bootstrap.py` — automatisiert Erstinstallation, Login, Plugin-Install/-Check (idempotent) |
 
 ## 2. Umgebung & Zugangsdaten (nur lokale Entwicklung!)
