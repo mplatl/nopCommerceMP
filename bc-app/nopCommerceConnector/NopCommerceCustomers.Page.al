@@ -20,6 +20,10 @@ page 62122 "Nop Commerce Customers"
         {
             repeater(Customers)
             {
+                field("Shop Code"; Rec."Shop Code")
+                {
+                    Caption = 'Shop Code';
+                }
                 field("Customer No."; Rec."Customer No.")
                 {
                     Caption = 'Customer No.';
@@ -47,21 +51,32 @@ page 62122 "Nop Commerce Customers"
 
     var
         NopShopCode: Code[10];
+        NopCustomerNo: Code[20];
 
     trigger OnOpenPage()
     begin
-        if NopShopCode <> '' then
-            Rec.SetRange("Shop Code", NopShopCode);
+        //opened from a store: filter by shop, opened from a customer (Debitor): filter by customer
+        if NopCustomerNo <> '' then begin
+            Rec.SetRange("Customer No.", NopCustomerNo);
+        end else
+            if NopShopCode <> '' then
+                Rec.SetRange("Shop Code", NopShopCode);
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        Rec."Shop Code" := NopShopCode;
+        if NopCustomerNo = '' then
+            Rec."Shop Code" := NopShopCode;
         Rec.Status := "Nop Customer Status"::Draft;
     end;
 
     procedure SetShopCode(ShopCode: Code[10])
     begin
         NopShopCode := ShopCode;
+    end;
+
+    procedure SetCustomerNo(CustomerNo: Code[20])
+    begin
+        NopCustomerNo := CustomerNo;
     end;
 }

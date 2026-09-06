@@ -523,6 +523,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Nop Customer Id - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 805109205 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Shop Code - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 805109205 - Control 513339096 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Status</source>
           <note from="Developer" annotates="general" priority="2"></note>
