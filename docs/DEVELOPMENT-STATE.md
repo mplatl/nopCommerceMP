@@ -1,3 +1,4 @@
+| **Orders-Import (Staging)** | BC-App 1.0.28.0: `Get Orders` zieht je Shop `GET /api/bc/orders` in eigene Tabellen `Nop Order`/`Nop Order Line` (Upsert je nop-Order-Id); Bill-to-Mapping E-Mail→`Nop Customer Login`; Seite `Nop Commerce Orders`; Shop-Feld `Last Order Import`. Anzeige der Aufträge in BC über Staging (keine echten Sales Orders — Basisobjekte lokal nicht kompilierbar). Lieferschein folgt |
 | **Login-Transfer (Kunden-Logins)** | BC-App 1.0.26.0 + Plugin `POST /api/bc/customers/register`: BC legt nop-Kundenkonten mit E-mail + Initial-Passwort + Name an (mehrere Logins je Debitor); BC `Push Logins` (Draft→Active, Nop Customer Id). Offen: Auftrags-Import-Zuordnung (jedes Login eines Debitors → derselbe Bill-to-Kunde) |
 # Development State — Business Central Plugin (nopCommerceMP)
 

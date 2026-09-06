@@ -101,6 +101,18 @@ page 62100 "Nop Commerce Setup"
 
         area(Processing)
         {
+            action(GetOrders)
+            {
+                ApplicationArea = All;
+                Caption = 'Get Orders';
+                ToolTip = 'Imports the orders of this shop from nopCommerce (staging tables "Nop Order").';
+                trigger OnAction()
+                var
+                    NopOrderSync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopOrderSync.ImportOrders(Rec);
+                end;
+            }
             action(GetLanguages)
             {
                 Caption = 'Get Languages';
@@ -157,6 +169,18 @@ page 62100 "Nop Commerce Setup"
 
         area(Navigation)
         {
+            action(Orders)
+            {
+                Caption = 'Orders';
+                ToolTip = 'Open the imported nopCommerce orders of this shop (staging overview).';
+                trigger OnAction()
+                var
+                    NopCommerceOrders: Page "Nop Commerce Orders";
+                begin
+                    NopCommerceOrders.SetShopCode(Rec.Code);
+                    NopCommerceOrders.Run();
+                end;
+            }
             action(Customers)
             {
                 Caption = 'Customers';

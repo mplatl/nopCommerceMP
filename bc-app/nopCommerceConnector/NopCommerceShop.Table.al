@@ -89,6 +89,13 @@ table 62100 "Nop Commerce Shop"
             DataClassification = CustomerContent;
             ToolTip = 'The name of the matching store inside nopCommerce (multistore). Leave empty to fall back to the shop description.';
         }
+        field(14; "Last Order Import"; DateTime)
+        {
+            Caption = 'Last Order Import';
+            DataClassification = CustomerContent;
+            Editable = false;
+            ToolTip = 'Date and time of the last order import from the nopCommerce store.';
+        }
     }
 
     keys

@@ -288,6 +288,253 @@ codeunit 62100 "Nop Commerce Mgt."
         exit(true);
     end;
 
+    /// <summary>
+    /// Imports the orders of a shop from nopCommerce (GET /api/bc/orders) into the
+    /// staging tables "Nop Order"/"Nop Order Line" (upsert by nopCommerce order id).
+    /// The Bill-to customer is mapped via the customer login rows ("Nop Customer Login",
+    /// e-mail of the ordering login); several logins of one customer therefore always
+    /// land on the same Bill-to customer.
+    /// </summary>
+    internal procedure ImportOrders(Shop: Record "Nop Commerce Shop")
+    var
+        NopHttp: Codeunit "Nop Commerce Http";
+        NopCustomerLogin: Record "Nop Customer Login";
+        NopOrder: Record "Nop Order";
+        ResponseText: Text;
+        JResponse: JsonToken;
+        JOrders: JsonToken;
+        JArray: JsonArray;
+        JOrder: JsonToken;
+        OrderId: Integer;
+        Imported: Integer;
+        Unmapped: Integer;
+        ImportMsg: Label 'Orders of the shop "%1" imported: %2. %3 order(s) without a mapped customer (no matching login).';
+    begin
+        Shop.ValidateSetup();
+        Imported := 0;
+        Unmapped := 0;
+
+        if not NopHttp.Get(Shop, 'api/bc/orders?max=500', ResponseText) then
+            Error('The orders of the shop "%1" could not be imported. %2', Shop.Code, CopyStr(ResponseText, 1, 200));
+        if not JResponse.ReadFrom(ResponseText) then
+            Error('The orders of the shop "%1" could not be parsed.', Shop.Code);
+        if not JResponse.SelectToken('$.orders', JOrders) or not TryGetArray(JOrders, JArray) then
+            Error('The order export of the shop "%1" does not contain the expected "orders" array.', Shop.Code);
+
+        foreach JOrder in JArray do begin
+            if not TryGetInt(JOrder, '$.id', OrderId) then
+                Error('An order of the shop "%1" is missing the "id".', Shop.Code);
+            if OrderId = 0 then
+                Error('An order of the shop "%1" has an invalid "id".', Shop.Code);
+
+            //remove previous snapshot (upsert by nopCommerce order id)
+            DeleteOrderSnapshot(Shop.Code, OrderId);
+
+            if InsertOrder(JOrder, Shop.Code, OrderId, NopCustomerLogin) then
+                Imported := Imported + 1
+            else
+                Unmapped := Unmapped + 1;
+        end;
+
+        Shop."Last Order Import" := CurrentDateTime();
+        Shop.Modify();
+
+        Message(ImportMsg, Shop.Code, Imported, Unmapped);
+    end;
+
+    local procedure DeleteOrderSnapshot(ShopCode: Code[10]; OrderId: Integer)
+    var
+        NopOrder: Record "Nop Order";
+        NopOrderLine: Record "Nop Order Line";
+    begin
+        NopOrderLine.SetRange("Shop Code", ShopCode);
+        NopOrderLine.SetRange("Nop Order Id", OrderId);
+        NopOrderLine.DeleteAll();
+
+        NopOrder.SetRange("Shop Code", ShopCode);
+        NopOrder.SetRange("Nop Order Id", OrderId);
+        NopOrder.DeleteAll();
+    end;
+
+    /// <summary>
+    /// Inserts one order snapshot (header + lines) for the shop.
+    /// </summary>
+    /// <returns>False if the order could not be mapped to a customer login.</returns>
+    local procedure InsertOrder(JOrder: JsonToken; ShopCode: Code[10]; OrderId: Integer; NopCustomerLogin: Record "Nop Customer Login"): Boolean
+    var
+        NopOrder: Record "Nop Order";
+        NopOrderLine: Record "Nop Order Line";
+        JItems: JsonToken;
+        JArray: JsonArray;
+        JItem: JsonToken;
+        JVal: JsonToken;
+        OrderNo: Code[30];
+        Email: Text;
+        CustomerNo: Code[20];
+        BillToName: Text;
+        BillToLine: Text;
+        ShipToName: Text;
+        ShipToLine: Text;
+        CurrencyCode: Code[10];
+        OrderTotal: Decimal;
+        OrderDate: DateTime;
+        StatusCode: Code[20];
+        PaymentCode: Code[20];
+        ShippingCode: Code[20];
+        StatusId: Integer;
+        PaymentId: Integer;
+        ShippingId: Integer;
+        Sku: Code[20];
+        Description: Text;
+        Quantity: Decimal;
+        UnitPrice: Decimal;
+        LineTotal: Decimal;
+        LineNo: Integer;
+    begin
+        TryGetCode(JOrder, '$.orderNumber', OrderNo);
+        TryGetText(JOrder, '$.customerEmail', Email);
+        TryGetCode(JOrder, '$.currencyCode', CurrencyCode);
+        TryGetDec(JOrder, '$.orderTotal', OrderTotal);
+        TryGetDate(JOrder, '$.createdOnUtc', OrderDate);
+        TryGetInt(JOrder, '$.orderStatusId', StatusId);
+        TryGetInt(JOrder, '$.paymentStatusId', PaymentId);
+        TryGetInt(JOrder, '$.shippingStatusId', ShippingId);
+        StatusCode := MapOrderStatus(StatusId);
+        PaymentCode := MapPaymentStatus(PaymentId);
+        ShippingCode := MapShippingStatus(ShippingId);
+
+        //bill-to customer: mapped via the login of the ordering customer
+        NopCustomerLogin.SetRange("Shop Code", ShopCode);
+        NopCustomerLogin.SetRange("E-mail", Email);
+        if NopCustomerLogin.FindFirst() then
+            CustomerNo := NopCustomerLogin."Customer No.";
+
+        //address snapshots for the overview
+        if JOrder.SelectToken('$.billingAddress', JVal) and JVal.IsObject then
+            GetAddressTexts(JOrder, '$.billingAddress', BillToName, BillToLine);
+        if JOrder.SelectToken('$.shippingAddress', JVal) and JVal.IsObject then
+            GetAddressTexts(JOrder, '$.shippingAddress', ShipToName, ShipToLine);
+
+        if CustomerNo = '' then
+            exit(false);
+
+        NopOrder.Init();
+        NopOrder."Shop Code" := ShopCode;
+        NopOrder."Nop Order Id" := OrderId;
+        NopOrder."Order No." := OrderNo;
+        NopOrder."Order Date" := OrderDate;
+        NopOrder."Order Status" := StatusCode;
+        NopOrder."Payment Status" := PaymentCode;
+        NopOrder."Shipping Status" := ShippingCode;
+        NopOrder."Currency Code" := CurrencyCode;
+        NopOrder."Order Total" := OrderTotal;
+        NopOrder."Customer E-mail" := Email;
+        NopOrder."Bill-to Customer No." := CustomerNo;
+        NopOrder."Bill-to Name" := BillToName;
+        NopOrder."Ship-to Name" := ShipToName;
+        NopOrder."Ship-to Address" := ShipToLine;
+        NopOrder."Imported Date" := CurrentDateTime();
+        NopOrder.Insert();
+
+        if JOrder.SelectToken('$.items', JItems) and TryGetArray(JItems, JArray) then begin
+            LineNo := 0;
+            foreach JItem in JArray do begin
+                LineNo := LineNo + 10000;
+                TryGetCode(JItem, '$.sku', Sku);
+                TryGetText(JItem, '$.productName', Description);
+                TryGetDec(JItem, '$.quantity', Quantity);
+                TryGetDec(JItem, '$.unitPriceExclTax', UnitPrice);
+                TryGetDec(JItem, '$.lineTotalInclTax', LineTotal);
+
+                NopOrderLine.Init();
+                NopOrderLine."Shop Code" := ShopCode;
+                NopOrderLine."Nop Order Id" := OrderId;
+                NopOrderLine."Line No." := LineNo;
+                NopOrderLine.SKU := Sku;
+                NopOrderLine."Item Description" := Description;
+                NopOrderLine.Quantity := Quantity;
+                NopOrderLine."Unit Price" := UnitPrice;
+                NopOrderLine."Line Amount" := LineTotal;
+                NopOrderLine.Insert();
+            end;
+        end;
+        exit(true);
+    end;
+
+    local procedure GetAddressTexts(JRoot: JsonToken; JsonPath: Text; var FullName: Text; var AddressLine: Text)
+    var
+        First: Text;
+        Last: Text;
+        Company: Text;
+        Street: Text;
+        City: Text;
+        Zip: Text;
+    begin
+        TryGetText(JRoot, JsonPath + '.firstName', First);
+        TryGetText(JRoot, JsonPath + '.lastName', Last);
+        TryGetText(JRoot, JsonPath + '.company', Company);
+        TryGetText(JRoot, JsonPath + '.address1', Street);
+        TryGetText(JRoot, JsonPath + '.city', City);
+        TryGetText(JRoot, JsonPath + '.zipPostalCode', Zip);
+
+        FullName := CopyStr(First + ' ' + Last, 1, 100);
+        if Company <> '' then
+            FullName := CopyStr(Company, 1, 100);
+        AddressLine := CopyStr(Street + ', ' + Zip + ' ' + City, 1, 250);
+    end;
+
+    local procedure MapOrderStatus(StatusId: Integer): Code[20]
+    begin
+        case StatusId of
+            10: exit('Pending');
+            20: exit('Processing');
+            30: exit('Complete');
+            40: exit('Cancelled');
+        end;
+        exit('');
+    end;
+
+    local procedure MapPaymentStatus(StatusId: Integer): Code[20]
+    begin
+        case StatusId of
+            10: exit('Pending');
+            20: exit('Authorized');
+            30: exit('Paid');
+            40: exit('Refunded');
+            50: exit('Voided');
+        end;
+        exit('');
+    end;
+
+    local procedure MapShippingStatus(StatusId: Integer): Code[20]
+    begin
+        case StatusId of
+            10: exit('NotYetShipped');
+            20: exit('Shipped');
+            25: exit('PartiallyShipped');
+            30: exit('Delivered');
+        end;
+        exit('');
+    end;
+
+    [TryFunction]
+    local procedure TryGetDec(JToken: JsonToken; JsonPath: Text; var Value: Decimal)
+    var
+        JValue: JsonToken;
+    begin
+        if JToken.SelectToken(JsonPath, JValue) and JValue.IsValue and not JValue.AsValue().IsNull then
+            Evaluate(Value, JValue.AsValue().AsText());
+    end;
+
+    [TryFunction]
+    local procedure TryGetDate(JToken: JsonToken; JsonPath: Text; var Value: DateTime)
+    var
+        JValue: JsonToken;
+    begin
+        if JToken.SelectToken(JsonPath, JValue) and JValue.IsValue and not JValue.AsValue().IsNull then
+            Value := JValue.AsValue().AsDateTime();
+    end;
+
     [TryFunction]
     local procedure TryGetArray(JToken: JsonToken; var JArray: JsonArray)
     begin

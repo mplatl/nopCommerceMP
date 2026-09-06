@@ -68,6 +68,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Import Orders - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 373903139 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date and time of the last order import from the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Last Order Import - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2438157764 - Field 373903139 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Order Import</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Last Order Import - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 2438157764 - Field 764272665 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>NopCommerce URL</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -383,6 +393,151 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Unique SEO Code - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 356137257 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Order</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2965034906 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Business Central customer (Debitor) that is billed - mapped from the login of the ordering customer.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Bill-to Customer No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2965034906 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bill-to Customer No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Bill-to Customer No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 240204966 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bill-to Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Bill-to Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 4198939294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Currency Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Currency Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 1184385479 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Customer E-mail</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Customer E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 4035407732 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date and time when the order was last imported from the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Imported Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 4035407732 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imported Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Imported Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 1305345158 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Identifier of the order in the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Nop Order Id - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 1305345158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Order Id</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Nop Order Id - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2632124822 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Order Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2202932243 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Order No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 4145127342 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Status of the order in the nopCommerce store (Pending/Processing/Complete/Cancelled).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Order Status - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 4145127342 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Order Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 3421079048 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Order Total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 931886930 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Payment Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Payment Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 1187003046 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ship-to Address</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Ship-to Address - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2743501653 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ship-to Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Ship-to Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 2014177170 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shipping Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Shipping Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 356137257 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Order Line</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 2842094365 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Item Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 3582421358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Line Amount</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Line Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Line No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Line No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 1305345158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Order Id</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Nop Order Id - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 2704404533 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Quantity</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Quantity - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 1247743551 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SKU</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field SKU - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2590356691 - Field 2937233469 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unit Price</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Order Line - Field Unit Price - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3259063814 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Product</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -487,6 +642,11 @@
           <source>Shop Code</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 1475307044 - NamedType 1005399808" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Orders of the shop "%1" imported: %2. %3 order(s) without a mapped customer (no matching login).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method ImportOrders - NamedType ImportMsg</note>
         </trans-unit>
         <trans-unit id="Codeunit 146023832 - Method 3358554883 - NamedType 4013758993" size-unit="char" translate="yes" xml:space="preserve">
           <source>Customer logins of the shop "%1" pushed: %2 successful, %3 failed.</source>
@@ -602,6 +762,46 @@
           <source>Synchronized Date</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Synchronized Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Orders</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 2965034906 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bill-to Customer No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Bill-to Customer No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 1184385479 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Customer E-mail</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Customer E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 2632124822 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Order Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 2202932243 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Order No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 4145127342 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Status</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Order Status - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 3421079048 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Order Total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2953633115 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Orders - Control Shop Code - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3890820952 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Products</source>
@@ -798,6 +998,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Languages - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3435539207 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Open the imported nopCommerce orders of this shop (staging overview).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Orders - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3435539207 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Orders</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Orders - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3318282709 - Action 2653030148 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the saved search filters (item + attribute filters) that add items to store products.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -827,6 +1037,16 @@
           <source>Get Languages</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 1116517565 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imports the orders of this shop from nopCommerce (staging tables "Nop Order").</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetOrders - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 1116517565 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Orders</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetOrders - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3318282709 - Action 991227914 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Creates the customer logins (Draft) of this shop in nopCommerce with their initial password (one account per login/e-mail).</source>
@@ -933,6 +1153,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Languages - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3435539207 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Open the imported nopCommerce orders of this shop (staging overview).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Orders - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3435539207 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Orders</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Orders - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 24306597 - Action 2653030148 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the saved search filters that add items to store products.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -952,6 +1182,16 @@
           <source>Get Languages</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 1116517565 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imports the orders of this shop from nopCommerce (staging tables "Nop Order").</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetOrders - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 1116517565 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Orders</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetOrders - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 24306597 - Action 991227914 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Creates the customer logins (Draft) of the selected shop in nopCommerce with their initial password (one account per login/e-mail).</source>
