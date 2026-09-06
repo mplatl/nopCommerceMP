@@ -3,6 +3,26 @@
   <file datatype="xml" source-language="en-US" target-language="en-US" original="nopCommerce Connector">
     <body>
       <group id="body">
+        <trans-unit id="Table 1168423545 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Cue</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Cue - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1168423545 - Field 1663593181 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Primary Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Cue - Field Primary Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1168423545 - Field 338831553 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of connected nopCommerce shops (stores).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Cue - Field Shop Count - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 1168423545 - Field 338831553 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Count</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Cue - Field Shop Count - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 2438157764 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>NopCommerce Shop</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -608,6 +628,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action TestConnection - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 2244031285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shops</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shop Cue - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2244031285 - Control 1007511537 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shops</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shop Cue - Control Shops - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2244031285 - Control 1798716569 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of connected nopCommerce shops. Select to open the list of shops.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shop Cue - Control ShopCount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2244031285 - Control 1798716569 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shops</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shop Cue - Control ShopCount - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 24306597 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Shops</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -992,6 +1032,11 @@
           <source>nopCommerce Connector</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3737697109 - Control 1773659408 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shops</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Control ShopCues - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3737697109 - Control 833833978 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Shops</source>

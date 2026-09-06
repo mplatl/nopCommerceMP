@@ -14,6 +14,11 @@ page 62140 "nopCommerce Admin"
     {
         area(RoleCenter)
         {
+            part(ShopCues; "Nop Commerce Shop Cue")
+            {
+                ApplicationArea = All;
+                Caption = 'Shops';
+            }
             part(ShopList; "Nop Commerce Shops Part")
             {
                 ApplicationArea = All;
