@@ -188,6 +188,47 @@ public class BusinessCentralService
     }
 
     /// <summary>
+    /// Attaches the first picture of the Business Central item to the nopCommerce product
+    /// with the given SKU (downloads it from the Business Central API when the product does
+    /// not have a picture yet). Used by the inbound product push endpoint. Returns true when
+    /// a picture was attached. Never throws - problems are logged and result in false.
+    /// </summary>
+    public virtual async Task<bool> AttachItemPictureBySkuAsync(BusinessCentralSettings settings, string sku)
+    {
+        try
+        {
+            if (settings == null || string.IsNullOrWhiteSpace(sku))
+                return false;
+
+            var normalizedSku = sku.Trim();
+            var product = await _productService.GetProductBySkuAsync(normalizedSku);
+            if (product == null)
+                return false;
+
+            var accessToken = await GetAccessTokenAsync(settings);
+            var company = await ResolveCompanyAsync(settings, accessToken);
+
+            //resolve the Business Central item by its number (= the product SKU)
+            var filterNumber = normalizedSku.Replace("'", "''");
+            var path = $"{string.Format(BusinessCentralDefaults.CompaniesItemsPath, company.Id)}?$top=1&$filter=number eq '{filterNumber}'";
+            var page = await _httpClient.GetAsync<ApiCollectionResponse<Item>>(settings, accessToken, path);
+            var item = page?.Value?.FirstOrDefault();
+            if (item == null || string.IsNullOrEmpty(item.Id))
+                return false;
+
+            var result = new BusinessCentralSyncResult();
+            await AttachItemPictureIfMissingAsync(settings, accessToken, company, item, product, result);
+
+            return result.PicturesAdded > 0;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Attaching the Business Central picture for SKU \"{Sku}\" failed.", sku);
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Downloads the first picture of the given item (if any) and attaches it to the nopCommerce product
     /// (the picture is only downloaded when the product does not have a picture yet)
     /// </summary>

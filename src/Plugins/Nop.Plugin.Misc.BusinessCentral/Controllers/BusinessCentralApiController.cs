@@ -8,6 +8,7 @@ using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Common;
 using Nop.Plugin.Misc.BusinessCentral.Models.Api;
+using Nop.Plugin.Misc.BusinessCentral.Services;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
@@ -31,6 +32,7 @@ public class BusinessCentralApiController : Controller
     protected readonly IAddressService _addressService;
     protected readonly ICountryService _countryService;
     protected readonly ICategoryService _categoryService;
+    protected readonly BusinessCentralService _businessCentralService;
     protected readonly ICustomerService _customerService;
     protected readonly ICustomerRegistrationService _customerRegistrationService;
     protected readonly IGenericAttributeService _genericAttributeService;
@@ -50,6 +52,7 @@ public class BusinessCentralApiController : Controller
         IAddressService addressService,
         ICountryService countryService,
         ICategoryService categoryService,
+        BusinessCentralService businessCentralService,
         ICustomerService customerService,
         ICustomerRegistrationService customerRegistrationService,
         IGenericAttributeService genericAttributeService,
@@ -65,6 +68,7 @@ public class BusinessCentralApiController : Controller
         _addressService = addressService;
         _countryService = countryService;
         _categoryService = categoryService;
+        _businessCentralService = businessCentralService;
         _customerService = customerService;
         _customerRegistrationService = customerRegistrationService;
         _genericAttributeService = genericAttributeService;
@@ -292,6 +296,9 @@ public class BusinessCentralApiController : Controller
             else
                 await _productService.UpdateProductAsync(product);
 
+            //attach the first Business Central item picture to the product when it has none yet
+            await AttachBusinessCentralPictureAsync(request.Sku);
+
             return JsonResult(StatusCodes.Status200OK, new { sku = request.Sku, productId = product.Id, created = isNew });
         }
         catch (Exception ex)
@@ -299,6 +306,23 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central product push failed for SKU {Sku}", request.Sku);
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Product push failed" });
+        }
+    }
+
+    /// <summary>
+    /// Attaches the first picture of the Business Central item to the product with the given
+    /// SKU (best effort - a missing or unreachable picture must not fail the product push)
+    /// </summary>
+    private async Task AttachBusinessCentralPictureAsync(string sku)
+    {
+        try
+        {
+            var settings = await _settingService.LoadSettingAsync<BusinessCentralSettings>();
+            await _businessCentralService.AttachItemPictureBySkuAsync(settings, sku);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Attaching the Business Central picture for SKU \"{Sku}\" failed.", sku);
         }
     }
 
