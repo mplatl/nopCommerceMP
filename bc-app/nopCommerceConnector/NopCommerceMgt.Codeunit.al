@@ -261,6 +261,34 @@ codeunit 62100 "Nop Commerce Mgt."
     end;
 
     /// <summary>
+    /// Transfers one single customer login row to nopCommerce (per-row action "Push Login"
+    /// of the Customers page). The account is registered if the e-mail does not exist in the
+    /// shop yet; if the account already exists (e.g. registered via the storefront earlier),
+    /// the existing nopCommerce customer id is synchronized back into Business Central - no
+    /// second account is created and the existing account is not changed.
+    /// </summary>
+    internal procedure PushCustomerLoginRow(NopCustomerLogin: Record "Nop Customer Login")
+    var
+        Shop: Record "Nop Commerce Shop";
+        PushedOkMsg: Label 'Customer login "%1" transferred (nopCommerce customer id %2).';
+        PushedNoIdMsg: Label 'Customer login "%1" transferred to the shop.';
+        PushedFailMsg: Label 'Customer login "%1" could not be transferred: %2';
+    begin
+        if NopCustomerLogin."E-mail" = '' then
+            Error('The customer login has no e-mail address.');
+        if not Shop.Get(NopCustomerLogin."Shop Code") then
+            Error('The shop "%1" does not exist.', NopCustomerLogin."Shop Code");
+        Shop.ValidateSetup();
+        if PushCustomerLogin(NopCustomerLogin, Shop) then begin
+            if NopCustomerLogin."Nop Customer Id" <> 0 then
+                Message(PushedOkMsg, NopCustomerLogin."E-mail", NopCustomerLogin."Nop Customer Id")
+            else
+                Message(PushedNoIdMsg, NopCustomerLogin."E-mail");
+        end else
+            Message(PushedFailMsg, NopCustomerLogin."E-mail", NopCustomerLogin."Last Sync Error");
+    end;
+
+    /// <summary>
     /// Registers one customer login (row) in nopCommerce and updates the row.
     /// </summary>
     /// <returns>True if the row was processed successfully.</returns>
