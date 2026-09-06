@@ -280,6 +280,11 @@ public class BusinessCentralApiController : Controller
             if (request.Published.HasValue)
                 product.Published = request.Published.Value;
 
+            //products pushed by Business Central must stay individually visible in the store
+            //(search/catalog/product page) - heals products that were created by an older
+            //plugin version with VisibleIndividually = false
+            product.VisibleIndividually = true;
+
             product.Sku = request.Sku;
 
             if (isNew)

@@ -319,6 +319,14 @@ public class BusinessCentralService
                     //update only the fields that really changed
                     var changed = false;
 
+                    //products synchronized from Business Central must stay individually visible in the store
+                    //(search/catalog/product page) - heals products of an older plugin version
+                    if (!product.VisibleIndividually)
+                    {
+                        product.VisibleIndividually = true;
+                        changed = true;
+                    }
+
                     if (!string.IsNullOrWhiteSpace(item.DisplayName) && product.Name != item.DisplayName.Trim())
                     {
                         product.Name = item.DisplayName.Trim();
