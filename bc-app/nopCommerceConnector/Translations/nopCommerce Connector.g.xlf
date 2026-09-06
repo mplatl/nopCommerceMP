@@ -83,6 +83,116 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Commerce Shop - Field Sync Products - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 4024829517 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Language</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1926771168 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Display order of the language in the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Display Order - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1926771168 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Display Order</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Display Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 264209779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the default language of this shop (used for shop communication and as fallback language). Only one language per shop should be flagged as default.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Is Default - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 264209779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Is Default</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Is Default - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1447952498 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Culture code of the language, e.g. de-AT or en-US.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Language Culture - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1447952498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Language Culture</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Language Culture - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 450009889 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ID of the language in the nopCommerce store (e.g. from the language edit URL /Admin/Language/Edit/{id}).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Language ID - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 450009889 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Language ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Language ID - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2687252343 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Error message of the last failed synchronization of the language data, if any.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Last Sync Error - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Sync Error</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Last Sync Error - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2961552353 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name of the language as shown in the nopCommerce store, e.g. "Deutsch (Österreich)".</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1434822636 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether the language is published (enabled) in the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Published - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1434822636 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Published</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Published - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2814673046 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether the language is a right-to-left language.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field RTL - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 2814673046 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>RTL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field RTL - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1679533494 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date and time of the last successful synchronization of the language data from the nopCommerce store.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Synchronized Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 1679533494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Synchronized Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Synchronized Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 3602746569 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unique SEO code of the language in the nopCommerce store (e.g. en).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Unique SEO Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 4024829517 - Field 3602746569 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unique SEO Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Language - Field Unique SEO Code - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3259063814 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Product</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -188,10 +298,75 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Shop Code - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Codeunit 146023832 - Method 4263468516 - NamedType 873290991" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The shop "%1" (%2) is ready. nopCommerce endpoint checks will run once the plugin API is published.</source>
-          <note from="Developer" annotates="general" priority="2">Placeholder until the nopCommerce REST endpoints are implemented (Iteration B).</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method TestConnection - NamedType NopSetupTestOkMsg</note>
+        <trans-unit id="Codeunit 146023832 - Method 724968698 - NamedType 4013758993" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Products of the shop "%1" pushed: %2 successful, %3 failed.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushProducts - NamedType PushMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 2378593642 - NamedType 573349409" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Languages of the shop "%1" synchronized: %2 added, %3 updated.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method SyncLanguages - NamedType SyncedMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 2378593642 - NamedType 1304523136" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The languages of the shop "%1" could not be synchronized. %2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method SyncLanguages - NamedType SyncFailMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 4263468516 - NamedType 2589600598" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The connection to the shop "%1" is working. The nopCommerce plugin responded: %2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method TestConnection - NamedType NopTestOkMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 4263468516 - NamedType 3748123264" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The connection to the shop "%1" failed. Response: %2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method TestConnection - NamedType NopTestFailMsg</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>nopCommerce Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 1926771168 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Display Order</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Display Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 264209779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Is Default</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Is Default - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 1447952498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Language Culture</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Language Culture - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 450009889 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Language ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Language ID - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 1434822636 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Published</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Published - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shop Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Shop Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 276168367 - Control 1679533494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Synchronized Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Languages - Control Synchronized Date - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3890820952 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Products</source>
@@ -373,6 +548,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action AddItems - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 1750020835 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manage the nopCommerce languages that are used by this shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Languages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 1750020835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Languages - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3318282709 - Action 2653030148 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the saved search filters (item + attribute filters) that add items to store products.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -392,6 +587,16 @@
           <source>Products</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action Products - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action PushProducts - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 724968698 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Push Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action PushProducts - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3318282709 - Action 4263468516 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Verifies that Business Central can reach the nopCommerce plugin API of this shop.</source>
@@ -448,6 +653,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action AddStoreProducts - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pulls the nopCommerce languages of the selected shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 3716230433 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 1750020835 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manage the nopCommerce languages of the selected shop (per shop). The default language of the shop is used for shop communication and as fallback for product texts.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Languages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 1750020835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Languages - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 24306597 - Action 2662476652 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Open the shop card of the selected shop.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -467,6 +692,16 @@
           <source>Saved Filters</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action ProductFilters - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action PushProducts - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 724968698 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Push Products</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action PushProducts - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 24306597 - Action 517258945 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Open the products of the selected shop (filtered by shop).</source>
@@ -772,6 +1007,16 @@
           <source>nopCommerce Shops</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Control ShopList - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3737697109 - Action 1750020835 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Open the list of nopCommerce languages that are maintained per shop.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action Languages - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3737697109 - Action 1750020835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Languages</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action Languages - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3737697109 - Action 1007511537 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Open the list of nopCommerce shops (stores).</source>
