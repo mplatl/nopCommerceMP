@@ -128,6 +128,18 @@ page 62100 "Nop Commerce Setup"
                     NopProductSync.PushProducts(Rec);
                 end;
             }
+            action(PushLogins)
+            {
+                ApplicationArea = All;
+                Caption = 'Push Logins';
+                ToolTip = 'Creates the customer logins (Draft) of this shop in nopCommerce with their initial password (one account per login/e-mail).';
+                trigger OnAction()
+                var
+                    NopCustomerSync: Codeunit "Nop Commerce Mgt.";
+                begin
+                    NopCustomerSync.PushCustomers(Rec);
+                end;
+            }
             action(TestConnection)
             {
                 Caption = 'Test Connection';

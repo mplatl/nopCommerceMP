@@ -216,6 +216,78 @@ codeunit 62100 "Nop Commerce Mgt."
         exit(Value.Replace('\', '\\').Replace('"', '\"'));
     end;
 
+    /// <summary>
+    /// Creates the customer logins of a shop in nopCommerce (POST /api/bc/customers/register).
+    /// One call per row with status Draft: the account is created with the row e-mail, the
+    /// initial password and the row name. Successful rows become Active and store the
+    /// nopCommerce customer id; failed rows keep their status and get a sync error.
+    /// Several logins per customer (Debitor) are possible - every order of any of these
+    /// logins is later assigned to the same Business Central Bill-to customer (row "Customer No.").
+    /// </summary>
+    internal procedure PushCustomers(Shop: Record "Nop Commerce Shop")
+    var
+        NopCustomerLogin: Record "Nop Customer Login";
+        Pushed: Integer;
+        Failed: Integer;
+        PushMsg: Label 'Customer logins of the shop "%1" pushed: %2 successful, %3 failed.';
+    begin
+        Shop.ValidateSetup();
+        Pushed := 0;
+        Failed := 0;
+
+        NopCustomerLogin.SetRange("Shop Code", Shop.Code);
+        NopCustomerLogin.SetRange(Status, "Nop Customer Status"::Draft);
+        if NopCustomerLogin.FindSet() then
+            repeat
+                if not PushCustomerLogin(NopCustomerLogin, Shop) then
+                    Failed := Failed + 1
+                else
+                    Pushed := Pushed + 1;
+            until NopCustomerLogin.Next() = 0;
+
+        Message(PushMsg, Shop.Code, Pushed, Failed);
+    end;
+
+    /// <summary>
+    /// Registers one customer login (row) in nopCommerce and updates the row.
+    /// </summary>
+    /// <returns>True if the row was processed successfully.</returns>
+    local procedure PushCustomerLogin(NopCustomerLogin: Record "Nop Customer Login"; Shop: Record "Nop Commerce Shop"): Boolean
+    var
+        NopHttp: Codeunit "Nop Commerce Http";
+        ResponseText: Text;
+        JResponse: JsonToken;
+        JToken: JsonToken;
+        Payload: Text;
+        CustomerId: Integer;
+        Created: Boolean;
+    begin
+        Payload := '{"email":"' + EscapeJson(NopCustomerLogin."E-mail") + '","password":"' + EscapeJson(NopCustomerLogin."Initial Password") + '","name":"' + EscapeJson(NopCustomerLogin.Name) + '"}';
+
+        if not NopHttp.Post(Shop, 'api/bc/customers/register', Payload, ResponseText) then begin
+            NopCustomerLogin."Last Sync Error" := CopyStr(ResponseText, 1, 250);
+            NopCustomerLogin.Modify();
+            exit(false);
+        end;
+
+        CustomerId := 0;
+        Created := false;
+        if JResponse.ReadFrom(ResponseText) then begin
+            if JResponse.SelectToken('$.customerId', JToken) and JToken.IsValue and not JToken.AsValue().IsNull then
+                CustomerId := JToken.AsValue().AsInteger();
+            if JResponse.SelectToken('$.created', JToken) and JToken.IsValue and not JToken.AsValue().IsNull then
+                Created := JToken.AsValue().AsBoolean();
+        end;
+
+        NopCustomerLogin."Last Sync Error" := '';
+        if CustomerId <> 0 then
+            NopCustomerLogin."Nop Customer Id" := CustomerId;
+        NopCustomerLogin."Synchronized Date" := CurrentDateTime();
+        NopCustomerLogin.Status := "Nop Customer Status"::Active;
+        NopCustomerLogin.Modify();
+        exit(true);
+    end;
+
     [TryFunction]
     local procedure TryGetArray(JToken: JsonToken; var JArray: JsonArray)
     begin

@@ -32,6 +32,10 @@ page 62122 "Nop Commerce Customers"
                 {
                     Caption = 'E-mail';
                 }
+                field(Name; Rec.Name)
+                {
+                    Caption = 'Name';
+                }
                 field(Status; Rec.Status)
                 {
                     Caption = 'Status';

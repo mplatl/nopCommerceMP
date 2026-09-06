@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Common;
 using Nop.Plugin.Misc.BusinessCentral.Models.Api;
 using Nop.Services.Catalog;
@@ -30,6 +31,8 @@ public class BusinessCentralApiController : Controller
     protected readonly IAddressService _addressService;
     protected readonly ICountryService _countryService;
     protected readonly ICustomerService _customerService;
+    protected readonly ICustomerRegistrationService _customerRegistrationService;
+    protected readonly IGenericAttributeService _genericAttributeService;
     protected readonly IEncryptionService _encryptionService;
     protected readonly ILanguageService _languageService;
     protected readonly IOrderService _orderService;
@@ -46,6 +49,8 @@ public class BusinessCentralApiController : Controller
         IAddressService addressService,
         ICountryService countryService,
         ICustomerService customerService,
+        ICustomerRegistrationService customerRegistrationService,
+        IGenericAttributeService genericAttributeService,
         IEncryptionService encryptionService,
         ILanguageService languageService,
         IOrderService orderService,
@@ -58,6 +63,8 @@ public class BusinessCentralApiController : Controller
         _addressService = addressService;
         _countryService = countryService;
         _customerService = customerService;
+        _customerRegistrationService = customerRegistrationService;
+        _genericAttributeService = genericAttributeService;
         _encryptionService = encryptionService;
         _languageService = languageService;
         _orderService = orderService;
@@ -435,6 +442,55 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central language export failed");
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Language export failed" });
+        }
+    }
+
+    /// <summary>
+    /// Registers a customer login in nopCommerce (Business Central creates the shop logins
+    /// of its customers with an initial password). Multiple logins per Business Central
+    /// customer are possible - each login is one nopCommerce customer account.
+    /// </summary>
+    public virtual async Task<IActionResult> RegisterCustomer()
+    {
+        if (!await IsApiKeyValidAsync())
+            return JsonResult(StatusCodes.Status401Unauthorized, new { error = "Invalid API key" });
+
+        try
+        {
+            using var reader = new StreamReader(Request.Body);
+            var body = await reader.ReadToEndAsync();
+            var request = JsonConvert.DeserializeObject<CustomerRegisterRequest>(body);
+            if (request is null || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                return JsonResult(StatusCodes.Status400BadRequest, new { error = "Email and password are required" });
+
+            var email = request.Email.Trim();
+            var existing = await _customerService.GetCustomerByEmailAsync(email);
+            if (existing != null)
+                return JsonResult(StatusCodes.Status200OK, new { email = existing.Email, customerId = existing.Id, created = false });
+
+            var customer = new Customer { Active = true };
+            await _customerService.InsertCustomerAsync(customer);
+
+            var registrationRequest = new CustomerRegistrationRequest(customer, email, string.Empty, request.Password, PasswordFormat.Hashed, 0, true);
+            var result = await _customerRegistrationService.RegisterCustomerAsync(registrationRequest);
+            if (!result.Success)
+            {
+                await _customerService.DeleteCustomerAsync(customer);
+
+                return JsonResult(StatusCodes.Status400BadRequest, new { error = string.Join("; ", result.Errors) });
+            }
+
+            //display name of the account (used as "full name" of the customer)
+            if (!string.IsNullOrWhiteSpace(request.Name))
+                await _genericAttributeService.SaveAttributeAsync(customer, "FirstName", request.Name.Trim());
+
+            return JsonResult(StatusCodes.Status200OK, new { email = customer.Email, customerId = customer.Id, created = true });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Business Central customer registration failed");
+
+            return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Customer registration failed" });
         }
     }
 

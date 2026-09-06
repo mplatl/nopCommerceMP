@@ -1,3 +1,4 @@
+| **Login-Transfer (Kunden-Logins)** | BC-App 1.0.26.0 + Plugin `POST /api/bc/customers/register`: BC legt nop-Kundenkonten mit E-mail + Initial-Passwort + Name an (mehrere Logins je Debitor); BC `Push Logins` (Draft→Active, Nop Customer Id). Offen: Auftrags-Import-Zuordnung (jedes Login eines Debitors → derselbe Bill-to-Kunde) |
 # Development State — Business Central Plugin (nopCommerceMP)
 
 > **Letzte Aktualisierung:** 04.09.2026 (P1 live verifiziert; BC-App „nopCommerce Connector“ Iteration A+B Teil 1)

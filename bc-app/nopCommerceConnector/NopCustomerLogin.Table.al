@@ -70,6 +70,12 @@ table 62116 "Nop Customer Login"
             Editable = false;
             ToolTip = 'Contains the error message of the last failed transfer, if any.';
         }
+        field(9; Name; Text[250])
+        {
+            Caption = 'Name';
+            DataClassification = CustomerContent;
+            ToolTip = 'Display name of the customer account in the nopCommerce store (used at the account creation, e.g. the customer/company name).';
+        }
     }
 
     keys

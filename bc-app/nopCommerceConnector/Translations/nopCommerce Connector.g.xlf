@@ -228,6 +228,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Last Sync Error - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 2961552353 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Display name of the customer account in the nopCommerce store (used at the account creation, e.g. the customer/company name).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 3209749842 - Field 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nop Customer Login - Field Name - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3209749842 - Field 234986132 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Identifier of the customer in the nopCommerce store (set by the transfer).</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -478,6 +488,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nop Product Filter - Field Shop Code - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 3358554883 - NamedType 4013758993" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Customer logins of the shop "%1" pushed: %2 successful, %3 failed.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushCustomers - NamedType PushMsg</note>
+        </trans-unit>
         <trans-unit id="Codeunit 146023832 - Method 724968698 - NamedType 4013758993" size-unit="char" translate="yes" xml:space="preserve">
           <source>Products of the shop "%1" pushed: %2 successful, %3 failed.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -517,6 +532,11 @@
           <source>E-mail</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 805109205 - Control 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Name - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 805109205 - Control 234986132 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Customer Id</source>
@@ -808,6 +828,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action GetLanguages - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 991227914 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the customer logins (Draft) of this shop in nopCommerce with their initial password (one account per login/e-mail).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action PushLogins - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3318282709 - Action 991227914 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Push Logins</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Setup - Action PushLogins - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3318282709 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -922,6 +952,16 @@
           <source>Get Languages</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action GetLanguages - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 991227914 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the customer logins (Draft) of the selected shop in nopCommerce with their initial password (one account per login/e-mail).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action PushLogins - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 24306597 - Action 991227914 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Push Logins</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action PushLogins - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 24306597 - Action 724968698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Exports the selected store products of this shop to nopCommerce (creates/updates them or removes archived ones).</source>
