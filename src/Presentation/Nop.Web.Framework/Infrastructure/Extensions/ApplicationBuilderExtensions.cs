@@ -489,7 +489,7 @@ public static class ApplicationBuilderExtensions
         {
             var options = new ForwardedHeadersOptions
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedPrefix,
                 // IIS already serves as a reverse proxy and will add X-Forwarded headers to all requests,
                 // so we need to increase this limit, otherwise, passed forwarding headers will be ignored.
                 ForwardLimit = 2
