@@ -16,6 +16,7 @@ using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Services.Orders;
+using Nop.Services.Seo;
 using Nop.Services.Security;
 
 namespace Nop.Plugin.Misc.BusinessCentral.Controllers;
@@ -43,6 +44,7 @@ public class BusinessCentralApiController : Controller
     protected readonly IProductTemplateService _productTemplateService;
     protected readonly ISettingService _settingService;
     protected readonly IStateProvinceService _stateProvinceService;
+    protected readonly IUrlRecordService _urlRecordService;
 
     #endregion
 
@@ -62,7 +64,8 @@ public class BusinessCentralApiController : Controller
         IProductService productService,
         IProductTemplateService productTemplateService,
         ISettingService settingService,
-        IStateProvinceService stateProvinceService)
+        IStateProvinceService stateProvinceService,
+        IUrlRecordService urlRecordService)
     {
         _logger = logger;
         _addressService = addressService;
@@ -79,6 +82,7 @@ public class BusinessCentralApiController : Controller
         _productTemplateService = productTemplateService;
         _settingService = settingService;
         _stateProvinceService = stateProvinceService;
+        _urlRecordService = urlRecordService;
     }
 
     #endregion
@@ -299,6 +303,9 @@ public class BusinessCentralApiController : Controller
             //attach the first Business Central item picture to the product when it has none yet
             await AttachBusinessCentralPictureAsync(request.Sku);
 
+            //SEO slug (the product page URL needs it; existing slugs are kept)
+            await EnsureProductSlugAsync(product);
+
             return JsonResult(StatusCodes.Status200OK, new { sku = request.Sku, productId = product.Id, created = isNew });
         }
         catch (Exception ex)
@@ -306,6 +313,27 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central product push failed for SKU {Sku}", request.Sku);
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Product push failed" });
+        }
+    }
+
+    /// <summary>
+    /// Creates the SEO slug of the product when it does not have one yet (a slug is required
+    /// for the product page URL; existing slugs are kept so that URLs do not change on re-push)
+    /// </summary>
+    private async Task EnsureProductSlugAsync(Product product)
+    {
+        try
+        {
+            var activeSlug = await _urlRecordService.GetActiveSlugAsync(product.Id, nameof(Product), 0);
+            if (!string.IsNullOrWhiteSpace(activeSlug))
+                return;
+
+            var seName = await _urlRecordService.ValidateSeNameAsync(product, null, product.Name, true);
+            await _urlRecordService.SaveSlugAsync(product, seName, 0);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Creating the SEO slug for SKU \"{Sku}\" failed.", product.Sku);
         }
     }
 
@@ -574,7 +602,11 @@ public class BusinessCentralApiController : Controller
             var existing = (await _categoryService.GetAllCategoriesAsync())
                 .FirstOrDefault(c => c.ParentCategoryId == request.ParentId && string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase));
             if (existing != null)
+            {
+                //SEO slug (the category URL needs it; existing slugs are kept)
+                await EnsureCategorySlugAsync(existing);
                 return JsonResult(StatusCodes.Status200OK, new { categoryId = existing.Id, created = false });
+            }
 
             var category = new Category
             {
@@ -592,6 +624,9 @@ public class BusinessCentralApiController : Controller
             if (!string.IsNullOrWhiteSpace(request.BcCategoryCode))
                 await _genericAttributeService.SaveAttributeAsync(category, "bcCategoryCode", request.BcCategoryCode.Trim());
 
+            //SEO slug (the category URL needs it, created like the nopCommerce admin does it)
+            await EnsureCategorySlugAsync(category);
+
             return JsonResult(StatusCodes.Status200OK, new { categoryId = category.Id, created = true });
         }
         catch (Exception ex)
@@ -599,6 +634,27 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central category registration failed");
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Category registration failed" });
+        }
+    }
+
+    /// <summary>
+    /// Creates the SEO slug of the category when it does not have one yet (a slug is required
+    /// for the category page URL; existing slugs are kept so that URLs do not change)
+    /// </summary>
+    private async Task EnsureCategorySlugAsync(Category category)
+    {
+        try
+        {
+            var activeSlug = await _urlRecordService.GetActiveSlugAsync(category.Id, nameof(Category), 0);
+            if (!string.IsNullOrWhiteSpace(activeSlug))
+                return;
+
+            var seName = await _urlRecordService.ValidateSeNameAsync(category, null, category.Name, true);
+            await _urlRecordService.SaveSlugAsync(category, seName, 0);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Creating the SEO slug for category \"{Name}\" failed.", category.Name);
         }
     }
 

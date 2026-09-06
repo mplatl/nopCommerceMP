@@ -125,6 +125,7 @@ ssh erp-server "docker exec erp-discovery-web-1 caddy reload --config /etc/caddy
 - Plugin-Settings liegen in `Setting` (DB): `businesscentralsettings.companyname` muss exakt dem BC-Firmennamen entsprechen (**`CRONUS AT`**, Sandbox) — stand auf `CRONUS AG` und lies den Company-Resolver (`ResolveCompanyAsync`) fehlschlagen ⇒ Bild-Anhang beim Produkt-Push & Catalog-Sync schlugen fehl.
   Fix: `UPDATE Setting SET Value='CRONUS AT' WHERE Name='businesscentralsettings.companyname'` + Container-Restart.
 - Produkt-Push (`POST /api/bc/products`) hängt seit Commit `5884226` automatisch das erste BC-Artikelbild an (best effort, nur wenn das Produkt noch keins hat; `VisibleIndividually` wird dabei auch geheilt). Artikel ohne BC-Bild bleiben ohne Bild.
+- **Produkt-Sichtbarkeit (Storefront):** Ein Artikel braucht `Published=1`, `Deleted=0`, `VisibleIndividually=1`, `ProductTemplateId` != 0 (Simple) sowie einen URL-Slug. ⚠️ Beim manuellen Speichern im nop-Admin wird `VisibleIndividually` auf false zurückgesetzt, wenn die (Advanced-)Checkbox „Visible individually“ in den Produkt-Editor-Einstellungen ausgeblendet ist → danach wieder per BC-Push aktualisieren oder die Einstellung aktivieren. Kategorie- und Produkt-Slugs erzeugt das Plugin seit Commit `c9a3xxx` automatisch (nur wenn noch keiner existiert; SQL-Backfills/Heals erfordern danach einen Container-Restart wegen Cache).
 
 ## 6. Fehlerdiagnose-Lektionen
 
