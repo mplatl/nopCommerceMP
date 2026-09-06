@@ -484,6 +484,11 @@ public class BusinessCentralApiController : Controller
             if (!string.IsNullOrWhiteSpace(request.Name))
                 await _genericAttributeService.SaveAttributeAsync(customer, "FirstName", request.Name.Trim());
 
+            //mapping to the Business Central customer (Debitor): every login of the same
+            //customer carries the same bcCustomerNo -> orders are assigned to the same Bill-to customer
+            if (!string.IsNullOrWhiteSpace(request.CustomerNo))
+                await _genericAttributeService.SaveAttributeAsync(customer, "bcCustomerNo", request.CustomerNo);
+
             return JsonResult(StatusCodes.Status200OK, new { email = customer.Email, customerId = customer.Id, created = true });
         }
         catch (Exception ex)

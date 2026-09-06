@@ -262,7 +262,7 @@ codeunit 62100 "Nop Commerce Mgt."
         CustomerId: Integer;
         Created: Boolean;
     begin
-        Payload := '{"email":"' + EscapeJson(NopCustomerLogin."E-mail") + '","password":"' + EscapeJson(NopCustomerLogin."Initial Password") + '","name":"' + EscapeJson(NopCustomerLogin.Name) + '"}';
+        Payload := '{"email":"' + EscapeJson(NopCustomerLogin."E-mail") + '","password":"' + EscapeJson(NopCustomerLogin."Initial Password") + '","name":"' + EscapeJson(NopCustomerLogin.Name) + '","customerNo":"' + EscapeJson(NopCustomerLogin."Customer No.") + '"}';
 
         if not NopHttp.Post(Shop, 'api/bc/customers/register', Payload, ResponseText) then begin
             NopCustomerLogin."Last Sync Error" := CopyStr(ResponseText, 1, 250);
