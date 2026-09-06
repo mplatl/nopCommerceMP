@@ -229,7 +229,10 @@ codeunit 62100 "Nop Commerce Mgt."
         NopCustomerLogin: Record "Nop Customer Login";
         Pushed: Integer;
         Failed: Integer;
+        Total: Integer;
         PushMsg: Label 'Customer logins of the shop "%1" pushed: %2 successful, %3 failed.';
+        NoRowsMsg: Label 'No customer logins exist for the shop "%1" yet. Create the logins via Customers and push again.';
+        AllActiveMsg: Label 'All %1 customer logins of the shop "%2" are already active in the store - nothing new to push.';
     begin
         Shop.ValidateSetup();
         Pushed := 0;
@@ -245,7 +248,16 @@ codeunit 62100 "Nop Commerce Mgt."
                     Pushed := Pushed + 1;
             until NopCustomerLogin.Next() = 0;
 
-        Message(PushMsg, Shop.Code, Pushed, Failed);
+        if Pushed + Failed = 0 then begin
+            NopCustomerLogin.SetRange("Shop Code", Shop.Code);
+            NopCustomerLogin.SetRange(Status);
+            Total := NopCustomerLogin.Count();
+            if Total = 0 then
+                Message(NoRowsMsg, Shop.Code)
+            else
+                Message(AllActiveMsg, Total, Shop.Code);
+        end else
+            Message(PushMsg, Shop.Code, Pushed, Failed);
     end;
 
     /// <summary>

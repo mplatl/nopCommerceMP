@@ -32,6 +32,11 @@ page 62122 "Nop Commerce Customers"
                 {
                     Caption = 'E-mail';
                 }
+                field("Initial Password"; Rec."Initial Password")
+                {
+                    Caption = 'Initial Password';
+                    ToolTip = 'Initial password that is set for the login in the nopCommerce store (transferred when the row is pushed).';
+                }
                 field(Name; Rec.Name)
                 {
                     Caption = 'Name';
@@ -47,6 +52,11 @@ page 62122 "Nop Commerce Customers"
                 field("Synchronized Date"; Rec."Synchronized Date")
                 {
                     Caption = 'Synchronized Date';
+                    Editable = false;
+                }
+                field("Last Sync Error"; Rec."Last Sync Error")
+                {
+                    Caption = 'Last Sync Error';
                     Editable = false;
                 }
             }

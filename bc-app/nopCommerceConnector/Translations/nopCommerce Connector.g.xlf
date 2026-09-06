@@ -653,6 +653,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushCustomers - NamedType PushMsg</note>
         </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 3358554883 - NamedType 2759089619" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No customer logins exist for the shop "%1" yet. Create the logins via Customers and push again.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushCustomers - NamedType NoRowsMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 3358554883 - NamedType 414699320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>All %1 customer logins of the shop "%2" are already active in the store - nothing new to push.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushCustomers - NamedType AllActiveMsg</note>
+        </trans-unit>
         <trans-unit id="Codeunit 146023832 - Method 724968698 - NamedType 4013758993" size-unit="char" translate="yes" xml:space="preserve">
           <source>Products of the shop "%1" pushed: %2 successful, %3 failed.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -692,6 +702,21 @@
           <source>E-mail</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 805109205 - Control 4241830435 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial password that is set for the login in the nopCommerce store (transferred when the row is pushed).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Initial Password - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 805109205 - Control 4241830435 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial Password</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Initial Password - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 805109205 - Control 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Sync Error</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Last Sync Error - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 805109205 - Control 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Name</source>
