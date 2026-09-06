@@ -323,6 +323,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method PushProducts - NamedType PushMsg</note>
         </trans-unit>
+        <trans-unit id="Codeunit 146023832 - Method 3056034085 - NamedType 3275943471" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The product "%1" of the shop "%2" could not be removed in nopCommerce. %3</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Nop Commerce Mgt. - Method RemoveProductInNop - NamedType RemoveFailMsg</note>
+        </trans-unit>
         <trans-unit id="Codeunit 146023832 - Method 2378593642 - NamedType 573349409" size-unit="char" translate="yes" xml:space="preserve">
           <source>Languages of the shop "%1" synchronized: %2 added, %3 updated.</source>
           <note from="Developer" annotates="general" priority="2"></note>
