@@ -11,6 +11,7 @@ page 62102 "Nop Commerce Shops"
     SourceTable = "Nop Commerce Shop";
     Caption = 'nopCommerce Shops';
     UsageCategory = Administration;
+    CardPageId = "Nop Commerce Setup";
 
     layout
     {
@@ -124,15 +125,6 @@ page 62102 "Nop Commerce Shops"
                 begin
                     NopProductSync.PushProducts(Rec);
                 end;
-            }
-            action(OpenCard)
-            {
-                ApplicationArea = All;
-                Caption = 'Card';
-                ToolTip = 'Open the shop card of the selected shop.';
-                Visible = Rec.Code <> '';
-                RunObject = Page "Nop Commerce Setup";
-                RunPageMode = Edit;
             }
         }
     }

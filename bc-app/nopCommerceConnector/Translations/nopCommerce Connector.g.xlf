@@ -673,16 +673,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action Languages - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 24306597 - Action 2662476652 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Open the shop card of the selected shop.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action OpenCard - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 24306597 - Action 2662476652 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Card</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action OpenCard - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 24306597 - Action 2653030148 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Manage the saved search filters that add items to store products.</source>
           <note from="Developer" annotates="general" priority="2"></note>
