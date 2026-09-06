@@ -51,34 +51,6 @@ page 62102 "Nop Commerce Shops"
     {
         area(Processing)
         {
-            action(StoreProducts)
-            {
-                ApplicationArea = All;
-                Caption = 'Store Products';
-                ToolTip = 'Open the products of the selected shop (filtered by shop).';
-                Visible = Rec.Code <> '';
-                trigger OnAction()
-                var
-                    NopCommerceProducts: Page "Nop Commerce Products";
-                begin
-                    NopCommerceProducts.SetShopCode(Rec.Code);
-                    NopCommerceProducts.Run();
-                end;
-            }
-            action(AddStoreProducts)
-            {
-                ApplicationArea = All;
-                Caption = 'Search & Add Items';
-                ToolTip = 'Search items (also by saved filters) and add them to the store products of the selected shop.';
-                Visible = Rec.Code <> '';
-                trigger OnAction()
-                var
-                    NopItemSearch: Page "Nop Item Search";
-                begin
-                    NopItemSearch.SetShopCode(Rec.Code);
-                    NopItemSearch.Run();
-                end;
-            }
             action(ProductFilters)
             {
                 ApplicationArea = All;

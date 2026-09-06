@@ -18,10 +18,8 @@ page 62101 "Nop Commerce Products"
         {
             repeater(Products)
             {
-                field("Shop Code"; Rec."Shop Code")
-                {
-                    Caption = 'Shop Code';
-                }
+                // no "Shop Code" column: the page is opened filtered from the shop card
+                // (Setup -> Products / Search & Add Items) and always belongs to one shop.
                 field("Item No."; Rec."Item No.")
                 {
                     Caption = 'Item No.';

@@ -413,11 +413,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Nop Product Id - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 3890820952 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Shop Code</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Products - Control Shop Code - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 3890820952 - Control 513339096 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Status</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -683,16 +678,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Control Sync Products - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 24306597 - Action 2333640698 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Search items (also by saved filters) and add them to the store products of the selected shop.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action AddStoreProducts - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 24306597 - Action 2333640698 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Search &amp; Add Items</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action AddStoreProducts - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 24306597 - Action 3716230433 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Pulls the nopCommerce languages of the selected shop from the plugin API (per-shop whitelist update) and opens the language list.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -732,16 +717,6 @@
           <source>Push Products</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action PushProducts - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 24306597 - Action 517258945 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Open the products of the selected shop (filtered by shop).</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action StoreProducts - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 24306597 - Action 517258945 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Store Products</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Shops - Action StoreProducts - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3944195800 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Shops</source>
@@ -1063,16 +1038,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action Shops - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 3737697109 - Action 517258945 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Open the list of products that are selected per shop.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action StoreProducts - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 3737697109 - Action 517258945 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Store Products</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action StoreProducts - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 3737697109 - Action 4137051400 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>New</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1087,16 +1052,6 @@
           <source>Shop</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action AddShop - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 3737697109 - Action 1031649967 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Select an item of a shop for the transfer to nopCommerce. Only products listed here are transferred.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action AddStoreProduct - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 3737697109 - Action 1031649967 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Store Product</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page nopCommerce Admin - Action AddStoreProduct - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 3177061298 - EnumValue 1090351696 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Active</source>
