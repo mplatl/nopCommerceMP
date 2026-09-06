@@ -84,6 +84,18 @@ page 62102 "Nop Commerce Shops"
 
         area(Navigation)
         {
+            action(Customers)
+            {
+                Caption = 'Customers';
+                ToolTip = 'Manage the customer logins (Debitor) of this shop. Several logins per customer are possible; each row = one login in the nopCommerce store.';
+                trigger OnAction()
+                var
+                    NopCommerceCustomers: Page "Nop Commerce Customers";
+                begin
+                    NopCommerceCustomers.SetShopCode(Rec.Code);
+                    NopCommerceCustomers.Run();
+                end;
+            }
             action(ProductFilters)
             {
                 ApplicationArea = All;
