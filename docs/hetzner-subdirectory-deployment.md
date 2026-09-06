@@ -120,6 +120,12 @@ ssh erp-server "docker exec erp-discovery-web-1 caddy reload --config /etc/caddy
 
 ---
 
+## 5b. Plugin-BC-API-Config (Live) & Produktbilder
+
+- Plugin-Settings liegen in `Setting` (DB): `businesscentralsettings.companyname` muss exakt dem BC-Firmennamen entsprechen (**`CRONUS AT`**, Sandbox) — stand auf `CRONUS AG` und lies den Company-Resolver (`ResolveCompanyAsync`) fehlschlagen ⇒ Bild-Anhang beim Produkt-Push & Catalog-Sync schlugen fehl.
+  Fix: `UPDATE Setting SET Value='CRONUS AT' WHERE Name='businesscentralsettings.companyname'` + Container-Restart.
+- Produkt-Push (`POST /api/bc/products`) hängt seit Commit `5884226` automatisch das erste BC-Artikelbild an (best effort, nur wenn das Produkt noch keins hat; `VisibleIndividually` wird dabei auch geheilt). Artikel ohne BC-Bild bleiben ohne Bild.
+
 ## 6. Fehlerdiagnose-Lektionen
 
 1. **Reverse Proxy ist Caddy, nicht nginx** — immer `docker ps`/`docker network ls` prüfen.
