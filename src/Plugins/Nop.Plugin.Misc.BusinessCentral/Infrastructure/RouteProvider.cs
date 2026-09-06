@@ -36,6 +36,10 @@ public class RouteProvider : IRouteProvider
         endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiCustomersRouteName,
             pattern: BusinessCentralDefaults.ApiCustomersRoute,
             defaults: new { controller = "BusinessCentralApi", action = "Customers" });
+
+        endpointRouteBuilder.MapControllerRoute(name: BusinessCentralDefaults.ApiLanguagesRouteName,
+            pattern: BusinessCentralDefaults.ApiLanguagesRoute,
+            defaults: new { controller = "BusinessCentralApi", action = "Languages" });
     }
 
     /// <summary>

@@ -103,6 +103,11 @@ public class BusinessCentralDefaults
     public static string ApiCustomersRoute => "api/bc/customers";
 
     /// <summary>
+    /// Gets the route pattern of the language export endpoint (public API for Business Central)
+    /// </summary>
+    public static string ApiLanguagesRoute => "api/bc/languages";
+
+    /// <summary>
     /// Gets the API route name used to register the health endpoint
     /// </summary>
     public static string ApiHealthRouteName => "Plugin.Misc.BusinessCentral.ApiHealth";
@@ -121,4 +126,9 @@ public class BusinessCentralDefaults
     /// Gets the API route name used to register the customer export endpoint
     /// </summary>
     public static string ApiCustomersRouteName => "Plugin.Misc.BusinessCentral.ApiCustomers";
+
+    /// <summary>
+    /// Gets the route name of the language export endpoint
+    /// </summary>
+    public static string ApiLanguagesRouteName => "Plugin.Misc.BusinessCentral.ApiLanguages";
 }

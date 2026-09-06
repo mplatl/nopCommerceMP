@@ -12,6 +12,7 @@ using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
+using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Security;
 
@@ -30,6 +31,7 @@ public class BusinessCentralApiController : Controller
     protected readonly ICountryService _countryService;
     protected readonly ICustomerService _customerService;
     protected readonly IEncryptionService _encryptionService;
+    protected readonly ILanguageService _languageService;
     protected readonly IOrderService _orderService;
     protected readonly IProductService _productService;
     protected readonly IProductTemplateService _productTemplateService;
@@ -45,6 +47,7 @@ public class BusinessCentralApiController : Controller
         ICountryService countryService,
         ICustomerService customerService,
         IEncryptionService encryptionService,
+        ILanguageService languageService,
         IOrderService orderService,
         IProductService productService,
         IProductTemplateService productTemplateService,
@@ -56,6 +59,7 @@ public class BusinessCentralApiController : Controller
         _countryService = countryService;
         _customerService = customerService;
         _encryptionService = encryptionService;
+        _languageService = languageService;
         _orderService = orderService;
         _productService = productService;
         _productTemplateService = productTemplateService;
@@ -393,6 +397,44 @@ public class BusinessCentralApiController : Controller
             _logger.LogError(ex, "Business Central customer export failed");
 
             return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Customer export failed" });
+        }
+    }
+
+    /// <summary>
+    /// Exports the store languages (used by the Business Central shop setup to maintain
+    /// the per-shop language whitelist and the default language of each shop)
+    /// </summary>
+    public virtual async Task<IActionResult> Languages()
+    {
+        if (!await IsApiKeyValidAsync())
+            return JsonResult(StatusCodes.Status401Unauthorized, new { error = "Invalid API key" });
+
+        try
+        {
+            var languages = await _languageService.GetAllLanguagesAsync(showHidden: true);
+
+            var response = new LanguageExportResponse
+            {
+                Total = languages.Count,
+                Languages = languages.Select(language => new LanguageExportDto
+                {
+                    Id = language.Id,
+                    Name = language.Name,
+                    LanguageCulture = language.LanguageCulture,
+                    UniqueSeoCode = language.UniqueSeoCode,
+                    Rtl = language.Rtl,
+                    Published = language.Published,
+                    DisplayOrder = language.DisplayOrder
+                }).ToList()
+            };
+
+            return JsonResult(StatusCodes.Status200OK, response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Business Central language export failed");
+
+            return JsonResult(StatusCodes.Status500InternalServerError, new { error = "Language export failed" });
         }
     }
 

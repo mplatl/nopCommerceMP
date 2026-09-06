@@ -145,6 +145,21 @@ page 62100 "Nop Commerce Setup"
                     NopCommerceLanguages.Run();
                 end;
             }
+            action(GetLanguages)
+            {
+                Caption = 'Get Languages';
+                ToolTip = 'Pulls the nopCommerce languages of this shop from the plugin API (per-shop whitelist update) and opens the language list.';
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    NopLanguageSync: Codeunit "Nop Commerce Mgt.";
+                    NopCommerceLanguages: Page "Nop Commerce Languages";
+                begin
+                    NopLanguageSync.SyncLanguages(Rec);
+                    NopCommerceLanguages.SetShopCode(Rec.Code);
+                    NopCommerceLanguages.Run();
+                end;
+            }
             action(TestConnection)
             {
                 Caption = 'Test Connection';
