@@ -74,7 +74,9 @@ table 62114 "Nop Customer"
 
     keys
     {
-        key(PK; "Shop Code", "Customer No.")
+        //several logins per customer (Debitor) are possible: one row per login/e-mail.
+        //The e-mail is the login in the nopCommerce store and stays unique per shop.
+        key(PK; "Shop Code", "Customer No.", "E-mail")
         {
             Clustered = true;
         }
