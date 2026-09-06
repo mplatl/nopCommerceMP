@@ -5,8 +5,8 @@ namespace NopCommerceConnector;
 /// Opened via the "Customers" action of the shop (Setup/card and Shops list) —
 /// the page is filtered to the shop and new records get the shop code automatically.
 /// Several logins per customer (Debitor) are possible (one row per login/e-mail).
-/// The initial password is displayed masked; it is set per row via "Set Initial
-/// Password" and transferred per row or for all Draft rows ("Push Login(s)").
+/// The "Initial Password" column is displayed masked (like the standard password
+/// fields) and is entered/changed via the AssistEdit button of the row.
 /// </summary>
 page 62122 "Nop Commerce Customers"
 {
@@ -34,11 +34,20 @@ page 62122 "Nop Commerce Customers"
                 {
                     Caption = 'E-mail';
                 }
-                field(PasswordMasked; PasswordMaskedDisplay)
+                field("Initial Password"; Rec."Initial Password")
                 {
                     Caption = 'Initial Password';
                     Editable = false;
-                    ToolTip = 'Initial password for the login in the shop (shown masked; set per row via "Set Initial Password").';
+                    ExtendedDatatype = Masked;
+                    AssistEdit = true;
+                    ToolTip = 'Initial password of the login in the shop - displayed masked; set or change it with the AssistEdit button.';
+                    trigger OnAssistEdit()
+                    var
+                        PwPage: Page "Nop Login Password";
+                    begin
+                        PwPage.SetLogin(Rec);
+                        PwPage.RunModal();
+                    end;
                 }
                 field(Name; Rec.Name)
                 {
@@ -70,33 +79,6 @@ page 62122 "Nop Commerce Customers"
     {
         area(Processing)
         {
-            action(SetInitialPassword)
-            {
-                Caption = 'Set Initial Password';
-                ToolTip = 'Sets the initial password that is used when the account of this login is created in the shop (dialog only, masked display).';
-                ApplicationArea = All;
-                trigger OnAction()
-                var
-                    Login: Record "Nop Customer Login";
-                    PwPage: Page "Nop Login Password";
-                begin
-                    if Rec."E-mail" = '' then
-                        Error('Select a customer login first.');
-                    PwPage.SetEmail(Rec."E-mail");
-                    PwPage.RunModal();
-                    if not PwPage.WasOkPressed() then
-                        exit;
-                    if not Login.Get(Rec."Shop Code", Rec."Customer No.", Rec."E-mail") then
-                        Error('The selected customer login does not exist anymore.');
-                    Login."Initial Password" := PwPage.GetPassword();
-                    Login.Modify();
-                    Rec."Initial Password" := Login."Initial Password";
-                    if Login."Initial Password" <> '' then
-                        PasswordMaskedDisplay := '********'
-                    else
-                        PasswordMaskedDisplay := '';
-                end;
-            }
             action(PushLogin)
             {
                 Caption = 'Push Login';
@@ -115,7 +97,6 @@ page 62122 "Nop Commerce Customers"
     var
         NopShopCode: Code[10];
         NopCustomerNo: Code[20];
-        PasswordMaskedDisplay: Text;
 
     trigger OnOpenPage()
     begin
@@ -125,14 +106,6 @@ page 62122 "Nop Commerce Customers"
         end else
             if NopShopCode <> '' then
                 Rec.SetRange("Shop Code", NopShopCode);
-    end;
-
-    trigger OnAfterGetRecord()
-    begin
-        if Rec."Initial Password" <> '' then
-            PasswordMaskedDisplay := '********'
-        else
-            PasswordMaskedDisplay := '';
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)

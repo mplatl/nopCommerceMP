@@ -718,6 +718,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control E-mail - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 805109205 - Control 4241830435 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial password of the login in the shop - displayed masked; set or change it with the AssistEdit button.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Initial Password - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 805109205 - Control 4241830435 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial Password</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Initial Password - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 805109205 - Control 2687252343 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Last Sync Error</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -732,16 +742,6 @@
           <source>nopCommerce Customer Id</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control Nop Customer Id - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 805109205 - Control 653287654 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Initial password for the login in the shop (shown masked; set per row via "Set Initial Password").</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control PasswordMasked - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 805109205 - Control 653287654 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Initial Password</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Control PasswordMasked - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 805109205 - Control 1669136979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Shop Code</source>
@@ -767,16 +767,6 @@
           <source>Push Login</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Action PushLogin - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 805109205 - Action 3956481901 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sets the initial password that is used when the account of this login is created in the shop (dialog only, masked display).</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Action SetInitialPassword - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 805109205 - Action 3956481901 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Set Initial Password</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Commerce Customers - Action SetInitialPassword - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 276168367 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Languages</source>
@@ -1433,13 +1423,13 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 3585550983 - Control 1285973296 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>E-mail</source>
+        <trans-unit id="Page 3585550983 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Initial password of the shop account (used when the account is created in the shop).</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Control Email - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Control General - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3585550983 - Control 4241830435 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Initial password of the shop account (used when the account is created in the shop).</source>
+          <source>Initial password of the shop account.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Control Initial Password - Property ToolTip</note>
         </trans-unit>
@@ -1447,11 +1437,6 @@
           <source>Initial Password</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Control Initial Password - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 3585550983 - Action 1789904502 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>OK</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Nop Login Password - Action OkAction - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1986787142 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>nopCommerce Product Filter</source>
